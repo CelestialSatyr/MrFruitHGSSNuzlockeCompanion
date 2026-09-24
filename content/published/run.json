@@ -4,8 +4,11 @@
   "title": "Heart Gold & Soul Silver Soul Link",
   "gameId": "heartgold-soulsilver",
   "status": "planning",
+  "attemptNumber": 1,
   "scope": "main-story",
-  "playerIds": ["player_fruit", "player_blue"],
-  "description": "Run Number 1",
-  "attemptNumber": 1
+  "playerIds": [
+    "player_fruit",
+    "player_blue"
+  ],
+  "description": "Run Number 1"
 }

@@ -1,40 +1,131 @@
 [
   {
-    "id": "first-encounter",
-    "title": "First Encounter",
-    "category": "encounters",
-    "shortSummary": "Only the first valid encounter in an eligible area may be used.",
+    "id": "rule-1",
+    "title": "Simultaneous Playthrough",
+    "category": "other",
+    "shortSummary": "Both players must playthrough the games simultaneously.",
     "versions": [
       {
         "effectiveFromEpisode": 1,
-        "summary": "First valid encounter only.",
-        "description": "Each player may only use the first valid encounter for an encounter opportunity unless another rule explicitly grants a reroll or exception."
+        "summary": "Initial version",
+        "description": "The two players play through the same game simultaneously."
       }
     ]
   },
   {
-    "id": "soul-link-death",
-    "title": "Linked Fates",
-    "category": "soul-link",
-    "shortSummary": "If one linked Pokémon dies, its partner is retired as well.",
+    "id": "rule-2",
+    "title": "Linked Encounters",
+    "category": "encounters",
+    "shortSummary": "Caught Pokemon Are Linked Together.",
     "versions": [
       {
         "effectiveFromEpisode": 1,
-        "summary": "A death ends the whole Soul Link.",
-        "description": "When either member of a Soul Link faints permanently, that Pokémon is recorded as dead and its linked partner is retired because the link was lost."
+        "summary": "Initial version",
+        "description": "Encounters for players on each route are linked. If one player fails to catch their encounter for a route, the other player must box or release their encounter for that route as well. If both players successfully catch their first encounter for the route, those two Pokémon are “linked” as partners."
       }
     ]
   },
   {
-    "id": "gift-pokemon",
-    "title": "Gift Pokémon",
-    "category": "encounters",
-    "shortSummary": "Gift encounters are tracked as their own encounter opportunities when the run permits them.",
+    "id": "rule-3",
+    "title": "Pokemon Dying",
+    "category": "deaths",
+    "shortSummary": "When a pokemon dies, it's partner dies as well.",
     "versions": [
       {
         "effectiveFromEpisode": 1,
-        "summary": "Gift encounters are separately tracked.",
-        "description": "The companion can represent gift and static encounters independently from a location's main encounter. Whether they are legal is controlled by the run rules."
+        "summary": "Initial version",
+        "description": "When one player’s Pokémon faints, its partner on the other player’s team must be boxed or released as well."
+      }
+    ]
+  },
+  {
+    "id": "rule-4",
+    "title": "Boxed Pokemon",
+    "category": "party",
+    "shortSummary": "The link must stay strong!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "If a Pokémon is placed in the PC, its partner on the other player’s team must be placed in the PC as well."
+      }
+    ]
+  },
+  {
+    "id": "rule-5",
+    "title": "Restricted Typings",
+    "category": "party",
+    "shortSummary": "No sharing of the same primary typing.",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "Often, players will restrict the use of shared types between the teams, meaning that no Pokémon on either team may share the same primary type."
+      }
+    ]
+  },
+  {
+    "id": "rule-6",
+    "title": "Randomized Encounters",
+    "category": "encounters",
+    "shortSummary": "Pokemon are randomized to promote variety!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "It’s common to randomize the encounters on each route for this challenge, to promote greater Pokémon and type variety between the teams, especially on early routes where Pokémon selection is limited."
+      }
+    ]
+  },
+  {
+    "id": "rule-7",
+    "title": "First Encounter Only",
+    "category": "encounters",
+    "shortSummary": "Only the first one counts!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "Only the first wild Pokémon encountered in a route or area can be caught. If the player fails to catch it (ie. it flees or faints), their opportunity to catch a Pokémon in that area is lost."
+      }
+    ]
+  },
+  {
+    "id": "rule-8",
+    "title": "Named Pokemon",
+    "category": "party",
+    "shortSummary": "All pokemon must be named.",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "The player must nickname all Pokémon they catch or obtain."
+      }
+    ]
+  },
+  {
+    "id": "rule-9",
+    "title": "Duplicate Clause",
+    "category": "encounters",
+    "shortSummary": "To prevent duplicates, and promote variety!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "If the first Pokémon in an area is one the player already owns, they may continue battling until they encounter one they do not own, and then attempt to catch it. This rule prevents a player from having multiples of the same Pokémon, especially early in the game when the selection of different Pokémon on the first few routes is limited."
+      }
+    ]
+  },
+  {
+    "id": "rule-10",
+    "title": "Shiny Clause",
+    "category": "encounters",
+    "shortSummary": "Shinies can always be caught!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "If the player encounters a shiny wild Pokémon, they may catch it, even if a wild Pokémon has already been encountered in that area. This does not count as the encounter for that area."
       }
     ]
   }

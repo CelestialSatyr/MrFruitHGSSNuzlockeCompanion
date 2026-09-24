@@ -3,12 +3,16 @@
     "id": "player_fruit",
     "displayName": "Mr Fruit",
     "shortName": "Fruit",
-    "gameVersionId": "heartgold"
+    "gameVersionId": "heartgold",
+    "avatarUrl": "https://yt3.ggpht.com/XaHuok1yGZluodYq8D3Hhlo1Rvc2AKJdhDINSDfAYUW7j63B9n5fHevUc_QERFJYgOXuEwpNeQ=s800-c-k-c0x00ffffff-no-rj",
+    "channelUrl": "https://www.youtube.com/channel/UCaKQ-Ak6lPnA9DGB2fd0sJw"
   },
   {
-    "id": "player_partner",
+    "id": "player_blue",
     "displayName": "BlueWestlo",
     "shortName": "Blue",
-    "gameVersionId": "soulsilver"
+    "gameVersionId": "soulsilver",
+    "avatarUrl": "https://yt3.ggpht.com/ky7_yICtkq7iMoYEraY45oeHm9c0twX2wIcfC4atTBo63prRT2TTiuPVuSmuGmjJZVbbQqmPSgo=s800-c-k-c0x00ffffff-no-rj",
+    "channelUrl": "https://www.youtube.com/channel/UCOb-cMEKg0A7uQPOxdJzJSA"
   }
 ]
