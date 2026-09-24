@@ -18,7 +18,11 @@ function navClassName({ isActive }: { isActive: boolean }) {
 }
 
 export function AppShell() {
-  const { isDraftPreview, spoilerPromptOpen } = useRunView();
+  const { dataset, isDraftPreview, spoilerPromptOpen } = useRunView();
+
+  const playerOneId = dataset.run.playerIds[0];
+  const playerOne = dataset.players.find((player) => player.id === playerOneId);
+  const playerOneInitial = playerOne?.displayName.trim().charAt(0).toUpperCase() || "◎";
 
   return (
     <div className="app-shell">
@@ -34,7 +38,7 @@ export function AppShell() {
           <div className="site-header__inner">
             <NavLink to="/" className="brand" aria-label="Nuzlocke Companion overview">
               <span className="brand__mark" aria-hidden="true">
-                ◎
+                {playerOne?.avatarUrl ? <img src={playerOne.avatarUrl} alt="" /> : playerOneInitial}
               </span>
               <span>
                 <strong>Nuzlocke Companion</strong>
