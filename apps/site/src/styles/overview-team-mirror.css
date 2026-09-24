@@ -1,0 +1,65 @@
+/*
+ * Step 10.7.1
+ * Mirror HeartGold toward the center of the two-player Overview layout.
+ * SoulSilver remains left-aligned in the right-hand column, so both teams
+ * visually face one another across the center divider.
+ */
+
+@media (min-width: 760px) {
+  .run-player-column--gold .player-profile-card--gold {
+    grid-template-columns: auto minmax(0, 1fr) 4.4rem;
+  }
+
+  .run-player-column--gold .player-profile-card__avatar {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .run-player-column--gold .player-profile-card__copy {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .run-player-column--gold .player-profile-card__copy p {
+    text-align: right;
+  }
+
+  .run-player-column--gold .player-profile-card__cta {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  .run-player-column--gold .run-player-column__heading {
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+
+  .team-pokemon-card--gold {
+    grid-template-columns: auto minmax(0, 1fr) 4rem;
+    border-left-width: 1px;
+    border-right: 3px solid var(--player-gold);
+    background: linear-gradient(270deg, var(--player-gold-soft), rgba(9, 13, 20, 0.45) 36%);
+  }
+
+  .team-pokemon-card--gold .team-pokemon-card__level {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .team-pokemon-card--gold .team-pokemon-card__copy {
+    grid-column: 2;
+    grid-row: 1;
+    text-align: right;
+  }
+
+  .team-pokemon-card--gold .type-chip-row {
+    justify-content: flex-end;
+  }
+
+  .team-pokemon-card--gold .team-pokemon-card__sprite {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

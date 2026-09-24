@@ -1,0 +1,45 @@
+/*
+ * Exact HGSS Johto badge sprites.
+ *
+ * The source PNGs are only ~20-24 pixels wide. They must be enlarged by
+ * changing their actual layout dimensions, not by applying transform: scale().
+ * Transform scaling was multiplying the older Timeline 7rem rule and caused
+ * the enormous blurred badge shown in Step 10.7.3.
+ */
+.hgss-badge-sprite {
+  display: block;
+  flex: none;
+  object-fit: contain !important;
+  transform: none !important;
+  max-width: none !important;
+  max-height: none !important;
+  image-rendering: crisp-edges !important;
+  image-rendering: pixelated !important;
+}
+
+/*
+ * Badge case: exactly 2x the original game sprite pixels.
+ * The more-specific class selector intentionally wins over older global image
+ * rules regardless of stylesheet load order.
+ */
+.badge-token__icon > .hgss-badge-sprite {
+  width: var(--hgss-badge-case-width) !important;
+  height: var(--hgss-badge-case-height) !important;
+}
+
+/*
+ * Gym events: exactly 5x native resolution on desktop. This puts the badges at
+ * roughly 100-120px while preserving each badge's real aspect ratio and pixel
+ * grid. No second transform-based scale is applied.
+ */
+.gym-event__badge > .hgss-badge-sprite {
+  width: var(--hgss-badge-gym-width) !important;
+  height: var(--hgss-badge-gym-height) !important;
+}
+
+@media (max-width: 759px) {
+  .gym-event__badge > .hgss-badge-sprite {
+    width: var(--hgss-badge-gym-mobile-width) !important;
+    height: var(--hgss-badge-gym-mobile-height) !important;
+  }
+}

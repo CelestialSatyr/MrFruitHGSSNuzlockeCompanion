@@ -1,0 +1,61 @@
+/* Pre-run / planning presentation for the public landing page. */
+.run-hero--planning {
+  border-color: rgba(240, 199, 94, 0.26);
+}
+
+.overview-planning-state {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1.2rem 1.3rem;
+  border: 1px solid rgba(240, 199, 94, 0.3);
+  border-radius: 1rem;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(217, 173, 66, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(21, 30, 43, 0.98), rgba(12, 18, 27, 0.98));
+}
+
+.overview-planning-state h2 {
+  margin: 0.25rem 0 0.45rem;
+  font-size: clamp(1.35rem, 2.5vw, 2rem);
+}
+
+.overview-planning-state p:not(.eyebrow) {
+  max-width: 54rem;
+  margin: 0;
+  color: var(--muted-strong);
+  line-height: 1.6;
+}
+
+.overview-planning-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.run-player-column__team--planning .run-player-column__heading strong {
+  color: var(--muted-strong);
+  font-size: 0.68rem;
+}
+
+.team-empty--planning {
+  min-height: 5.5rem;
+  display: grid;
+  place-items: center;
+  padding: 1rem 1.2rem;
+  border-style: solid;
+  background: rgba(255, 255, 255, 0.025);
+  line-height: 1.5;
+}
+
+@media (max-width: 759px) {
+  .overview-planning-state {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-planning-state__actions {
+    justify-content: flex-start;
+  }
+}

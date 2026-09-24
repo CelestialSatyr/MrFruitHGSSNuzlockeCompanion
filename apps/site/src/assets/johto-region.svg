@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1961 1316" role="img" aria-labelledby="title desc">
+  <title id="title">Johto region map background</title>
+  <desc id="desc">A locally hosted topographic Johto map backdrop for the interactive HeartGold and SoulSilver encounter planner.</desc>
+  <defs>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#193b4a"/>
+      <stop offset="0.58" stop-color="#0c3346"/>
+      <stop offset="1" stop-color="#082a3c"/>
+    </linearGradient>
+    <linearGradient id="land" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5f704f"/>
+      <stop offset="0.48" stop-color="#485e43"/>
+      <stop offset="1" stop-color="#394d3a"/>
+    </linearGradient>
+    <linearGradient id="highland" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d7768"/>
+      <stop offset="1" stop-color="#514d45"/>
+    </linearGradient>
+    <radialGradient id="forest" cx="50%" cy="45%" r="60%">
+      <stop offset="0" stop-color="#4e6f46"/>
+      <stop offset="1" stop-color="#314833"/>
+    </radialGradient>
+    <pattern id="forestDots" width="34" height="30" patternUnits="userSpaceOnUse">
+      <circle cx="7" cy="8" r="5" fill="#738766" opacity=".18"/>
+      <circle cx="23" cy="18" r="7" fill="#1f3d2c" opacity=".26"/>
+      <circle cx="32" cy="3" r="4" fill="#91a37d" opacity=".13"/>
+    </pattern>
+    <filter id="texture" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".012" numOctaves="3" seed="22" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="mono"/>
+      <feComponentTransfer in="mono" result="soft">
+        <feFuncA type="table" tableValues="0 .12"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="soft" mode="soft-light"/>
+    </filter>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#02070b" flood-opacity=".42"/>
+    </filter>
+  </defs>
+
+  <rect width="1961" height="1316" fill="url(#sea)"/>
+  <path d="M0 820 C120 785 185 770 267 778 C350 786 410 833 493 835 C584 837 624 786 700 782 C792 778 877 826 948 850 C1030 878 1132 868 1210 831 C1300 787 1354 706 1433 686 C1523 663 1640 697 1715 739 C1803 788 1884 792 1961 766 L1961 1316 L0 1316 Z" fill="#0d2f41" opacity=".48"/>
+
+  <g filter="url(#shadow)">
+    <path d="M72 188 C190 110 338 97 470 135 C578 166 681 125 788 154 C892 182 979 151 1084 119 C1244 70 1450 101 1605 178 C1710 230 1846 247 1928 323 L1928 724 C1842 763 1749 772 1646 742 C1542 712 1470 678 1371 687 C1283 695 1207 761 1110 793 C998 830 884 808 788 774 C687 737 624 722 536 754 C447 786 342 798 248 765 C166 737 102 683 54 614 Z" fill="url(#land)" stroke="#8b8b74" stroke-opacity=".38" stroke-width="6" filter="url(#texture)"/>
+    <path d="M0 616 C79 594 159 604 225 641 C276 670 304 729 274 781 C244 831 176 844 112 828 C58 815 20 782 0 752 Z" fill="url(#land)" stroke="#8b8b74" stroke-opacity=".38" stroke-width="6" filter="url(#texture)"/>
+  </g>
+
+  <path d="M809 122 C850 73 914 50 977 62 C1041 74 1095 121 1102 179 C1110 243 1052 288 987 289 C923 290 859 262 825 216 C801 183 791 148 809 122 Z" fill="#23627b" stroke="#8fb7b6" stroke-opacity=".45" stroke-width="8"/>
+  <path d="M986 285 C986 339 964 365 949 405 C932 452 943 504 972 543" fill="none" stroke="#4e91aa" stroke-width="20" stroke-linecap="round" opacity=".82"/>
+  <path d="M971 286 C971 339 950 369 938 408 C924 453 935 493 959 534" fill="none" stroke="#8fd2db" stroke-width="5" stroke-linecap="round" opacity=".55"/>
+
+  <path d="M95 193 C222 129 355 142 471 199 C533 229 576 277 620 325 C501 324 393 339 286 395 C215 432 146 474 62 478 Z" fill="url(#forest)" opacity=".92"/>
+  <path d="M1132 153 C1277 109 1453 140 1584 218 C1650 257 1705 303 1751 360 C1598 345 1487 365 1373 413 C1266 458 1180 468 1096 433 Z" fill="url(#forest)" opacity=".88"/>
+  <path d="M176 186 C272 147 374 159 471 210 L602 329 C455 326 320 371 206 433 C140 468 92 476 61 474 Z" fill="url(#forestDots)" opacity=".95"/>
+  <path d="M1134 159 C1261 123 1414 143 1539 203 C1638 250 1710 309 1753 361 C1628 345 1492 368 1375 416 C1274 457 1183 467 1097 431 Z" fill="url(#forestDots)" opacity=".82"/>
+  <path d="M240 472 C381 417 537 423 659 481 C724 512 771 568 806 633 C687 653 570 674 483 726 C392 780 298 791 225 760 C160 733 124 681 130 618 C136 554 178 497 240 472 Z" fill="url(#forest)" opacity=".9"/>
+  <path d="M245 477 C380 431 521 433 642 486 C713 517 763 568 798 626 C673 652 561 678 477 727 C382 781 293 785 226 756 C164 729 132 679 138 619 C144 559 184 507 245 477 Z" fill="url(#forestDots)" opacity=".72"/>
+
+  <g fill="url(#highland)" stroke="#a39d8e" stroke-opacity=".23" stroke-width="4" opacity=".96">
+    <path d="M651 265 L720 138 L794 268 L842 189 L915 317 L973 226 L1056 359 L1084 263 L1188 414 L1216 320 L1318 455 L1284 526 L1128 501 L1034 453 L909 433 L786 399 Z"/>
+    <path d="M1282 373 L1352 240 L1420 381 L1470 269 L1545 409 L1608 289 L1698 444 L1763 329 L1864 487 L1878 613 L1756 596 L1639 557 L1515 529 L1406 496 Z"/>
+    <path d="M684 688 L736 595 L798 701 L845 628 L903 735 L868 792 L771 783 L714 759 Z"/>
+  </g>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1548 962 L1353 948 L1180 868 L1008 847 L879 737 L686 752 L566 684 L429 682 L303 576 L304 446 L447 375 L601 411 L705 523 L840 580 L986 598 L1118 539 L1274 501 L1457 496 L1571 610 L1550 738" stroke="#d4c6a0" stroke-width="16" opacity=".26"/>
+    <path d="M1548 962 L1353 948 L1180 868 L1008 847 L879 737 L686 752 L566 684 L429 682 L303 576 L304 446 L447 375 L601 411 L705 523 L840 580 L986 598 L1118 539 L1274 501 L1457 496 L1571 610 L1550 738" stroke="#efe5c2" stroke-width="4" opacity=".4"/>
+    <path d="M304 446 L306 318 L420 254 L564 277 L687 229" stroke="#d4c6a0" stroke-width="12" opacity=".22"/>
+    <path d="M1008 847 L900 960 L761 992 L618 914" stroke="#d4c6a0" stroke-width="12" opacity=".22"/>
+  </g>
+
+  <g opacity=".45">
+    <circle cx="1538" cy="958" r="13" fill="#f1d88b"/><circle cx="1160" cy="848" r="13" fill="#d4dce4"/>
+    <circle cx="610" cy="414" r="14" fill="#d4dce4"/><circle cx="303" cy="446" r="16" fill="#f1d88b"/>
+    <circle cx="690" cy="522" r="13" fill="#d4dce4"/><circle cx="688" cy="230" r="13" fill="#f1d88b"/>
+  </g>
+
+  <rect x="18" y="18" width="1925" height="1280" rx="26" fill="none" stroke="#eef1e8" stroke-opacity=".1" stroke-width="3"/>
+</svg>

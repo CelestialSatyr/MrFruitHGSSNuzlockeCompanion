@@ -1,0 +1,16 @@
+{
+  "name": "@nuzlocke/hgss",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --pretty false"
+  },
+  "dependencies": {
+    "@nuzlocke/core": "0.0.0",
+    "zod": "4.6.5"
+  }
+}

@@ -1,0 +1,11 @@
+{
+    "schemaVersion": 1,
+    "id": "mr-fruit-hgss-soul-link",
+    "title": "Heart Gold & Soul Silver Soul Link",
+    "gameId": "heartgold-soulsilver",
+    "status": "planning",
+    "scope": "main-story",
+    "playerIds": ["player_fruit", "player_blue"],
+    "description": "Run Number 1",
+    "attemptNumber": 1
+}

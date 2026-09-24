@@ -1,0 +1,14 @@
+[
+  {
+    "id": "player_fruit",
+    "displayName": "Mr Fruit",
+    "shortName": "Fruit",
+    "gameVersionId": "heartgold"
+  },
+  {
+    "id": "player_partner",
+    "displayName": "BlueWestlo",
+    "shortName": "Blue",
+    "gameVersionId": "soulsilver"
+  }
+]

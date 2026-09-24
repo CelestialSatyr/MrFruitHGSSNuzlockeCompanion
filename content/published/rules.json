@@ -1,0 +1,41 @@
+[
+  {
+    "id": "first-encounter",
+    "title": "First Encounter",
+    "category": "encounters",
+    "shortSummary": "Only the first valid encounter in an eligible area may be used.",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "First valid encounter only.",
+        "description": "Each player may only use the first valid encounter for an encounter opportunity unless another rule explicitly grants a reroll or exception."
+      }
+    ]
+  },
+  {
+    "id": "soul-link-death",
+    "title": "Linked Fates",
+    "category": "soul-link",
+    "shortSummary": "If one linked Pokémon dies, its partner is retired as well.",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "A death ends the whole Soul Link.",
+        "description": "When either member of a Soul Link faints permanently, that Pokémon is recorded as dead and its linked partner is retired because the link was lost."
+      }
+    ]
+  },
+  {
+    "id": "gift-pokemon",
+    "title": "Gift Pokémon",
+    "category": "encounters",
+    "shortSummary": "Gift encounters are tracked as their own encounter opportunities when the run permits them.",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Gift encounters are separately tracked.",
+        "description": "The companion can represent gift and static encounters independently from a location's main encounter. Whether they are legal is controlled by the run rules."
+      }
+    ]
+  }
+]

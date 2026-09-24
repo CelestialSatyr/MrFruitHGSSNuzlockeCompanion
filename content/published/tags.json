@@ -1,0 +1,26 @@
+[
+  {
+    "id": "community-name",
+    "label": "Community Name",
+    "description": "The Pokémon was named after a member of the community.",
+    "style": "celebration"
+  },
+  {
+    "id": "illegal-capture",
+    "label": "Illegal Capture",
+    "description": "The encounter did not follow the established rules of the run.",
+    "style": "rules"
+  },
+  {
+    "id": "rules-dispute",
+    "label": "Rules Dispute",
+    "description": "The legality or interpretation of this moment was discussed during the run.",
+    "style": "rules"
+  },
+  {
+    "id": "clutch",
+    "label": "Clutch",
+    "description": "A particularly close or unlikely survival or victory.",
+    "style": "celebration"
+  }
+]

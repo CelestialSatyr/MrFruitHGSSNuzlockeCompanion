@@ -1,0 +1,12 @@
+/*
+ * Town/city labels are useful while navigating at normal zoom, but above 300%
+ * they obscure nearby encounter nodes. Keep the nodes themselves fully active.
+ */
+.map-node__label {
+  pointer-events: none;
+  transition: opacity 160ms ease;
+}
+
+.map-nodes--labels-hidden .map-node__label {
+  opacity: 0;
+}

@@ -1,0 +1,39 @@
+{
+  "name": "nuzlocke-companion",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "npm run dev:site",
+    "dev:site": "npm run dev --workspace @nuzlocke/site",
+    "dev:editor": "npm run dev --workspace @nuzlocke/editor",
+    "build": "npm run build --workspaces --if-present",
+    "build:site": "npm run build --workspace @nuzlocke/site && node scripts/postbuild-pages.mjs",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "check": "npm run lint && npm run typecheck && npm run test && npm run build:site",
+    "dev:authoring": "node scripts/dev-authoring.mjs"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.13.6",
+    "eslint": "10.11.0",
+    "prettier": "3.9.8",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.70.0",
+    "vitest": "5.0.1"
+  }
+}

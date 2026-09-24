@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "id": "mr-fruit-hgss-soul-link",
+  "title": "Mr Fruit HeartGold / SoulSilver Soul Link",
+  "runs": [
+    {
+      "run": {
+        "schemaVersion": 1,
+        "id": "mr-fruit-hgss-soul-link",
+        "title": "Heart Gold & Soul Silver Soul Link",
+        "gameId": "heartgold-soulsilver",
+        "status": "planning",
+        "scope": "main-story",
+        "playerIds": ["player_fruit", "player_blue"],
+        "description": "Run Number 1",
+        "attemptNumber": 1
+      },
+      "players": [
+        {
+          "id": "player_fruit",
+          "displayName": "Mr Fruit",
+          "shortName": "Fruit",
+          "gameVersionId": "heartgold"
+        },
+        {
+          "id": "player_blue",
+          "displayName": "BlueWestlo",
+          "shortName": "Blue",
+          "gameVersionId": "soulsilver"
+        }
+      ],
+      "rules": [
+        {
+          "id": "first-encounter",
+          "title": "First Encounter",
+          "category": "encounters",
+          "shortSummary": "Only the first valid encounter in an eligible area may be used.",
+          "versions": [
+            {
+              "effectiveFromEpisode": 1,
+              "summary": "First valid encounter only.",
+              "description": "Each player may only use the first valid encounter for an encounter opportunity unless another rule explicitly grants a reroll or exception."
+            }
+          ]
+        },
+        {
+          "id": "soul-link-death",
+          "title": "Linked Fates",
+          "category": "soul-link",
+          "shortSummary": "If one linked Pok\u00e9mon dies, its partner is retired as well.",
+          "versions": [
+            {
+              "effectiveFromEpisode": 1,
+              "summary": "A death ends the whole Soul Link.",
+              "description": "When either member of a Soul Link faints permanently, that Pok\u00e9mon is recorded as dead and its linked partner is retired because the link was lost."
+            }
+          ]
+        },
+        {
+          "id": "gift-pokemon",
+          "title": "Gift Pok\u00e9mon",
+          "category": "encounters",
+          "shortSummary": "Gift encounters are tracked as their own encounter opportunities when the run permits them.",
+          "versions": [
+            {
+              "effectiveFromEpisode": 1,
+              "summary": "Gift encounters are separately tracked.",
+              "description": "The companion can represent gift and static encounters independently from a location's main encounter. Whether they are legal is controlled by the run rules."
+            }
+          ]
+        }
+      ],
+      "tags": [
+        {
+          "id": "community-name",
+          "label": "Community Name",
+          "description": "The Pok\u00e9mon was named after a member of the community.",
+          "style": "celebration"
+        },
+        {
+          "id": "illegal-capture",
+          "label": "Illegal Capture",
+          "description": "The encounter did not follow the established rules of the run.",
+          "style": "rules"
+        },
+        {
+          "id": "rules-dispute",
+          "label": "Rules Dispute",
+          "description": "The legality or interpretation of this moment was discussed during the run.",
+          "style": "rules"
+        },
+        {
+          "id": "clutch",
+          "label": "Clutch",
+          "description": "A particularly close or unlikely survival or victory.",
+          "style": "celebration"
+        }
+      ],
+      "episodes": [
+      ],
+      "pokemon": [
+      ],
+      "soulLinks": [
+      ],
+      "events": [
+      ]
+    }
+  ]
+}
