@@ -1,5 +1,6 @@
 import { cp, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { format, resolveConfig } from "prettier";
 import {
   RunSeriesSchema,
   parseRunDataset,
@@ -127,8 +128,7 @@ export async function readOrCreateDraft(
 
 export async function writeDraftSeries(paths: EditorPaths, input: unknown): Promise<RunSeries> {
   const series = parseRunSeries(input);
-  await mkdir(path.dirname(paths.draftPath), { recursive: true });
-  await writeFile(paths.draftPath, `${JSON.stringify(series, null, 2)}\n`, "utf8");
+  await writeJson(paths.draftPath, series);
   return series;
 }
 
@@ -347,9 +347,17 @@ export function createPublishDiff(
   };
 }
 
-async function writeJson(filePath: string, value: unknown) {
+async function writeJson(filePath: string, value: unknown): Promise<void> {
   await mkdir(path.dirname(filePath), { recursive: true });
-  await writeFile(filePath, `${JSON.stringify(value, null, 2)}\n`, "utf8");
+
+  const prettierConfig = (await resolveConfig(filePath)) ?? {};
+  const formatted = await format(JSON.stringify(value), {
+    ...prettierConfig,
+    filepath: filePath,
+    parser: "json",
+  });
+
+  await writeFile(filePath, formatted, "utf8");
 }
 
 export async function backupPublishedDataset(paths: EditorPaths): Promise<string> {
