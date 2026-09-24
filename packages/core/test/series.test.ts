@@ -167,9 +167,7 @@ describe("series spoiler visibility", () => {
       runs: [runOne, runTwo],
     });
 
-    expect(getVisibleSeriesRuns(series, 3).map((run) => run.run.id)).toEqual([
-      runOne.run.id,
-    ]);
+    expect(getVisibleSeriesRuns(series, 3).map((run) => run.run.id)).toEqual([runOne.run.id]);
 
     expect(getVisibleSeriesRuns(series, 6).map((run) => run.run.id)).toEqual([
       runOne.run.id,

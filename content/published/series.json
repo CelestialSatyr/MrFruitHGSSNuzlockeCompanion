@@ -96,14 +96,10 @@
           "style": "celebration"
         }
       ],
-      "episodes": [
-      ],
-      "pokemon": [
-      ],
-      "soulLinks": [
-      ],
-      "events": [
-      ]
+      "episodes": [],
+      "pokemon": [],
+      "soulLinks": [],
+      "events": []
     }
   ]
 }

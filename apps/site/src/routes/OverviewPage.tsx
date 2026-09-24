@@ -25,7 +25,9 @@ export function OverviewPage() {
 
   return (
     <div className="page-stack overview-page">
-      <section className={`run-hero run-hero--overview run-hero--compact${planningStage ? " run-hero--planning" : ""}`}>
+      <section
+        className={`run-hero run-hero--overview run-hero--compact${planningStage ? " run-hero--planning" : ""}`}
+      >
         <div>
           <p className="eyebrow">HeartGold / SoulSilver Soul Link</p>
           <h1>{dataset.run.title}</h1>
@@ -59,7 +61,9 @@ export function OverviewPage() {
                   planningStage={planningStage}
                 />
 
-                <div className={`run-player-column__team${planningStage ? " run-player-column__team--planning" : ""}`}>
+                <div
+                  className={`run-player-column__team${planningStage ? " run-player-column__team--planning" : ""}`}
+                >
                   <div className="run-player-column__heading">
                     <span>{planningStage ? "Run status" : "Current team"}</span>
                     <strong>{planningStage ? "Not started" : `${party.length}/6`}</strong>
@@ -100,10 +104,22 @@ export function OverviewPage() {
 
       {!planningStage ? (
         <section className="stat-grid" aria-label="Run statistics">
-          <article><strong>{activeLinks.length}</strong><span>Active links</span></article>
-          <article><strong>{lostLinks.length}</strong><span>Lost links</span></article>
-          <article><strong>{visiblePokemon.length}</strong><span>Known Pokémon</span></article>
-          <article><strong>{state.processedEventIds.length}</strong><span>Visible events</span></article>
+          <article>
+            <strong>{activeLinks.length}</strong>
+            <span>Active links</span>
+          </article>
+          <article>
+            <strong>{lostLinks.length}</strong>
+            <span>Lost links</span>
+          </article>
+          <article>
+            <strong>{visiblePokemon.length}</strong>
+            <span>Known Pokémon</span>
+          </article>
+          <article>
+            <strong>{state.processedEventIds.length}</strong>
+            <span>Visible events</span>
+          </article>
         </section>
       ) : null}
 
@@ -153,14 +169,18 @@ function PlanningState() {
         <p className="eyebrow">Run status</p>
         <h2 id="overview-planning-title">The Soul Link has not started yet</h2>
         <p>
-          Whilst the nuzlocke has not begun yet, this website is already ready to go! As soon as the first
-          episode airs, this page will switch over to the nuzlocke mode, and will keep track of all pokemon,
-          events and other milestones that will happen!
+          Whilst the nuzlocke has not begun yet, this website is already ready to go! As soon as the
+          first episode airs, this page will switch over to the nuzlocke mode, and will keep track
+          of all pokemon, events and other milestones that will happen!
         </p>
       </div>
       <div className="overview-planning-state__actions">
-        <Link className="button" to="/rules">Read the rules</Link>
-        <Link className="button" to="/map">Explore the encounter map</Link>
+        <Link className="button" to="/rules">
+          Read the rules
+        </Link>
+        <Link className="button" to="/map">
+          Explore the encounter map
+        </Link>
       </div>
     </section>
   );
@@ -180,7 +200,11 @@ function PlayerProfileCard({
   const content = (
     <>
       <div className="player-profile-card__avatar">
-        {player.avatarUrl ? <img src={player.avatarUrl} alt="" /> : <span>{player.displayName.charAt(0)}</span>}
+        {player.avatarUrl ? (
+          <img src={player.avatarUrl} alt="" />
+        ) : (
+          <span>{player.displayName.charAt(0)}</span>
+        )}
       </div>
       <div className="player-profile-card__copy">
         <span>{player.gameVersionId === "heartgold" ? "HeartGold" : "SoulSilver"}</span>
@@ -194,7 +218,9 @@ function PlayerProfileCard({
   const className = `player-profile-card player-profile-card--${side}`;
 
   return player.channelUrl ? (
-    <a className={className} href={player.channelUrl} target="_blank" rel="noreferrer">{content}</a>
+    <a className={className} href={player.channelUrl} target="_blank" rel="noreferrer">
+      {content}
+    </a>
   ) : (
     <div className={className}>{content}</div>
   );
@@ -209,7 +235,11 @@ function TeamPokemonCard({ pokemon, side }: { pokemon: PokemonState; side: "gold
       to={`/pokemon/${pokemon.id}`}
     >
       <div className="team-pokemon-card__sprite">
-        <img src={getHgssSpriteUrl(pokemon.currentSpeciesId, pokemon.source.shiny)} alt="" loading="lazy" />
+        <img
+          src={getHgssSpriteUrl(pokemon.currentSpeciesId, pokemon.source.shiny)}
+          alt=""
+          loading="lazy"
+        />
         {pokemon.source.shiny ? <span aria-label="Shiny Pokémon">✨</span> : null}
       </div>
       <div className="team-pokemon-card__copy">
@@ -217,7 +247,9 @@ function TeamPokemonCard({ pokemon, side }: { pokemon: PokemonState; side: "gold
         {pokemon.currentNickname ? <small>{species}</small> : null}
         <PokemonTypeChips speciesId={pokemon.currentSpeciesId} />
       </div>
-      {pokemon.currentLevel ? <span className="team-pokemon-card__level">Lv. {pokemon.currentLevel}</span> : null}
+      {pokemon.currentLevel ? (
+        <span className="team-pokemon-card__level">Lv. {pokemon.currentLevel}</span>
+      ) : null}
     </Link>
   );
 }
