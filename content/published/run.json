@@ -6,9 +6,6 @@
   "status": "planning",
   "attemptNumber": 1,
   "scope": "main-story",
-  "playerIds": [
-    "player_fruit",
-    "player_blue"
-  ],
+  "playerIds": ["player_fruit", "player_blue"],
   "description": "Run Number 1"
 }
