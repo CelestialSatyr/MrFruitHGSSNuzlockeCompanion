@@ -187,9 +187,20 @@ export function createPublicDataset(dataset: RunDataset): RunDataset {
     (latest, episode) => Math.max(latest, episode.number),
     0,
   );
+
+  /*
+   * A planning run has no published episodes yet, but its initial
+   * ruleset still belongs to the public pre-run companion.
+   *
+   * Treat planning as visible through Episode 1 for rule-version
+   * filtering only. This exposes the starting rules without exposing
+   * any later rule changes.
+   */
+  const publicRuleCutoff =
+    latestPublishedEpisode > 0 ? latestPublishedEpisode : run.status === "planning" ? 1 : 0;
   const rules = dataset.rules.flatMap((rule) => {
     const versions = rule.versions.filter(
-      (version) => version.effectiveFromEpisode <= latestPublishedEpisode,
+      (version) => version.effectiveFromEpisode <= publicRuleCutoff,
     );
     return versions.length ? [{ ...rule, versions }] : [];
   });
@@ -211,16 +222,42 @@ export function createPublicDataset(dataset: RunDataset): RunDataset {
 }
 
 export function createPublicSeries(series: RunSeries): RunSeries {
-  const runs = series.runs
-    .map(createPublicDataset)
-    .filter((dataset) => dataset.episodes.length > 0);
+  const publicRuns = series.runs.map(createPublicDataset);
+  const runsWithPublishedEpisodes = publicRuns.filter((dataset) => dataset.episodes.length > 0);
 
-  if (!runs.length) {
+  /*
+   * Normal publication behaviour:
+   *
+   * Once the series has public episodes, only runs with at least
+   * one published episode are exposed. This keeps future/draft-only
+   * attempts hidden.
+   */
+  if (runsWithPublishedEpisodes.length > 0) {
+    return parseRunSeries({
+      ...series,
+      runs: runsWithPublishedEpisodes,
+    });
+  }
+
+  /*
+   * Pre-run publication behaviour:
+   *
+   * Before Episode 1 exists, allow the first planning run to be
+   * published so player profiles, initial rules and run metadata
+   * can be live on the site.
+   */
+  const planningRun = publicRuns.find((dataset) => dataset.run.status === "planning");
+
+  if (!planningRun) {
     throw new Error(
-      "At least one run needs a published episode before the series can be published.",
+      "A series with no published episodes needs a planning run before it can be published.",
     );
   }
-  return parseRunSeries({ ...series, runs });
+
+  return parseRunSeries({
+    ...series,
+    runs: [planningRun],
+  });
 }
 
 function publishedSummary(series: RunSeries): EditorPublishedSummary {
