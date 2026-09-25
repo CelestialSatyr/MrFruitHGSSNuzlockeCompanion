@@ -2,6 +2,14 @@
   "schemaVersion": 1,
   "id": "mr-fruit-hgss-soul-link",
   "title": "Mr Fruit HeartGold / SoulSilver Soul Link",
+  "siteNotice": {
+    "id": "site-notice",
+    "enabled": true,
+    "type": "note",
+    "title": "Waiting for the run to start",
+    "message": "Whilst we're waiting for the run to start, feel free to get familiar with the website, there's a lot of new changes. Including a much more involved spoiler protection, build from the ground up! There's an interactive map, a full timeline, and soul link roster. If there are any changes you'd like to see, you can sent it in the Mr Fruit Discord, and tag me! (@celestialsatyr)",
+    "dismissible": true
+  },
   "runs": [
     {
       "run": {
