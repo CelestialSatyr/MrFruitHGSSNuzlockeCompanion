@@ -3,6 +3,7 @@ import { SettingsMenu } from "./SettingsMenu";
 import { RunSelector } from "./RunSelector";
 import { SiteFooter } from "./SiteFooter";
 import { SpoilerWelcomeDialog } from "./SpoilerWelcomeDialog";
+import { SiteNoticeBanner } from "./SiteNoticeBanner";
 import { useRunView } from "../context/RunViewContext";
 
 const navigation = [
@@ -18,7 +19,7 @@ function navClassName({ isActive }: { isActive: boolean }) {
 }
 
 export function AppShell() {
-  const { dataset, isDraftPreview, spoilerPromptOpen } = useRunView();
+  const { dataset, series, isDraftPreview, spoilerPromptOpen } = useRunView();
 
   const playerOneId = dataset.run.playerIds[0];
   const playerOne = dataset.players.find((player) => player.id === playerOneId);
@@ -34,6 +35,7 @@ export function AppShell() {
         {isDraftPreview ? (
           <div className="draft-preview-banner">LOCAL DRAFT PREVIEW · Not public</div>
         ) : null}
+        {series.siteNotice?.enabled ? <SiteNoticeBanner notice={series.siteNotice} /> : null}
         <header className="site-header">
           <div className="site-header__inner">
             <NavLink to="/" className="brand" aria-label="Nuzlocke Companion overview">

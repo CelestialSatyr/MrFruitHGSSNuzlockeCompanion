@@ -274,6 +274,11 @@ function stableValue(value: unknown): string {
   return JSON.stringify(value);
 }
 
+function seriesMetadata(series: RunSeries) {
+  const { runs: _runs, ...metadata } = series;
+  return metadata;
+}
+
 function diffById<T extends { id: string }>(
   current: readonly T[],
   next: readonly T[],
@@ -307,7 +312,7 @@ export function createPublishDiff(
   return {
     publicDataset: publishedSummary(nextPublic),
     seriesChanged:
-      currentPublished.id !== nextPublic.id || currentPublished.title !== nextPublic.title,
+      stableValue(seriesMetadata(currentPublished)) !== stableValue(seriesMetadata(nextPublic)),
     runs: diffById(
       currentPublished.runs.map((dataset) => dataset.run),
       nextPublic.runs.map((dataset) => dataset.run),

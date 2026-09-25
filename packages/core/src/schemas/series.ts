@@ -2,11 +2,50 @@ import { z } from "zod";
 import { NonEmptyStringSchema } from "./common.ts";
 import { RunDatasetSchema } from "./dataset.ts";
 
+export const SiteNoticeTypeSchema = z.enum(["note", "info", "success", "warning", "error"]);
+
+const SiteNoticeLinkSchema = z
+  .string()
+  .trim()
+  .max(2048)
+  .refine(
+    (value) => !value || value.startsWith("/") || /^https?:\/\//i.test(value),
+    "Site notice links must be a /relative path or an http(s) URL.",
+  );
+
+export const SiteNoticeSchema = z
+  .object({
+    id: z
+      .string()
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Site notice IDs must use lowercase kebab-case."),
+    enabled: z.boolean(),
+    type: SiteNoticeTypeSchema,
+    title: z.string().trim().max(120).optional(),
+    message: z.string().trim().max(1200),
+    dismissible: z.boolean(),
+    linkLabel: z.string().trim().max(80).optional(),
+    linkUrl: SiteNoticeLinkSchema.optional(),
+  })
+  .strict()
+  .superRefine((notice, context) => {
+    if (notice.enabled && !notice.message.trim()) {
+      context.addIssue({
+        code: "custom",
+        path: ["message"],
+        message: "An enabled site notice needs a message.",
+      });
+    }
+  });
+
+export type SiteNoticeType = z.infer<typeof SiteNoticeTypeSchema>;
+export type SiteNotice = z.infer<typeof SiteNoticeSchema>;
+
 export const RunSeriesSchema = z
   .object({
     schemaVersion: z.literal(1),
     id: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Series IDs must use lowercase kebab-case."),
     title: NonEmptyStringSchema,
+    siteNotice: SiteNoticeSchema.optional(),
     runs: z.array(RunDatasetSchema).min(1),
   })
   .strict()

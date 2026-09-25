@@ -10,6 +10,7 @@ import {
   type Run,
   type RunDataset,
   type RunSeries,
+  type SiteNotice,
   type RunEvent,
   type RunStatus,
   type TagStyle,
@@ -58,7 +59,8 @@ import {
   normalizeEpisodeEventOrder,
 } from "./lib/editorData";
 
-type Section = "overview" | "configuration" | "library" | "episodes" | "events" | "publish";
+type Section =
+  "overview" | "configuration" | "notice" | "library" | "episodes" | "events" | "publish";
 
 const EVENT_TYPES = [
   { value: "encounter", label: "Encounter / capture" },
@@ -124,6 +126,22 @@ const PLAYER_GAMES = [
   { value: "heartgold", label: "HeartGold" },
   { value: "soulsilver", label: "SoulSilver" },
 ] as const;
+
+const SITE_NOTICE_TYPES = [
+  { value: "note", label: "Note" },
+  { value: "info", label: "Information" },
+  { value: "success", label: "Success" },
+  { value: "warning", label: "Warning" },
+  { value: "error", label: "Error" },
+] satisfies ReadonlyArray<{ value: SiteNotice["type"]; label: string }>;
+
+const DEFAULT_SITE_NOTICE: SiteNotice = {
+  id: "site-notice",
+  enabled: false,
+  type: "note",
+  message: "",
+  dismissible: true,
+};
 
 const GYMS = [
   ["violet-gym", "Falkner", "zephyr"],
@@ -548,6 +566,7 @@ export function EditorApp() {
   const sections: ReadonlyArray<{ value: Section; label: string }> = [
     { value: "overview", label: "Overview" },
     { value: "configuration", label: "Runs & Players" },
+    { value: "notice", label: "Site Notice" },
     { value: "library", label: "Rules & Tags" },
     { value: "episodes", label: "Episodes" },
     { value: "events", label: "Events" },
@@ -645,6 +664,9 @@ export function EditorApp() {
               youtubeConfigured={bootstrap.youtubeConfigured}
               setError={setError}
             />
+          ) : null}
+          {section === "notice" ? (
+            <SiteNoticeEditor series={series} mutateSeries={mutateSeries} />
           ) : null}
           {section === "library" ? (
             <RulesAndTags key={dataset.run.id} dataset={dataset} mutate={mutate} />
@@ -817,6 +839,196 @@ function Overview({
           <p>Replace every local run with the current public series.</p>
         </div>
         <button onClick={onReset}>Reset</button>
+      </section>
+    </div>
+  );
+}
+
+function SiteNoticeEditor({
+  series,
+  mutateSeries,
+}: {
+  series: RunSeries;
+  mutateSeries(fn: (draft: RunSeries) => RunSeries): void;
+}) {
+  const notice = series.siteNotice ?? DEFAULT_SITE_NOTICE;
+  const typeLabel =
+    SITE_NOTICE_TYPES.find((entry) => entry.value === notice.type)?.label ?? titleCase(notice.type);
+  const previewIcon =
+    notice.type === "success"
+      ? "✓"
+      : notice.type === "warning"
+        ? "!"
+        : notice.type === "error"
+          ? "×"
+          : "i";
+
+  function patch(changes: Partial<SiteNotice>) {
+    mutateSeries((draft) => {
+      const nextNotice: SiteNotice = {
+        ...(draft.siteNotice ?? DEFAULT_SITE_NOTICE),
+        ...changes,
+      };
+      return { ...draft, siteNotice: nextNotice };
+    });
+  }
+
+  function clearNotice() {
+    mutateSeries((draft) => {
+      const next = { ...draft };
+      delete next.siteNotice;
+      return next;
+    });
+  }
+
+  return (
+    <div className="editor-stack">
+      <header className="editor-heading">
+        <p>Site communication</p>
+        <h2>Public notice banner</h2>
+        <span>
+          Publish one site-wide message above the navigation. Use it for schedule changes,
+          corrections, warnings, updates, or other information that players and viewers should see.
+        </span>
+      </header>
+
+      <section className="editor-card notice-editor">
+        <div className="card-heading">
+          <div>
+            <p>Visibility</p>
+            <h3>{notice.enabled ? "Banner enabled" : "Banner hidden"}</h3>
+          </div>
+          <button type="button" onClick={clearNotice} disabled={!series.siteNotice}>
+            Clear notice
+          </button>
+        </div>
+
+        <label className="check-field notice-editor__enabled">
+          <input
+            type="checkbox"
+            checked={notice.enabled}
+            onChange={(event) => patch({ enabled: event.target.checked })}
+          />
+          <span>
+            <strong>Show this notice on the public website</strong>
+            <small>
+              Disabled notices stay in the draft so you can prepare or temporarily hide a message.
+            </small>
+          </span>
+        </label>
+
+        <div className="form-grid">
+          <Field label="Banner type">
+            <select
+              value={notice.type}
+              onChange={(event) => patch({ type: event.target.value as SiteNotice["type"] })}
+            >
+              {SITE_NOTICE_TYPES.map((entry) => (
+                <option key={entry.value} value={entry.value}>
+                  {entry.label}
+                </option>
+              ))}
+            </select>
+          </Field>
+          <Field label="Title" hint="Optional. The banner type is still shown when this is blank.">
+            <input
+              value={notice.title ?? ""}
+              placeholder="Schedule change"
+              maxLength={120}
+              onChange={(event) => patch({ title: event.target.value })}
+            />
+          </Field>
+        </div>
+
+        <Field
+          label="Message"
+          hint="Required while the banner is enabled. Maximum 1200 characters."
+        >
+          <textarea
+            rows={5}
+            maxLength={1200}
+            value={notice.message}
+            placeholder="Write the message that players and viewers should see…"
+            onChange={(event) => patch({ message: event.target.value })}
+          />
+        </Field>
+
+        <label className="check-field notice-editor__dismissible">
+          <input
+            type="checkbox"
+            checked={notice.dismissible}
+            onChange={(event) => patch({ dismissible: event.target.checked })}
+          />
+          <span>
+            <strong>Visitors can dismiss this notice</strong>
+            <small>
+              A changed message is treated as a new notice, so previously dismissed visitors will
+              see the updated version again.
+            </small>
+          </span>
+        </label>
+
+        <div className="form-grid">
+          <Field
+            label="Link label"
+            hint="Optional. Defaults to “Learn more” when only a URL is set."
+          >
+            <input
+              value={notice.linkLabel ?? ""}
+              placeholder="Read more"
+              maxLength={80}
+              onChange={(event) => patch({ linkLabel: event.target.value })}
+            />
+          </Field>
+          <Field label="Link URL" hint="Optional. Use /rules or a full http(s) URL.">
+            <input
+              value={notice.linkUrl ?? ""}
+              placeholder="/rules"
+              onChange={(event) => patch({ linkUrl: event.target.value })}
+            />
+          </Field>
+        </div>
+      </section>
+
+      <section className="editor-card">
+        <div className="card-heading">
+          <div>
+            <p>Preview</p>
+            <h3>Public banner appearance</h3>
+          </div>
+          <span
+            className={`notice-editor__state ${notice.enabled ? "notice-editor__state--enabled" : ""}`}
+          >
+            {notice.enabled ? "Will publish" : "Hidden"}
+          </span>
+        </div>
+
+        <div className={`notice-preview notice-preview--${notice.type}`}>
+          <span className="notice-preview__icon" aria-hidden="true">
+            {previewIcon}
+          </span>
+          <div className="notice-preview__copy">
+            <small>{typeLabel}</small>
+            {notice.title?.trim() ? <strong>{notice.title}</strong> : null}
+            <p>{notice.message.trim() || "Your site notice message will appear here."}</p>
+            {notice.linkUrl?.trim() ? (
+              <span className="notice-preview__link">
+                {notice.linkLabel?.trim() || "Learn more"} →
+              </span>
+            ) : null}
+          </div>
+          {notice.dismissible ? (
+            <span className="notice-preview__dismiss" aria-hidden="true">
+              ×
+            </span>
+          ) : null}
+        </div>
+
+        {!notice.enabled ? (
+          <p className="muted-copy notice-editor__preview-note">
+            This preview is visible in the editor, but the banner is currently disabled on the site.
+          </p>
+        ) : null}
       </section>
     </div>
   );
