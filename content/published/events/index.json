@@ -33,5 +33,31 @@
       }
     ],
     "soulLinkId": "link_0001"
+  },
+  {
+    "id": "evt_0002",
+    "episodeId": "ep_0001",
+    "sequence": 20,
+    "tone": "neutral",
+    "importance": "minor",
+    "title": "Ended at Level 10",
+    "description": "Ended the episode at Level 10",
+    "type": "level-milestone",
+    "pokemonId": "pkm_0001",
+    "level": 10,
+    "label": "Ended at Level 10"
+  },
+  {
+    "id": "evt_0003",
+    "episodeId": "ep_0001",
+    "sequence": 30,
+    "tone": "neutral",
+    "importance": "minor",
+    "title": "Ended at Level 8",
+    "description": "Ended the episode at Level 8",
+    "type": "level-milestone",
+    "pokemonId": "pkm_0002",
+    "level": 8,
+    "label": "Ended at Level 8"
   }
 ]
