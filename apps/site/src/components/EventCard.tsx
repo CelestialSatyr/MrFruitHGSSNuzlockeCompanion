@@ -13,6 +13,7 @@ import { Link } from "react-router";
 import { GymBadgeIcon, JOHTO_BADGES, type JohtoBadgeId } from "./BadgeCase";
 import { formatTimestamp, titleCase } from "../lib/format";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
+import { getPlayerForTheme, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
 
 interface EventCardProps {
   event: RunEvent;
@@ -22,7 +23,6 @@ interface EventCardProps {
 }
 
 type PlayerAccent = "gold" | "silver" | "dual" | "neutral";
-type PlayerSide = "gold" | "silver";
 
 function eventTitle(event: RunEvent): string {
   if (event.title) return event.title;
@@ -132,23 +132,20 @@ function getPlayerAccent(
   dataset: RunDataset,
   state: RunState<HgssProgressionState>,
 ): PlayerAccent {
-  const [goldPlayerId, silverPlayerId] = dataset.run.playerIds;
-  const playerIds = eventPlayerIds(event, state);
-  const hasGold = goldPlayerId ? playerIds.includes(goldPlayerId) : false;
-  const hasSilver = silverPlayerId ? playerIds.includes(silverPlayerId) : false;
-  if (hasGold && hasSilver) return "dual";
-  if (hasGold) return "gold";
-  if (hasSilver) return "silver";
-  return "neutral";
+  const playerIds = [...new Set(eventPlayerIds(event, state))];
+  if (playerIds.length > 1) return "dual";
+
+  const playerId = playerIds[0];
+  if (!playerId) return "neutral";
+
+  const player = dataset.players.find((entry) => entry.id === playerId);
+  return player ? getPlayerTheme(player) : "neutral";
 }
 
 function playerAccentLabel(accent: PlayerAccent, dataset: RunDataset): string | undefined {
-  if (accent === "gold")
-    return dataset.players.find((player) => player.id === dataset.run.playerIds[0])?.displayName;
-  if (accent === "silver")
-    return dataset.players.find((player) => player.id === dataset.run.playerIds[1])?.displayName;
   if (accent === "dual") return "Both players";
-  return undefined;
+  if (accent === "neutral") return undefined;
+  return getPlayerForTheme(dataset, accent)?.displayName;
 }
 
 function PokemonSprite({ pokemon }: { pokemon: PokemonState }) {
@@ -257,31 +254,33 @@ function EventVisual({ event, state }: { event: RunEvent; state: RunState<HgssPr
 }
 
 function DualSideVisual({
-  side,
+  theme,
   event,
   dataset,
   state,
 }: {
-  side: PlayerSide;
+  theme: PlayerTheme;
   event: RunEvent;
   dataset: RunDataset;
   state: RunState<HgssProgressionState>;
 }) {
-  const playerId = dataset.run.playerIds[side === "gold" ? 0 : 1];
-  const player = dataset.players.find((entry) => entry.id === playerId);
+  const player = getPlayerForTheme(dataset, theme);
+  const playerId = player?.id;
 
   if (event.type === "encounter") {
     const outcome = event.outcomes.find((entry) => entry.playerId === playerId);
-    if (!outcome) return <div className={`event-side-visual event-side-visual--${side}`} />;
+    if (!outcome) return <div className={`event-side-visual event-side-visual--${theme}`} />;
     const authored =
       outcome.result === "caught"
         ? dataset.pokemon.find((entry) => entry.id === outcome.pokemonId)
         : undefined;
 
     return (
-      <div className={`event-side-visual event-side-visual--${side}`}>
+      <div className={`event-side-visual event-side-visual--${theme}`}>
         <span className="event-side-visual__owner">
-          {player?.shortName ?? player?.displayName ?? (side === "gold" ? "Player 1" : "Player 2")}
+          {player?.shortName ??
+            player?.displayName ??
+            (theme === "gold" ? "HeartGold" : "SoulSilver")}
         </span>
         <div className="event-side-visual__sprites">
           {outcome.speciesId ? (
@@ -306,9 +305,11 @@ function DualSideVisual({
     .slice(0, 3);
 
   return (
-    <div className={`event-side-visual event-side-visual--${side}`}>
+    <div className={`event-side-visual event-side-visual--${theme}`}>
       <span className="event-side-visual__owner">
-        {player?.shortName ?? player?.displayName ?? (side === "gold" ? "Player 1" : "Player 2")}
+        {player?.shortName ??
+          player?.displayName ??
+          (theme === "gold" ? "HeartGold" : "SoulSilver")}
       </span>
       <div className="event-side-visual__sprites">
         {pokemon.length ? (
@@ -336,9 +337,10 @@ function GymBattleCard({
   const participants = event.participantPokemonIds
     .map((id) => state.pokemon.get(id))
     .filter((pokemon): pokemon is PokemonState => pokemon !== undefined);
-  const [goldPlayerId, silverPlayerId] = dataset.run.playerIds;
-  const gold = participants.filter((pokemon) => pokemon.playerId === goldPlayerId);
-  const silver = participants.filter((pokemon) => pokemon.playerId === silverPlayerId);
+  const goldPlayer = getPlayerForTheme(dataset, "gold");
+  const silverPlayer = getPlayerForTheme(dataset, "silver");
+  const gold = participants.filter((pokemon) => pokemon.playerId === goldPlayer?.id);
+  const silver = participants.filter((pokemon) => pokemon.playerId === silverPlayer?.id);
   const badge =
     event.badgeId && JOHTO_BADGES.some((entry) => entry.id === event.badgeId)
       ? (event.badgeId as JohtoBadgeId)
@@ -370,20 +372,10 @@ function GymBattleCard({
         </h3>
         <p>{eventSummary(event, dataset)}</p>
         <div className="gym-event__teams">
+          <GymTeam label={goldPlayer?.displayName ?? "HeartGold"} theme="gold" pokemon={gold} />
           <GymTeam
-            label={
-              dataset.players.find((player) => player.id === goldPlayerId)?.displayName ??
-              "Player 1"
-            }
-            side="gold"
-            pokemon={gold}
-          />
-          <GymTeam
-            label={
-              dataset.players.find((player) => player.id === silverPlayerId)?.displayName ??
-              "Player 2"
-            }
-            side="silver"
+            label={silverPlayer?.displayName ?? "SoulSilver"}
+            theme="silver"
             pokemon={silver}
           />
         </div>
@@ -394,15 +386,15 @@ function GymBattleCard({
 
 function GymTeam({
   label,
-  side,
+  theme,
   pokemon,
 }: {
   label: string;
-  side: PlayerSide;
+  theme: PlayerTheme;
   pokemon: PokemonState[];
 }) {
   return (
-    <div className={`gym-event-team gym-event-team--${side}`}>
+    <div className={`gym-event-team gym-event-team--${theme}`}>
       <strong>{label}</strong>
       <div>
         {pokemon.map((entry) => (
@@ -509,9 +501,9 @@ export function EventCard({ event, dataset, state, compact = false }: EventCardP
   if (accent === "dual") {
     return (
       <article className={className}>
-        <DualSideVisual side="gold" event={event} dataset={dataset} state={state} />
+        <DualSideVisual theme="gold" event={event} dataset={dataset} state={state} />
         <EventBody event={event} dataset={dataset} state={state} accent={accent} />
-        <DualSideVisual side="silver" event={event} dataset={dataset} state={state} />
+        <DualSideVisual theme="silver" event={event} dataset={dataset} state={state} />
       </article>
     );
   }

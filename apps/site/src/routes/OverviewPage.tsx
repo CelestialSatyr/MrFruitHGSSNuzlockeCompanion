@@ -10,6 +10,7 @@ import { BadgeCase } from "../components/BadgeCase";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
+import { getPlayerGameLabel, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
 import "../styles/overview-team-mirror.css";
 import "../styles/overview-planning.css";
 
@@ -50,14 +51,18 @@ export function OverviewPage() {
         <div className="run-profile-board">
           {players.map((player, index) => {
             const party = selectPartyForPlayer(state, player.id);
-            const side = index === 0 ? "gold" : "silver";
+            const position = index === 0 ? "left" : "right";
+            const theme = getPlayerTheme(player);
 
             return (
-              <article className={`run-player-column run-player-column--${side}`} key={player.id}>
+              <article
+                className={`run-player-column run-player-column--${position} run-player-column--${theme}`}
+                key={player.id}
+              >
                 <PlayerProfileCard
                   player={player}
                   partySize={party.length}
-                  side={side}
+                  theme={theme}
                   planningStage={planningStage}
                 />
 
@@ -72,7 +77,7 @@ export function OverviewPage() {
                   <div className="team-list">
                     {party.length ? (
                       party.map((pokemon) => (
-                        <TeamPokemonCard key={pokemon.id} pokemon={pokemon} side={side} />
+                        <TeamPokemonCard key={pokemon.id} pokemon={pokemon} theme={theme} />
                       ))
                     ) : (
                       <div className={`team-empty${planningStage ? " team-empty--planning" : ""}`}>
@@ -189,12 +194,12 @@ function PlanningState() {
 function PlayerProfileCard({
   player,
   partySize,
-  side,
+  theme,
   planningStage,
 }: {
   player: Player;
   partySize: number;
-  side: "gold" | "silver";
+  theme: PlayerTheme;
   planningStage: boolean;
 }) {
   const content = (
@@ -207,7 +212,7 @@ function PlayerProfileCard({
         )}
       </div>
       <div className="player-profile-card__copy">
-        <span>{player.gameVersionId === "heartgold" ? "HeartGold" : "SoulSilver"}</span>
+        <span>{getPlayerGameLabel(player)}</span>
         <h3>{player.displayName}</h3>
         {!planningStage ? <p>{partySize}/6 Pokémon currently in the visible party</p> : null}
       </div>
@@ -215,7 +220,7 @@ function PlayerProfileCard({
     </>
   );
 
-  const className = `player-profile-card player-profile-card--${side}`;
+  const className = `player-profile-card player-profile-card--${theme}`;
 
   return player.channelUrl ? (
     <a className={className} href={player.channelUrl} target="_blank" rel="noreferrer">
@@ -226,12 +231,12 @@ function PlayerProfileCard({
   );
 }
 
-function TeamPokemonCard({ pokemon, side }: { pokemon: PokemonState; side: "gold" | "silver" }) {
+function TeamPokemonCard({ pokemon, theme }: { pokemon: PokemonState; theme: PlayerTheme }) {
   const species = getSpeciesName(pokemon.currentSpeciesId);
 
   return (
     <Link
-      className={`team-pokemon-card team-pokemon-card--${side}${pokemon.source.shiny ? " team-pokemon-card--shiny" : ""}`}
+      className={`team-pokemon-card team-pokemon-card--${theme}${pokemon.source.shiny ? " team-pokemon-card--shiny" : ""}`}
       to={`/pokemon/${pokemon.id}`}
     >
       <div className="team-pokemon-card__sprite">

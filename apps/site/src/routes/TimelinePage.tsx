@@ -1,6 +1,7 @@
 import { selectTimelineEpisodeGroups } from "@nuzlocke/core";
 import { EventCard } from "../components/EventCard";
 import { useRunView } from "../context/RunViewContext";
+import { getPlayerTheme } from "../lib/player-theme";
 
 export function TimelinePage() {
   const { dataset, viewEpisodes, state, visibleThroughEpisode, timelineOrder, setTimelineOrder } =
@@ -19,14 +20,18 @@ export function TimelinePage() {
           <p className="eyebrow">Run history</p>
           <h1>Timeline</h1>
           <div className="timeline-player-legend">
-            <span className="timeline-player-legend__gold">
-              {dataset.players.find((player) => player.id === dataset.run.playerIds[0])
-                ?.displayName ?? "Player 1"}
-            </span>
-            <span className="timeline-player-legend__silver">
-              {dataset.players.find((player) => player.id === dataset.run.playerIds[1])
-                ?.displayName ?? "Player 2"}
-            </span>
+            {dataset.run.playerIds.map((playerId, index) => {
+              const player = dataset.players.find((entry) => entry.id === playerId);
+              const theme = player ? getPlayerTheme(player) : undefined;
+              return (
+                <span
+                  key={playerId}
+                  className={theme ? `timeline-player-legend__${theme}` : undefined}
+                >
+                  {player?.displayName ?? `Player ${index + 1}`}
+                </span>
+              );
+            })}
           </div>
         </div>
         <label className="select-control">

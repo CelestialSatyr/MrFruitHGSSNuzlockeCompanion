@@ -1,65 +1,120 @@
 /*
- * Step 10.7.1
- * Mirror HeartGold toward the center of the two-player Overview layout.
- * SoulSilver remains left-aligned in the right-hand column, so both teams
- * visually face one another across the center divider.
+ * Player position and game theme are intentionally separate.
+ *
+ * Player 1 stays in the left column and Player 2 stays in the right column.
+ * The left column is mirrored toward the centre divider, while the right
+ * column keeps the normal layout. Gold/silver colours come from the player's
+ * selected game version rather than from their player number.
  */
 
 @media (min-width: 760px) {
-  .run-player-column--gold .player-profile-card--gold {
+  .run-player-column--left .player-profile-card {
     grid-template-columns: auto minmax(0, 1fr) 4.4rem;
   }
 
-  .run-player-column--gold .player-profile-card__avatar {
+  .run-player-column--left .player-profile-card__avatar {
     grid-column: 3;
     grid-row: 1;
   }
 
-  .run-player-column--gold .player-profile-card__copy {
+  .run-player-column--left .player-profile-card__copy {
     grid-column: 2;
     grid-row: 1;
     text-align: right;
   }
 
-  .run-player-column--gold .player-profile-card__copy p {
+  .run-player-column--left .player-profile-card__copy p {
     text-align: right;
   }
 
-  .run-player-column--gold .player-profile-card__cta {
+  .run-player-column--left .player-profile-card__cta {
     grid-column: 1;
     grid-row: 1;
     justify-self: start;
   }
 
-  .run-player-column--gold .run-player-column__heading {
+  .run-player-column--left .run-player-column__heading {
     flex-direction: row-reverse;
     text-align: right;
   }
 
-  .team-pokemon-card--gold {
+  .run-player-column--left .team-pokemon-card {
     grid-template-columns: auto minmax(0, 1fr) 4rem;
-    border-left-width: 1px;
-    border-right: 3px solid var(--player-gold);
-    background: linear-gradient(270deg, var(--player-gold-soft), rgba(9, 13, 20, 0.45) 36%);
   }
 
-  .team-pokemon-card--gold .team-pokemon-card__level {
+  .run-player-column--left .team-pokemon-card .team-pokemon-card__level {
     grid-column: 1;
     grid-row: 1;
   }
 
-  .team-pokemon-card--gold .team-pokemon-card__copy {
+  .run-player-column--left .team-pokemon-card .team-pokemon-card__copy {
     grid-column: 2;
     grid-row: 1;
     text-align: right;
   }
 
-  .team-pokemon-card--gold .type-chip-row {
+  .run-player-column--left .team-pokemon-card .type-chip-row {
     justify-content: flex-end;
   }
 
-  .team-pokemon-card--gold .team-pokemon-card__sprite {
+  .run-player-column--left .team-pokemon-card .team-pokemon-card__sprite {
     grid-column: 3;
     grid-row: 1;
+  }
+
+  .run-player-column--left.run-player-column--gold {
+    background: linear-gradient(to left, rgba(217, 173, 66, 0.15), transparent 72%);
+  }
+
+  .run-player-column--left.run-player-column--silver {
+    background: linear-gradient(to left, rgba(195, 204, 216, 0.14), transparent 72%);
+  }
+
+  .run-player-column--right.run-player-column--gold {
+    background: linear-gradient(to right, rgba(217, 173, 66, 0.15), transparent 72%);
+  }
+
+  .run-player-column--right.run-player-column--silver {
+    background: linear-gradient(to right, rgba(195, 204, 216, 0.14), transparent 72%);
+  }
+
+  .run-player-column--left .player-profile-card--gold {
+    background: linear-gradient(to left, rgba(217, 173, 66, 0.17), rgba(16, 23, 34, 0.96) 72%);
+  }
+
+  .run-player-column--left .player-profile-card--silver {
+    background: linear-gradient(to left, rgba(195, 204, 216, 0.15), rgba(16, 23, 34, 0.96) 72%);
+  }
+
+  .run-player-column--right .player-profile-card--gold {
+    background: linear-gradient(to right, rgba(217, 173, 66, 0.17), rgba(16, 23, 34, 0.96) 72%);
+  }
+
+  .run-player-column--right .player-profile-card--silver {
+    background: linear-gradient(to right, rgba(195, 204, 216, 0.15), rgba(16, 23, 34, 0.96) 72%);
+  }
+
+  .run-player-column--left .team-pokemon-card--gold {
+    border-left: 1px solid var(--border);
+    border-right: 3px solid var(--player-gold);
+    background: linear-gradient(to left, var(--player-gold-soft), rgba(9, 13, 20, 0.45) 40%);
+  }
+
+  .run-player-column--left .team-pokemon-card--silver {
+    border-left: 1px solid var(--border);
+    border-right: 3px solid var(--player-silver);
+    background: linear-gradient(to left, var(--player-silver-soft), rgba(9, 13, 20, 0.45) 40%);
+  }
+
+  .run-player-column--right .team-pokemon-card--gold {
+    border-left: 3px solid var(--player-gold);
+    border-right: 1px solid var(--border);
+    background: linear-gradient(to right, var(--player-gold-soft), rgba(9, 13, 20, 0.45) 40%);
+  }
+
+  .run-player-column--right .team-pokemon-card--silver {
+    border-left: 3px solid var(--player-silver);
+    border-right: 1px solid var(--border);
+    background: linear-gradient(to right, var(--player-silver-soft), rgba(9, 13, 20, 0.45) 40%);
   }
 }

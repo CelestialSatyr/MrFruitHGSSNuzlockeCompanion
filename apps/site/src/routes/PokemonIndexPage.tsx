@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
+import { getPlayerGameLabel, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
 
 interface PairRow {
   id: string;
@@ -17,6 +18,8 @@ export function PokemonIndexPage() {
   const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
   const leftPlayer = dataset.players.find((player) => player.id === leftPlayerId);
   const rightPlayer = dataset.players.find((player) => player.id === rightPlayerId);
+  const leftTheme = leftPlayer ? getPlayerTheme(leftPlayer) : undefined;
+  const rightTheme = rightPlayer ? getPlayerTheme(rightPlayer) : undefined;
   const eventOrder = buildEventOrder(dataset);
 
   const rows: PairRow[] = [...state.soulLinks.values()].map((link) => {
@@ -73,7 +76,9 @@ export function PokemonIndexPage() {
       </header>
 
       <div className="pokemon-pair-board">
-        <div className="pokemon-pair-board__heading pokemon-pair-board__heading--left">
+        <div
+          className={`pokemon-pair-board__heading pokemon-pair-board__heading--left${leftTheme ? ` pokemon-pair-board__heading--${leftTheme}` : ""}`}
+        >
           <PlayerHeading player={leftPlayer} side="left" />
         </div>
         <div
@@ -82,7 +87,9 @@ export function PokemonIndexPage() {
         >
           Soul Link
         </div>
-        <div className="pokemon-pair-board__heading pokemon-pair-board__heading--right">
+        <div
+          className={`pokemon-pair-board__heading pokemon-pair-board__heading--right${rightTheme ? ` pokemon-pair-board__heading--${rightTheme}` : ""}`}
+        >
           <PlayerHeading player={rightPlayer} side="right" />
         </div>
 
@@ -116,8 +123,12 @@ function buildEventOrder(dataset: RunDataset) {
 }
 
 function PlayerHeading({ player, side }: { player: Player | undefined; side: "left" | "right" }) {
+  const theme = player ? getPlayerTheme(player) : undefined;
+
   return (
-    <div className={`pokemon-owner-heading pokemon-owner-heading--${side}`}>
+    <div
+      className={`pokemon-owner-heading pokemon-owner-heading--${side}${theme ? ` pokemon-owner-heading--${theme}` : ""}`}
+    >
       <div className="pokemon-owner-heading__avatar">
         {player?.avatarUrl ? (
           <img src={player.avatarUrl} alt="" />
@@ -126,13 +137,7 @@ function PlayerHeading({ player, side }: { player: Player | undefined; side: "le
         )}
       </div>
       <div>
-        <small>
-          {player?.gameVersionId === "heartgold"
-            ? "HeartGold"
-            : player?.gameVersionId === "soulsilver"
-              ? "SoulSilver"
-              : "Player"}
-        </small>
+        <small>{player ? getPlayerGameLabel(player) : "Player"}</small>
         <strong>{player?.displayName ?? (side === "left" ? "Player one" : "Player two")}</strong>
       </div>
     </div>
@@ -149,9 +154,14 @@ function PokemonPairRow({
   rightPlayer: Player | undefined;
 }) {
   const status = row.link?.status ?? "unlinked";
+  const leftTheme = leftPlayer ? getPlayerTheme(leftPlayer) : undefined;
+  const rightTheme = rightPlayer ? getPlayerTheme(rightPlayer) : undefined;
+
   return (
     <article className={`pokemon-pair-row pokemon-pair-row--${status}`}>
-      <div className="pokemon-pair-row__member pokemon-pair-row__member--left">
+      <div
+        className={`pokemon-pair-row__member pokemon-pair-row__member--left${leftTheme ? ` pokemon-pair-row__member--${leftTheme}` : ""}`}
+      >
         {row.left ? (
           <PokemonHistoryCard pokemon={row.left} player={leftPlayer} />
         ) : (
@@ -175,7 +185,9 @@ function PokemonPairRow({
         <span aria-hidden="true" />
       </div>
 
-      <div className="pokemon-pair-row__member pokemon-pair-row__member--right">
+      <div
+        className={`pokemon-pair-row__member pokemon-pair-row__member--right${rightTheme ? ` pokemon-pair-row__member--${rightTheme}` : ""}`}
+      >
         {row.right ? (
           <PokemonHistoryCard pokemon={row.right} player={rightPlayer} />
         ) : (
@@ -194,9 +206,11 @@ function PokemonHistoryCard({
   player: Player | undefined;
 }) {
   const species = getSpeciesName(pokemon.currentSpeciesId);
+  const theme: PlayerTheme | undefined = player ? getPlayerTheme(player) : undefined;
+
   return (
     <Link
-      className={`pokemon-history-card pokemon-history-card--${pokemon.lifeStatus}${pokemon.source.shiny ? " pokemon-history-card--shiny" : ""}`}
+      className={`pokemon-history-card pokemon-history-card--${pokemon.lifeStatus}${theme ? ` pokemon-history-card--${theme}` : ""}${pokemon.source.shiny ? " pokemon-history-card--shiny" : ""}`}
       to={`/pokemon/${pokemon.id}`}
     >
       <div className="pokemon-history-card__art">

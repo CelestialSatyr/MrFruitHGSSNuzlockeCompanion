@@ -6,6 +6,7 @@ import { SpoilerGate } from "../components/SpoilerGate";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
 import { getOfficialArtworkUrl, getSpeciesName } from "../lib/pokemon";
+import { getPlayerTheme } from "../lib/player-theme";
 
 export function PokemonDetailPage() {
   const { pokemonId } = useParams();
@@ -32,7 +33,7 @@ export function PokemonDetailPage() {
   );
   const link = current.soulLinkId ? state.soulLinks.get(current.soulLinkId) : undefined;
   const shiny = current.source.shiny;
-  const playerSide = dataset.run.playerIds[0] === current.playerId ? "gold" : "silver";
+  const playerTheme = player ? getPlayerTheme(player) : undefined;
 
   return (
     <div className="page-stack page-stack--tight">
@@ -40,7 +41,7 @@ export function PokemonDetailPage() {
         ← All Pokémon
       </Link>
       <section
-        className={`pokemon-hero pokemon-hero--${current.lifeStatus} pokemon-hero--${playerSide}${shiny ? " pokemon-hero--shiny" : ""}`}
+        className={`pokemon-hero pokemon-hero--${current.lifeStatus}${playerTheme ? ` pokemon-hero--${playerTheme}` : ""}${shiny ? " pokemon-hero--shiny" : ""}`}
       >
         <div className="pokemon-hero__art">
           <img
