@@ -128,5 +128,44 @@
         "description": "If the player encounters a shiny wild Pokémon, they may catch it, even if a wild Pokémon has already been encountered in that area. This does not count as the encounter for that area."
       }
     ]
+  },
+  {
+    "id": "rule-11",
+    "title": "Level Cap",
+    "category": "battle",
+    "shortSummary": "No pokemon can exceed the level of the next gym leaders highest level",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "No pokemon can exceed the level of the next gym leaders highest level."
+      }
+    ]
+  },
+  {
+    "id": "rule-12",
+    "title": "2 Item Limit",
+    "category": "battle",
+    "shortSummary": "Maximum 2 Items used in-battle per battle",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "Maximum 2 Items used in-battle per battle, unless a Pokemon faints, then item usage resets in that battle"
+      }
+    ]
+  },
+  {
+    "id": "rule-13",
+    "title": "Fossils are re-rolls",
+    "category": "encounters",
+    "shortSummary": "Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found",
+    "versions": [
+      {
+        "effectiveFromEpisode": 1,
+        "summary": "Initial version",
+        "description": "Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)"
+      }
+    ]
   }
 ]

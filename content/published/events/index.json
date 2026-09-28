@@ -1,1 +1,37 @@
-[]
+[
+  {
+    "id": "evt_0001",
+    "episodeId": "ep_0001",
+    "sequence": 10,
+    "videoTimestampSeconds": 800,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Starter Pokemon!",
+    "description": "Our starter pokemon have been chosen, let's get this party started!",
+    "type": "encounter",
+    "locationId": "new-bark-town",
+    "opportunityId": "starter-pair",
+    "acquisitionType": "starter",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0001",
+        "speciesId": 447,
+        "level": 5,
+        "nickname": "BLACKOUT",
+        "placement": "party"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0002",
+        "speciesId": 405,
+        "level": 5,
+        "nickname": "DAPINGUS",
+        "placement": "party"
+      }
+    ],
+    "soulLinkId": "link_0001"
+  }
+]

@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "id": "pkm_0001",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0001",
+    "initialSpeciesId": 447,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid"
+  },
+  {
+    "id": "pkm_0002",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0001",
+    "initialSpeciesId": 405,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "naive",
+    "initialAbilityId": "compound-eyes"
+  }
+]
