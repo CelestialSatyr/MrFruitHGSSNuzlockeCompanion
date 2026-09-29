@@ -2,14 +2,6 @@
   "schemaVersion": 1,
   "id": "mr-fruit-hgss-soul-link",
   "title": "Mr Fruit HeartGold / SoulSilver Soul Link",
-  "siteNotice": {
-    "id": "site-notice",
-    "enabled": true,
-    "type": "info",
-    "title": "Welcome to the website!",
-    "message": "Welcome to the new Nuzlocke Companion for Mr Fruit's nuzlockes. This site has undergone many new improvements; proper mobile support, spoiler protection, and independent timelines. If you have any suggestions, feel free to let me know!",
-    "dismissible": true
-  },
   "runs": [
     {
       "run": {
