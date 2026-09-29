@@ -17,5 +17,62 @@
     "shiny": false,
     "natureId": "naive",
     "initialAbilityId": "compound-eyes"
+  },
+  {
+    "id": "pkm_0003",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0006",
+    "initialSpeciesId": 141,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "brave"
+  },
+  {
+    "id": "pkm_0004",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0006",
+    "initialSpeciesId": 141,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "calm",
+    "initialAbilityId": "shield-dust"
+  },
+  {
+    "id": "pkm_0005",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0007",
+    "initialSpeciesId": 274,
+    "gender": "female",
+    "shiny": false,
+    "initialAbilityId": "hydration"
+  },
+  {
+    "id": "pkm_0006",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0007",
+    "initialSpeciesId": 427,
+    "gender": "male",
+    "shiny": false,
+    "initialAbilityId": "water-veil"
+  },
+  {
+    "id": "pkm_0007",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0008",
+    "initialSpeciesId": 360,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "drought"
+  },
+  {
+    "id": "pkm_0008",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0008",
+    "initialSpeciesId": 345,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "soundproof"
   }
 ]
