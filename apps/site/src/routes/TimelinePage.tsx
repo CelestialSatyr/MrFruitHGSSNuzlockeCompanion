@@ -83,7 +83,10 @@ export function TimelinePage() {
                 {episode.summary ? <p className="episode-summary">{episode.summary}</p> : null}
                 <div className="event-list">
                   {(group?.events ?? [])
-                    .filter((event) => event.visibility?.runTimeline !== false)
+                    .filter(
+                      (event) =>
+                        event.type !== "level-milestone" && event.visibility?.runTimeline !== false,
+                    )
                     .map((event) => (
                       <EventCard key={event.id} event={event} dataset={dataset} state={state} />
                     ))}
