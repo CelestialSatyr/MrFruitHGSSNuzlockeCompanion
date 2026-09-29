@@ -24,6 +24,46 @@ interface EventCardProps {
 
 type PlayerAccent = "gold" | "silver" | "dual" | "neutral";
 
+function buildYouTubeTimestampUrl(videoUrl: string, seconds: number): string {
+  const timestamp = Math.max(0, Math.floor(seconds));
+
+  try {
+    const url = new URL(videoUrl);
+    url.searchParams.set("t", `${timestamp}s`);
+    return url.toString();
+  } catch {
+    const separator = videoUrl.includes("?") ? "&" : "?";
+    return `${videoUrl}${separator}t=${timestamp}s`;
+  }
+}
+
+function EventTimestamp({
+  episode,
+  seconds,
+}: {
+  episode: RunDataset["episodes"][number] | undefined;
+  seconds: number;
+}) {
+  const label = formatTimestamp(seconds);
+
+  if (!episode?.youtube?.url) {
+    return <span className="timestamp">▶ {label}</span>;
+  }
+
+  return (
+    <a
+      className="timestamp timestamp--link"
+      href={buildYouTubeTimestampUrl(episode.youtube.url, seconds)}
+      target="_blank"
+      rel="noreferrer"
+      title={`Watch Episode ${episode.number} from ${label} on YouTube`}
+      aria-label={`Watch Episode ${episode.number} from ${label} on YouTube`}
+    >
+      ▶ {label}
+    </a>
+  );
+}
+
 function eventTitle(event: RunEvent): string {
   if (event.title) return event.title;
   switch (event.type) {
@@ -360,7 +400,7 @@ function GymBattleCard({
         <div className="event-card__meta">
           <span>Episode {episode?.number ?? "?"}</span>
           {event.videoTimestampSeconds !== undefined ? (
-            <span className="timestamp">▶ {formatTimestamp(event.videoTimestampSeconds)}</span>
+            <EventTimestamp episode={episode} seconds={event.videoTimestampSeconds} />
           ) : null}
           <span>Gym Battle</span>
         </div>
@@ -436,7 +476,7 @@ function EventBody({
       <div className="event-card__meta">
         <span>Episode {episode?.number ?? "?"}</span>
         {event.videoTimestampSeconds !== undefined ? (
-          <span className="timestamp">▶ {formatTimestamp(event.videoTimestampSeconds)}</span>
+          <EventTimestamp episode={episode} seconds={event.videoTimestampSeconds} />
         ) : null}
         <span>{titleCase(event.type)}</span>
         {playerLabel ? (

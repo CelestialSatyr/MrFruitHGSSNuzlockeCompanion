@@ -338,6 +338,22 @@ p {
   font-size: 0.74rem;
 }
 
+.timestamp--link {
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease;
+}
+
+.timestamp--link:hover,
+.timestamp--link:focus-visible {
+  border-color: rgba(240, 199, 94, 0.55);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
 .run-hero {
   display: grid;
   gap: 1.5rem;
