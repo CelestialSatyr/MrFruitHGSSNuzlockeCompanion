@@ -315,8 +315,17 @@ function DualSideVisual({
         ? dataset.pokemon.find((entry) => entry.id === outcome.pokemonId)
         : undefined;
 
+    const outcomeLabel =
+      outcome.result === "failed"
+        ? "× Failed"
+        : outcome.result === "skipped"
+          ? "— Skipped"
+          : "Caught";
+
     return (
-      <div className={`event-side-visual event-side-visual--${theme}`}>
+      <div
+        className={`event-side-visual event-side-visual--${theme} event-side-visual--outcome-${outcome.result}`}
+      >
         <span className="event-side-visual__owner">
           {player?.shortName ??
             player?.displayName ??
@@ -333,7 +342,9 @@ function DualSideVisual({
             <b aria-hidden="true">?</b>
           )}
         </div>
-        <small>{outcome.result}</small>
+        <small className={`event-side-visual__result event-side-visual__result--${outcome.result}`}>
+          {outcomeLabel}
+        </small>
       </div>
     );
   }
@@ -536,7 +547,9 @@ export function EventCard({ event, dataset, state, compact = false }: EventCardP
   }
 
   const accent = getPlayerAccent(event, dataset, state);
-  const className = `event-card event-card--${event.tone} event-card--${accent}${accent === "dual" ? " event-card--paired-layout" : ""}${event.importance === "major" ? " event-card--major" : ""}${compact ? " event-card--compact" : ""}`;
+  const unsuccessfulEncounter =
+    event.type === "encounter" && event.outcomes.some((outcome) => outcome.result !== "caught");
+  const className = `event-card event-card--${event.tone} event-card--${accent}${accent === "dual" ? " event-card--paired-layout" : ""}${unsuccessfulEncounter ? " event-card--encounter-unsuccessful" : ""}${event.importance === "major" ? " event-card--major" : ""}${compact ? " event-card--compact" : ""}`;
 
   if (accent === "dual") {
     return (

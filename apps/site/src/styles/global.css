@@ -4484,6 +4484,68 @@ a.player-profile-card:hover {
   text-transform: uppercase;
 }
 
+/* Failed/skipped encounters should read as unsuccessful at a glance. */
+.event-card--encounter-unsuccessful {
+  border-color: rgba(240, 151, 151, 0.3);
+}
+
+.event-side-visual--outcome-failed,
+.event-side-visual--outcome-skipped {
+  border-color: rgba(240, 151, 151, 0.42);
+  background:
+    linear-gradient(rgba(111, 37, 45, 0.16), rgba(111, 37, 45, 0.16)), rgba(7, 10, 15, 0.38);
+}
+
+.event-side-visual--outcome-skipped {
+  border-color: rgba(240, 151, 151, 0.28);
+  background:
+    linear-gradient(rgba(111, 37, 45, 0.1), rgba(111, 37, 45, 0.1)), rgba(7, 10, 15, 0.38);
+}
+
+.event-side-visual--outcome-failed .event-side-visual__sprites img,
+.event-side-visual--outcome-skipped .event-side-visual__sprites img {
+  filter: grayscale(1) saturate(0.15) brightness(0.72);
+  opacity: 0.58;
+}
+
+.event-side-visual--outcome-skipped .event-side-visual__sprites img {
+  opacity: 0.46;
+}
+
+.event-side-visual--outcome-failed .event-side-visual__sprites b,
+.event-side-visual--outcome-skipped .event-side-visual__sprites b {
+  color: #8b939d;
+  opacity: 0.68;
+}
+
+.event-side-visual__result {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.45rem;
+  padding: 0.18rem 0.45rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.event-side-visual__result--caught {
+  color: var(--positive);
+  background: rgba(125, 215, 165, 0.08);
+}
+
+.event-side-visual__result--failed,
+.event-side-visual__result--skipped {
+  border-color: rgba(240, 151, 151, 0.3);
+  background: rgba(240, 151, 151, 0.1);
+  color: var(--negative);
+}
+
+.event-side-visual__result--skipped {
+  border-color: rgba(240, 151, 151, 0.22);
+  background: rgba(240, 151, 151, 0.065);
+  color: #d99797;
+}
+
 /* Gym battles use the same HeartGold-left / SoulSilver-right rule. */
 .event-card--gym {
   background:
