@@ -29,7 +29,7 @@ export function PokemonDetailPage() {
   const player = dataset.players.find((entry) => entry.id === current.playerId);
   const species = getSpeciesName(current.currentSpeciesId);
   const history = selectPokemonHistory(dataset, state, current.id).filter(
-    (event) => event.visibility?.pokemonHistory !== false,
+    (event) => event.type !== "level-milestone" && event.visibility?.pokemonHistory !== false,
   );
   const link = current.soulLinkId ? state.soulLinks.get(current.soulLinkId) : undefined;
   const shiny = current.source.shiny;

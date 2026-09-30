@@ -3087,6 +3087,8 @@ function PokemonFields({
   );
 }
 
+const FILTERED_SELECT_PLACEHOLDER_VALUE = "__filtered-select-placeholder__";
+
 function FilteredSelect({
   label,
   value,
@@ -3114,6 +3116,16 @@ function FilteredSelect({
       : options;
   }, [query, options]);
 
+  const selectedValueIsVisible = filtered.some((option) => option.value === value);
+  const selectValue = selectedValueIsVisible ? value : FILTERED_SELECT_PLACEHOLDER_VALUE;
+  const showSearchPlaceholder = query.trim().length > 0 && !selectedValueIsVisible;
+
+  function choose(nextValue: string) {
+    if (nextValue === FILTERED_SELECT_PLACEHOLDER_VALUE) return;
+    onChange(nextValue);
+    setQuery("");
+  }
+
   return (
     <Field label={label} hint={hint}>
       <div className="search-select">
@@ -3122,15 +3134,23 @@ function FilteredSelect({
           value={query}
           placeholder={placeholder}
           onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" && filtered.length > 0) {
+              event.preventDefault();
+              choose(filtered[0].value);
+            }
+          }}
         />
         <select
-          value={value}
-          size={Math.min(6, Math.max(2, filtered.length))}
-          onChange={(event) => {
-            onChange(event.target.value);
-            setQuery("");
-          }}
+          value={selectValue}
+          size={Math.min(6, Math.max(2, filtered.length + (showSearchPlaceholder ? 1 : 0)))}
+          onChange={(event) => choose(event.target.value)}
         >
+          {showSearchPlaceholder ? (
+            <option value={FILTERED_SELECT_PLACEHOLDER_VALUE} disabled>
+              Select a search result…
+            </option>
+          ) : null}
           {filtered.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
