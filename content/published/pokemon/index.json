@@ -19,25 +19,6 @@
     "initialAbilityId": "compound-eyes"
   },
   {
-    "id": "pkm_0003",
-    "playerId": "player_fruit",
-    "createdByEventId": "evt_0006",
-    "initialSpeciesId": 141,
-    "gender": "male",
-    "shiny": false,
-    "natureId": "brave"
-  },
-  {
-    "id": "pkm_0004",
-    "playerId": "player_blue",
-    "createdByEventId": "evt_0006",
-    "initialSpeciesId": 141,
-    "gender": "male",
-    "shiny": false,
-    "natureId": "calm",
-    "initialAbilityId": "shield-dust"
-  },
-  {
     "id": "pkm_0005",
     "playerId": "player_fruit",
     "createdByEventId": "evt_0007",
@@ -74,5 +55,24 @@
     "shiny": false,
     "natureId": "timid",
     "initialAbilityId": "soundproof"
+  },
+  {
+    "id": "pkm_0003",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0006",
+    "initialSpeciesId": 54,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "brave"
+  },
+  {
+    "id": "pkm_0004",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0006",
+    "initialSpeciesId": 141,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "calm",
+    "initialAbilityId": "shield-dust"
   }
 ]

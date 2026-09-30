@@ -94,25 +94,6 @@
           "initialAbilityId": "compound-eyes"
         },
         {
-          "id": "pkm_0003",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0006",
-          "initialSpeciesId": 141,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "brave"
-        },
-        {
-          "id": "pkm_0004",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0006",
-          "initialSpeciesId": 141,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "calm",
-          "initialAbilityId": "shield-dust"
-        },
-        {
           "id": "pkm_0005",
           "playerId": "player_fruit",
           "createdByEventId": "evt_0007",
@@ -149,6 +130,25 @@
           "shiny": false,
           "natureId": "timid",
           "initialAbilityId": "soundproof"
+        },
+        {
+          "id": "pkm_0003",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0006",
+          "initialSpeciesId": 54,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "brave"
+        },
+        {
+          "id": "pkm_0004",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0006",
+          "initialSpeciesId": 141,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "calm",
+          "initialAbilityId": "shield-dust"
         }
       ],
       "soulLinks": [
@@ -156,11 +156,6 @@
           "id": "link_0001",
           "pokemonIds": ["pkm_0001", "pkm_0002"],
           "createdByEventId": "evt_0001"
-        },
-        {
-          "id": "link_0002",
-          "pokemonIds": ["pkm_0003", "pkm_0004"],
-          "createdByEventId": "evt_0006"
         },
         {
           "id": "link_0003",
@@ -171,6 +166,11 @@
           "id": "link_0004",
           "pokemonIds": ["pkm_0007", "pkm_0008"],
           "createdByEventId": "evt_0008"
+        },
+        {
+          "id": "link_0002",
+          "pokemonIds": ["pkm_0003", "pkm_0004"],
+          "createdByEventId": "evt_0006"
         }
       ],
       "rules": [
@@ -463,7 +463,7 @@
               "result": "caught",
               "playerId": "player_fruit",
               "pokemonId": "pkm_0003",
-              "speciesId": 141,
+              "speciesId": 54,
               "level": 2,
               "nickname": "FEARGHALL",
               "placement": "party"
