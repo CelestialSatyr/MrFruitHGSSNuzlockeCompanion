@@ -189,7 +189,7 @@
         "speciesId": 360,
         "level": 5,
         "nickname": "DOCDELEO",
-        "placement": "party"
+        "placement": "box"
       },
       {
         "result": "caught",
@@ -198,7 +198,7 @@
         "speciesId": 345,
         "level": 3,
         "nickname": "NICKPIC",
-        "placement": "party"
+        "placement": "box"
       }
     ],
     "soulLinkId": "link_0004"
@@ -274,5 +274,140 @@
     "pokemonId": "pkm_0005",
     "level": 7,
     "label": "Ended at Level 7"
+  },
+  {
+    "id": "evt_0015",
+    "episodeId": "ep_0003",
+    "sequence": 10,
+    "videoTimestampSeconds": 173,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "The first encounter for the episode!",
+    "description": "Let's see if we're starting this one off better!",
+    "type": "encounter",
+    "locationId": "dark-cave",
+    "opportunityId": "dark-cave-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0009",
+        "speciesId": 135,
+        "level": 3,
+        "nickname": "TRENTDUCK",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0010",
+        "speciesId": 422,
+        "level": 3,
+        "nickname": "BETAREDACT",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0005"
+  },
+  {
+    "id": "evt_0016",
+    "episodeId": "ep_0003",
+    "sequence": 20,
+    "videoTimestampSeconds": 1553,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Another encounter",
+    "description": "And another species clause!",
+    "tags": [{ "tagId": "clutch" }],
+    "type": "encounter",
+    "locationId": "route-32",
+    "opportunityId": "route-32-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0011",
+        "speciesId": 334,
+        "level": 6,
+        "nickname": "DISPHTBDGE",
+        "placement": "party"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0012",
+        "speciesId": 165,
+        "level": 6,
+        "nickname": "DANAB",
+        "placement": "party"
+      }
+    ],
+    "soulLinkId": "link_0006"
+  },
+  {
+    "id": "evt_0017",
+    "episodeId": "ep_0003",
+    "sequence": 30,
+    "videoTimestampSeconds": 2526,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the last encounter!",
+    "description": "We're getting some extra ones today!",
+    "type": "encounter",
+    "locationId": "sprout-tower",
+    "opportunityId": "sprout-tower-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0013",
+        "speciesId": 303,
+        "level": 4,
+        "nickname": "IAMCHKNJOE",
+        "placement": "party"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0014",
+        "speciesId": 265,
+        "level": 4,
+        "nickname": "AFTRSCLPND",
+        "placement": "party"
+      }
+    ],
+    "soulLinkId": "link_0007"
+  },
+  {
+    "id": "evt_0018",
+    "episodeId": "ep_0003",
+    "sequence": 40,
+    "videoTimestampSeconds": 2687,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And we already evolved!",
+    "description": "Didn't last long, that's okay buddy",
+    "type": "evolution",
+    "pokemonId": "pkm_0014",
+    "fromSpeciesId": 265,
+    "toSpeciesId": 266,
+    "level": 7
+  },
+  {
+    "id": "evt_0019",
+    "episodeId": "ep_0003",
+    "sequence": 50,
+    "videoTimestampSeconds": 2716,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the new ability is....",
+    "description": "Download!",
+    "type": "ability-changed",
+    "pokemonId": "pkm_0014",
+    "fromAbilityId": "AFTRSCLPND",
+    "toAbilityId": "Download"
   }
 ]

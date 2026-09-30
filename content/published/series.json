@@ -71,6 +71,25 @@
               "height": 720
             }
           }
+        },
+        {
+          "id": "ep_0003",
+          "number": 3,
+          "status": "published",
+          "youtube": {
+            "videoId": "yss0SbxdB6A",
+            "url": "https://www.youtube.com/watch?v=yss0SbxdB6A",
+            "title": "The Gods Immediately Twist Our Luck | Pokemon HGSS Soul Link Nuzlocke",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\nThe Gods Immediately Twist Our Luck | Pokemon HGSS Soul Link Nuzlocke",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-09-30T18:00:36Z",
+            "durationSeconds": 2810,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/yss0SbxdB6A/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
         }
       ],
       "pokemon": [
@@ -112,6 +131,44 @@
           "initialAbilityId": "water-veil"
         },
         {
+          "id": "pkm_0003",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0006",
+          "initialSpeciesId": 54,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "brave"
+        },
+        {
+          "id": "pkm_0004",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0006",
+          "initialSpeciesId": 141,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "calm",
+          "initialAbilityId": "shield-dust"
+        },
+        {
+          "id": "pkm_0009",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0015",
+          "initialSpeciesId": 135,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "quirky",
+          "initialAbilityId": "magic-guard"
+        },
+        {
+          "id": "pkm_0010",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0015",
+          "initialSpeciesId": 422,
+          "gender": "male",
+          "shiny": false,
+          "initialAbilityId": "air-lock"
+        },
+        {
           "id": "pkm_0007",
           "playerId": "player_fruit",
           "createdByEventId": "evt_0008",
@@ -132,23 +189,44 @@
           "initialAbilityId": "soundproof"
         },
         {
-          "id": "pkm_0003",
+          "id": "pkm_0011",
           "playerId": "player_fruit",
-          "createdByEventId": "evt_0006",
-          "initialSpeciesId": 54,
+          "createdByEventId": "evt_0016",
+          "initialSpeciesId": 334,
           "gender": "male",
           "shiny": false,
-          "natureId": "brave"
+          "natureId": "bashful",
+          "initialAbilityId": "soundproof"
         },
         {
-          "id": "pkm_0004",
+          "id": "pkm_0012",
           "playerId": "player_blue",
-          "createdByEventId": "evt_0006",
-          "initialSpeciesId": 141,
+          "createdByEventId": "evt_0016",
+          "initialSpeciesId": 165,
           "gender": "male",
           "shiny": false,
-          "natureId": "calm",
-          "initialAbilityId": "shield-dust"
+          "natureId": "gentle",
+          "initialAbilityId": "anger-point"
+        },
+        {
+          "id": "pkm_0013",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0017",
+          "initialSpeciesId": 303,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "docile",
+          "initialAbilityId": "early-bird"
+        },
+        {
+          "id": "pkm_0014",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0017",
+          "initialSpeciesId": 265,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "gentle",
+          "initialAbilityId": "run-away"
         }
       ],
       "soulLinks": [
@@ -163,14 +241,29 @@
           "createdByEventId": "evt_0007"
         },
         {
+          "id": "link_0002",
+          "pokemonIds": ["pkm_0003", "pkm_0004"],
+          "createdByEventId": "evt_0006"
+        },
+        {
+          "id": "link_0005",
+          "pokemonIds": ["pkm_0009", "pkm_0010"],
+          "createdByEventId": "evt_0015"
+        },
+        {
           "id": "link_0004",
           "pokemonIds": ["pkm_0007", "pkm_0008"],
           "createdByEventId": "evt_0008"
         },
         {
-          "id": "link_0002",
-          "pokemonIds": ["pkm_0003", "pkm_0004"],
-          "createdByEventId": "evt_0006"
+          "id": "link_0006",
+          "pokemonIds": ["pkm_0011", "pkm_0012"],
+          "createdByEventId": "evt_0016"
+        },
+        {
+          "id": "link_0007",
+          "pokemonIds": ["pkm_0013", "pkm_0014"],
+          "createdByEventId": "evt_0017"
         }
       ],
       "rules": [
@@ -344,7 +437,14 @@
           ]
         }
       ],
-      "tags": [],
+      "tags": [
+        {
+          "id": "clutch",
+          "label": "Clutch",
+          "description": "A particularly close or unlikely survival or victory.",
+          "style": "celebration"
+        }
+      ],
       "events": [
         {
           "id": "evt_0001",
@@ -536,7 +636,7 @@
               "speciesId": 360,
               "level": 5,
               "nickname": "DOCDELEO",
-              "placement": "party"
+              "placement": "box"
             },
             {
               "result": "caught",
@@ -545,7 +645,7 @@
               "speciesId": 345,
               "level": 3,
               "nickname": "NICKPIC",
-              "placement": "party"
+              "placement": "box"
             }
           ],
           "soulLinkId": "link_0004"
@@ -621,6 +721,141 @@
           "pokemonId": "pkm_0005",
           "level": 7,
           "label": "Ended at Level 7"
+        },
+        {
+          "id": "evt_0015",
+          "episodeId": "ep_0003",
+          "sequence": 10,
+          "videoTimestampSeconds": 173,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "The first encounter for the episode!",
+          "description": "Let's see if we're starting this one off better!",
+          "type": "encounter",
+          "locationId": "dark-cave",
+          "opportunityId": "dark-cave-main",
+          "acquisitionType": "wild",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0009",
+              "speciesId": 135,
+              "level": 3,
+              "nickname": "TRENTDUCK",
+              "placement": "box"
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0010",
+              "speciesId": 422,
+              "level": 3,
+              "nickname": "BETAREDACT",
+              "placement": "box"
+            }
+          ],
+          "soulLinkId": "link_0005"
+        },
+        {
+          "id": "evt_0016",
+          "episodeId": "ep_0003",
+          "sequence": 20,
+          "videoTimestampSeconds": 1553,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Another encounter",
+          "description": "And another species clause!",
+          "tags": [{ "tagId": "clutch" }],
+          "type": "encounter",
+          "locationId": "route-32",
+          "opportunityId": "route-32-main",
+          "acquisitionType": "wild",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0011",
+              "speciesId": 334,
+              "level": 6,
+              "nickname": "DISPHTBDGE",
+              "placement": "party"
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0012",
+              "speciesId": 165,
+              "level": 6,
+              "nickname": "DANAB",
+              "placement": "party"
+            }
+          ],
+          "soulLinkId": "link_0006"
+        },
+        {
+          "id": "evt_0017",
+          "episodeId": "ep_0003",
+          "sequence": 30,
+          "videoTimestampSeconds": 2526,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "And the last encounter!",
+          "description": "We're getting some extra ones today!",
+          "type": "encounter",
+          "locationId": "sprout-tower",
+          "opportunityId": "sprout-tower-main",
+          "acquisitionType": "wild",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0013",
+              "speciesId": 303,
+              "level": 4,
+              "nickname": "IAMCHKNJOE",
+              "placement": "party"
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0014",
+              "speciesId": 265,
+              "level": 4,
+              "nickname": "AFTRSCLPND",
+              "placement": "party"
+            }
+          ],
+          "soulLinkId": "link_0007"
+        },
+        {
+          "id": "evt_0018",
+          "episodeId": "ep_0003",
+          "sequence": 40,
+          "videoTimestampSeconds": 2687,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "And we already evolved!",
+          "description": "Didn't last long, that's okay buddy",
+          "type": "evolution",
+          "pokemonId": "pkm_0014",
+          "fromSpeciesId": 265,
+          "toSpeciesId": 266,
+          "level": 7
+        },
+        {
+          "id": "evt_0019",
+          "episodeId": "ep_0003",
+          "sequence": 50,
+          "videoTimestampSeconds": 2716,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "And the new ability is....",
+          "description": "Download!",
+          "type": "ability-changed",
+          "pokemonId": "pkm_0014",
+          "fromAbilityId": "AFTRSCLPND",
+          "toAbilityId": "Download"
         }
       ]
     }

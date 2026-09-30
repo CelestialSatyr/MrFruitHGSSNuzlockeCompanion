@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "id": "clutch",
+    "label": "Clutch",
+    "description": "A particularly close or unlikely survival or victory.",
+    "style": "celebration"
+  }
+]
