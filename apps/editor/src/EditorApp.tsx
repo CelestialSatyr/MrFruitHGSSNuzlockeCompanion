@@ -3135,9 +3135,10 @@ function FilteredSelect({
           placeholder={placeholder}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={(event) => {
-            if (event.key === "Enter" && filtered.length > 0) {
+            const firstMatch = filtered[0];
+            if (event.key === "Enter" && firstMatch) {
               event.preventDefault();
-              choose(filtered[0].value);
+              choose(firstMatch.value);
             }
           }}
         />
