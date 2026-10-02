@@ -580,7 +580,7 @@
     "tone": "positive",
     "importance": "minor",
     "title": "We're calling Flying type for Doduo",
-    "description": "Custom run event",
+    "description": "For the flying clause!",
     "tags": [{ "tagId": "tag-4" }],
     "type": "custom",
     "pokemonIds": ["pkm_0018"],
@@ -695,5 +695,19 @@
       }
     ],
     "soulLinkId": "link_0011"
+  },
+  {
+    "id": "evt_0034",
+    "episodeId": "ep_0005",
+    "sequence": 90,
+    "videoTimestampSeconds": 4585,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "We're calling Flying type for Noctowl",
+    "description": "For the flying clause!",
+    "tags": [{ "tagId": "tag-4" }],
+    "type": "custom",
+    "pokemonIds": ["pkm_0021"],
+    "locationId": "new-bark-town"
   }
 ]
