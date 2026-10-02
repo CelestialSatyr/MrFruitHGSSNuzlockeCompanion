@@ -479,5 +479,221 @@
     "fromSpeciesId": 266,
     "toSpeciesId": 267,
     "level": 10
+  },
+  {
+    "id": "evt_0026",
+    "episodeId": "ep_0005",
+    "sequence": 10,
+    "videoTimestampSeconds": 1053,
+    "tone": "positive",
+    "importance": "major",
+    "title": "And the first gym is down!",
+    "type": "gym-battle",
+    "gymId": "violet-gym",
+    "leaderName": "Falkner",
+    "result": "win",
+    "participantPokemonIds": [
+      "pkm_0005",
+      "pkm_0006",
+      "pkm_0009",
+      "pkm_0010",
+      "pkm_0007",
+      "pkm_0008",
+      "pkm_0011",
+      "pkm_0012"
+    ],
+    "badgeId": "zephyr"
+  },
+  {
+    "id": "evt_0027",
+    "episodeId": "ep_0005",
+    "sequence": 20,
+    "videoTimestampSeconds": 1590,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the first encounter for the episode!",
+    "type": "encounter",
+    "locationId": "ruins-of-alph",
+    "opportunityId": "ruins-of-alph-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0015",
+        "speciesId": 11,
+        "level": 5,
+        "nickname": "MAKILLA",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0016",
+        "speciesId": 442,
+        "level": 5,
+        "nickname": "BO NIX",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0008"
+  },
+  {
+    "id": "evt_0028",
+    "episodeId": "ep_0005",
+    "sequence": 30,
+    "videoTimestampSeconds": 2238,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the gift egg turned into...",
+    "type": "encounter",
+    "locationId": "violet-city",
+    "opportunityId": "violet-togepi-egg",
+    "acquisitionType": "gift",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0017",
+        "speciesId": 48,
+        "level": 1,
+        "nickname": "MUTTBEARD",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0018",
+        "speciesId": 84,
+        "level": 1,
+        "nickname": "PISTACHIO",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0009"
+  },
+  {
+    "id": "evt_0029",
+    "episodeId": "ep_0005",
+    "sequence": 40,
+    "videoTimestampSeconds": 2280,
+    "tone": "positive",
+    "importance": "minor",
+    "title": "We're calling Flying type for Doduo",
+    "description": "Custom run event",
+    "tags": [{ "tagId": "tag-4" }],
+    "type": "custom",
+    "pokemonIds": ["pkm_0018"],
+    "locationId": "new-bark-town"
+  },
+  {
+    "id": "evt_0030",
+    "episodeId": "ep_0005",
+    "sequence": 50,
+    "videoTimestampSeconds": 3466,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Old Rod got!",
+    "description": "We can now start the fishing journey!",
+    "type": "progression-changed",
+    "flag": { "kind": "capability", "id": "oldRod", "value": true }
+  },
+  {
+    "id": "evt_0031",
+    "episodeId": "ep_0005",
+    "sequence": 60,
+    "videoTimestampSeconds": 3823,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "The first old rod encounter is...",
+    "description": "In Violet City!",
+    "type": "encounter",
+    "locationId": "violet-city",
+    "opportunityId": "violet-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "skipped",
+        "playerId": "player_fruit",
+        "speciesId": 462,
+        "reason": "Due to the failed encounter by Blue, Magnezone has been skipped"
+      },
+      {
+        "result": "failed",
+        "playerId": "player_blue",
+        "speciesId": 354,
+        "reason": "An unfortunate Curse has been placed upon this encounter"
+      }
+    ]
+  },
+  {
+    "id": "evt_0032",
+    "episodeId": "ep_0005",
+    "sequence": 70,
+    "videoTimestampSeconds": 4202,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "The second old rod encounter is...",
+    "description": "Cherrygrove City!",
+    "type": "encounter",
+    "locationId": "cherrygrove-city",
+    "opportunityId": "cherrygrove-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0019",
+        "speciesId": 261,
+        "level": 10,
+        "nickname": "ZACHNOOM",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0020",
+        "speciesId": 82,
+        "level": 10,
+        "nickname": "SUDOSA",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0010"
+  },
+  {
+    "id": "evt_0033",
+    "episodeId": "ep_0005",
+    "sequence": 80,
+    "videoTimestampSeconds": 4748,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the third old rod encounter is in...",
+    "description": "New Bark Town!",
+    "type": "encounter",
+    "locationId": "new-bark-town",
+    "opportunityId": "new-bark-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0021",
+        "speciesId": 164,
+        "level": 10,
+        "nickname": "IVY",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0022",
+        "speciesId": 241,
+        "level": 10,
+        "nickname": "CHOCO",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0011"
   }
 ]

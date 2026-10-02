@@ -133,5 +133,81 @@
     "shiny": false,
     "natureId": "gentle",
     "initialAbilityId": "run-away"
+  },
+  {
+    "id": "pkm_0017",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0028",
+    "initialSpeciesId": 48,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "hasty",
+    "initialAbilityId": "pickup"
+  },
+  {
+    "id": "pkm_0018",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0028",
+    "initialSpeciesId": 84,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "bashful",
+    "initialAbilityId": "motor-drive"
+  },
+  {
+    "id": "pkm_0015",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0027",
+    "initialSpeciesId": 11,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "lonely",
+    "initialAbilityId": "static"
+  },
+  {
+    "id": "pkm_0016",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0027",
+    "initialSpeciesId": 442,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "jolly",
+    "initialAbilityId": "gluttony"
+  },
+  {
+    "id": "pkm_0019",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0032",
+    "initialSpeciesId": 261,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "overgrow"
+  },
+  {
+    "id": "pkm_0020",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0032",
+    "initialSpeciesId": 82,
+    "gender": "unknown",
+    "shiny": false,
+    "natureId": "careful",
+    "initialAbilityId": "chlorophyll"
+  },
+  {
+    "id": "pkm_0021",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0033",
+    "initialSpeciesId": 164,
+    "gender": "female",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0022",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0033",
+    "initialSpeciesId": 241,
+    "gender": "female",
+    "shiny": false
   }
 ]

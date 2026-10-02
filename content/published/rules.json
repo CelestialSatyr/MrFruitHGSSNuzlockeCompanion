@@ -167,5 +167,18 @@
         "description": "Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)"
       }
     ]
+  },
+  {
+    "id": "rule-14",
+    "title": "Locked in gyms",
+    "category": "other",
+    "shortSummary": "When entering a gym, you're locked in!",
+    "versions": [
+      {
+        "effectiveFromEpisode": 5,
+        "summary": "Temporary rule change!",
+        "description": "When entering a gym, you're locked in!"
+      }
+    ]
   }
 ]
