@@ -66,12 +66,6 @@ export function PokemonDetailPage() {
               <small>Placement</small>
               <strong>{current.placement}</strong>
             </span>
-            {current.currentLevel ? (
-              <span>
-                <small>Last known level</small>
-                <strong>{current.currentLevel}</strong>
-              </span>
-            ) : null}
             {current.natureId ? (
               <span>
                 <small>Nature</small>
