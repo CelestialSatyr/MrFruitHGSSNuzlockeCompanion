@@ -709,5 +709,66 @@
     "type": "custom",
     "pokemonIds": ["pkm_0021"],
     "locationId": "new-bark-town"
+  },
+  {
+    "id": "evt_0035",
+    "episodeId": "ep_0006",
+    "sequence": 10,
+    "videoTimestampSeconds": 888,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Our first encounter for the episode!",
+    "description": "And it's a solid encounter",
+    "type": "encounter",
+    "locationId": "union-cave",
+    "opportunityId": "union-cave-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0023",
+        "speciesId": 449,
+        "level": 6,
+        "nickname": "MELISSA",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0024",
+        "speciesId": 2,
+        "level": 6,
+        "nickname": "DAWOODSTER",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0012"
+  },
+  {
+    "id": "evt_0036",
+    "episodeId": "ep_0006",
+    "sequence": 20,
+    "videoTimestampSeconds": 1395,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "An evolution, sir?",
+    "description": "Sure, wynaut.",
+    "type": "evolution",
+    "pokemonId": "pkm_0007",
+    "fromSpeciesId": 360,
+    "toSpeciesId": 202,
+    "level": 15
+  },
+  {
+    "id": "evt_0037",
+    "episodeId": "ep_0006",
+    "sequence": 30,
+    "videoTimestampSeconds": 2545,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Armor Fossil found by Blue!",
+    "description": "In Union Cave",
+    "type": "special-moment"
   }
 ]

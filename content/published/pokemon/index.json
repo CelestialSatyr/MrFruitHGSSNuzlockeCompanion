@@ -209,5 +209,25 @@
     "initialSpeciesId": 241,
     "gender": "female",
     "shiny": false
+  },
+  {
+    "id": "pkm_0023",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0035",
+    "initialSpeciesId": 449,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "careful",
+    "initialAbilityId": "air-lock"
+  },
+  {
+    "id": "pkm_0024",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0035",
+    "initialSpeciesId": 2,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "naughty",
+    "initialAbilityId": "effect-spore"
   }
 ]

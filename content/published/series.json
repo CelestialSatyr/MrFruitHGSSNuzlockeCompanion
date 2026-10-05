@@ -128,6 +128,25 @@
               "height": 720
             }
           }
+        },
+        {
+          "id": "ep_0006",
+          "number": 6,
+          "status": "published",
+          "youtube": {
+            "videoId": "WsRHvaNEXkE",
+            "url": "https://www.youtube.com/watch?v=WsRHvaNEXkE",
+            "title": "Every Randomized Run's Worst Nightmare | Pokemon HGSS Soul Link Nuzlocke",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\nEvery Randomized Run's Worst Nightmare | Pokemon HGSS Soul Link Nuzlocke",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-10-05T18:00:31Z",
+            "durationSeconds": 2973,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/WsRHvaNEXkE/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
         }
       ],
       "pokemon": [
@@ -341,6 +360,26 @@
           "initialSpeciesId": 241,
           "gender": "female",
           "shiny": false
+        },
+        {
+          "id": "pkm_0023",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0035",
+          "initialSpeciesId": 449,
+          "gender": "female",
+          "shiny": false,
+          "natureId": "careful",
+          "initialAbilityId": "air-lock"
+        },
+        {
+          "id": "pkm_0024",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0035",
+          "initialSpeciesId": 2,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "naughty",
+          "initialAbilityId": "effect-spore"
         }
       ],
       "soulLinks": [
@@ -398,6 +437,11 @@
           "id": "link_0011",
           "pokemonIds": ["pkm_0021", "pkm_0022"],
           "createdByEventId": "evt_0033"
+        },
+        {
+          "id": "link_0012",
+          "pokemonIds": ["pkm_0023", "pkm_0024"],
+          "createdByEventId": "evt_0035"
         }
       ],
       "rules": [
@@ -1309,6 +1353,67 @@
           "type": "custom",
           "pokemonIds": ["pkm_0021"],
           "locationId": "new-bark-town"
+        },
+        {
+          "id": "evt_0035",
+          "episodeId": "ep_0006",
+          "sequence": 10,
+          "videoTimestampSeconds": 888,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Our first encounter for the episode!",
+          "description": "And it's a solid encounter",
+          "type": "encounter",
+          "locationId": "union-cave",
+          "opportunityId": "union-cave-main",
+          "acquisitionType": "wild",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0023",
+              "speciesId": 449,
+              "level": 6,
+              "nickname": "MELISSA",
+              "placement": "box"
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0024",
+              "speciesId": 2,
+              "level": 6,
+              "nickname": "DAWOODSTER",
+              "placement": "box"
+            }
+          ],
+          "soulLinkId": "link_0012"
+        },
+        {
+          "id": "evt_0036",
+          "episodeId": "ep_0006",
+          "sequence": 20,
+          "videoTimestampSeconds": 1395,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "An evolution, sir?",
+          "description": "Sure, wynaut.",
+          "type": "evolution",
+          "pokemonId": "pkm_0007",
+          "fromSpeciesId": 360,
+          "toSpeciesId": 202,
+          "level": 15
+        },
+        {
+          "id": "evt_0037",
+          "episodeId": "ep_0006",
+          "sequence": 30,
+          "videoTimestampSeconds": 2545,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Armor Fossil found by Blue!",
+          "description": "In Union Cave",
+          "type": "special-moment"
         }
       ]
     }
