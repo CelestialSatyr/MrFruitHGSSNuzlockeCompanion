@@ -770,5 +770,111 @@
     "title": "Armor Fossil found by Blue!",
     "description": "In Union Cave",
     "type": "special-moment"
+  },
+  {
+    "id": "evt_0038",
+    "episodeId": "ep_0007",
+    "sequence": 10,
+    "videoTimestampSeconds": 594,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "First encounter for the episode!",
+    "description": "You shouldn't have said that, Blue..",
+    "type": "encounter",
+    "locationId": "route-33",
+    "opportunityId": "route-33-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "failed",
+        "playerId": "player_fruit",
+        "speciesId": 485,
+        "reason": "Died due to Struggle"
+      },
+      {
+        "result": "skipped",
+        "playerId": "player_blue",
+        "speciesId": 192,
+        "reason": "Skipped due to missed encounter by Fruit"
+      }
+    ]
+  },
+  {
+    "id": "evt_0039",
+    "episodeId": "ep_0007",
+    "sequence": 20,
+    "videoTimestampSeconds": 961,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "Let's try this encounter instead!",
+    "description": "And it didn't last long either.",
+    "type": "encounter",
+    "locationId": "ilex-forest",
+    "opportunityId": "ilex-forest-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "skipped",
+        "playerId": "player_fruit",
+        "speciesId": 203,
+        "reason": "Skipped due to the missed encounter by Blue"
+      },
+      {
+        "result": "failed",
+        "playerId": "player_blue",
+        "speciesId": 65,
+        "reason": "And it teleported away.."
+      }
+    ]
+  },
+  {
+    "id": "evt_0040",
+    "episodeId": "ep_0007",
+    "sequence": 30,
+    "videoTimestampSeconds": 1491,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Third time is the charm..",
+    "description": "Right... Right?",
+    "type": "encounter",
+    "locationId": "slowpoke-well",
+    "opportunityId": "slowpoke-well-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0025",
+        "speciesId": 119,
+        "level": 5,
+        "nickname": "MIRIAM",
+        "placement": "party"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0026",
+        "speciesId": 56,
+        "level": 6,
+        "nickname": "CAUGHTAG",
+        "placement": "party"
+      }
+    ],
+    "soulLinkId": "link_0013"
+  },
+  {
+    "id": "evt_0041",
+    "episodeId": "ep_0007",
+    "sequence": 40,
+    "videoTimestampSeconds": 2137,
+    "tone": "negative",
+    "importance": "major",
+    "title": "Another pair gone..",
+    "description": ".. At least Blue believed..",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0008",
+    "locationId": "slowpoke-well",
+    "opponentName": "Entei",
+    "cause": "Fallen at the hands of Entei and his Arena trap"
   }
 ]

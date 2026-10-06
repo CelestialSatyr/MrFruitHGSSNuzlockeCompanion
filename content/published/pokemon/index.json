@@ -229,5 +229,21 @@
     "shiny": false,
     "natureId": "naughty",
     "initialAbilityId": "effect-spore"
+  },
+  {
+    "id": "pkm_0025",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0040",
+    "initialSpeciesId": 119,
+    "gender": "female",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0026",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0040",
+    "initialSpeciesId": 56,
+    "gender": "male",
+    "shiny": false
   }
 ]
