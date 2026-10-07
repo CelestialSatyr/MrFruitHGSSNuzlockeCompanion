@@ -166,6 +166,25 @@
               "height": 720
             }
           }
+        },
+        {
+          "id": "ep_0008",
+          "number": 8,
+          "status": "published",
+          "youtube": {
+            "videoId": "DFMSuyyULzY",
+            "url": "https://www.youtube.com/watch?v=DFMSuyyULzY",
+            "title": "The GOONERLOCKE Has Begun | Pokemon HGSS Soul Link Nuzlocke",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\nThe GOONERLOCKE Has Begun | Pokemon HGSS Soul Link Nuzlocke",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-10-07T18:00:17Z",
+            "durationSeconds": 2505,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/DFMSuyyULzY/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
         }
       ],
       "pokemon": [
@@ -415,6 +434,26 @@
           "initialSpeciesId": 56,
           "gender": "male",
           "shiny": false
+        },
+        {
+          "id": "pkm_0027",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0042",
+          "initialSpeciesId": 258,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "gentle",
+          "initialAbilityId": "overgrow"
+        },
+        {
+          "id": "pkm_0028",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0042",
+          "initialSpeciesId": 361,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "lonely",
+          "initialAbilityId": "serene-grace"
         }
       ],
       "soulLinks": [
@@ -482,6 +521,11 @@
           "id": "link_0013",
           "pokemonIds": ["pkm_0025", "pkm_0026"],
           "createdByEventId": "evt_0040"
+        },
+        {
+          "id": "link_0014",
+          "pokemonIds": ["pkm_0027", "pkm_0028"],
+          "createdByEventId": "evt_0042"
         }
       ],
       "rules": [
@@ -1560,6 +1604,131 @@
           "locationId": "slowpoke-well",
           "opponentName": "Entei",
           "cause": "Fallen at the hands of Entei and his Arena trap"
+        },
+        {
+          "id": "evt_0042",
+          "episodeId": "ep_0008",
+          "sequence": 10,
+          "videoTimestampSeconds": 170,
+          "tone": "positive",
+          "importance": "major",
+          "title": "Starting off with an encounter!",
+          "description": "From the Egg Gift in Violet City",
+          "type": "encounter",
+          "locationId": "violet-city",
+          "opportunityId": "violet-togepi-egg",
+          "acquisitionType": "gift",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0027",
+              "speciesId": 258,
+              "level": 1,
+              "nickname": "HUNTARCH",
+              "placement": "box"
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0028",
+              "speciesId": 361,
+              "level": 1,
+              "nickname": "POOPYFLING",
+              "placement": "box"
+            }
+          ],
+          "soulLinkId": "link_0014"
+        },
+        {
+          "id": "evt_0043",
+          "episodeId": "ep_0008",
+          "sequence": 20,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0015", "pkm_0016"],
+          "to": "party",
+          "reason": "Bug / Ghost Pairing"
+        },
+        {
+          "id": "evt_0044",
+          "episodeId": "ep_0008",
+          "sequence": 30,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0019", "pkm_0020"],
+          "to": "party",
+          "reason": "Dark / Electric Pairing"
+        },
+        {
+          "id": "evt_0045",
+          "episodeId": "ep_0008",
+          "sequence": 40,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0027", "pkm_0028"],
+          "to": "party",
+          "reason": "Water / Fighting Pairing"
+        },
+        {
+          "id": "evt_0046",
+          "episodeId": "ep_0008",
+          "sequence": 50,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0009", "pkm_0010"],
+          "to": "box",
+          "reason": "Retired for now"
+        },
+        {
+          "id": "evt_0047",
+          "episodeId": "ep_0008",
+          "sequence": 60,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0011", "pkm_0012"],
+          "to": "box",
+          "reason": "Retired for now"
+        },
+        {
+          "id": "evt_0048",
+          "episodeId": "ep_0008",
+          "sequence": 70,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0027", "pkm_0028"],
+          "to": "box"
+        },
+        {
+          "id": "evt_0049",
+          "episodeId": "ep_0008",
+          "sequence": 80,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0013", "pkm_0014"],
+          "to": "party",
+          "reason": "Steel / Bug Pairing"
+        },
+        {
+          "id": "evt_0050",
+          "episodeId": "ep_0008",
+          "sequence": 90,
+          "videoTimestampSeconds": 948,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Lopunny evolved!",
+          "type": "evolution",
+          "pokemonId": "pkm_0006",
+          "fromSpeciesId": 427,
+          "toSpeciesId": 428,
+          "level": 17
         }
       ]
     }

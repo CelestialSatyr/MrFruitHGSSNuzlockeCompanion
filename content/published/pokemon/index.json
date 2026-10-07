@@ -245,5 +245,25 @@
     "initialSpeciesId": 56,
     "gender": "male",
     "shiny": false
+  },
+  {
+    "id": "pkm_0027",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0042",
+    "initialSpeciesId": 258,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "gentle",
+    "initialAbilityId": "overgrow"
+  },
+  {
+    "id": "pkm_0028",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0042",
+    "initialSpeciesId": 361,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "lonely",
+    "initialAbilityId": "serene-grace"
   }
 ]

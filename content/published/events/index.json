@@ -876,5 +876,130 @@
     "locationId": "slowpoke-well",
     "opponentName": "Entei",
     "cause": "Fallen at the hands of Entei and his Arena trap"
+  },
+  {
+    "id": "evt_0042",
+    "episodeId": "ep_0008",
+    "sequence": 10,
+    "videoTimestampSeconds": 170,
+    "tone": "positive",
+    "importance": "major",
+    "title": "Starting off with an encounter!",
+    "description": "From the Egg Gift in Violet City",
+    "type": "encounter",
+    "locationId": "violet-city",
+    "opportunityId": "violet-togepi-egg",
+    "acquisitionType": "gift",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0027",
+        "speciesId": 258,
+        "level": 1,
+        "nickname": "HUNTARCH",
+        "placement": "box"
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0028",
+        "speciesId": 361,
+        "level": 1,
+        "nickname": "POOPYFLING",
+        "placement": "box"
+      }
+    ],
+    "soulLinkId": "link_0014"
+  },
+  {
+    "id": "evt_0043",
+    "episodeId": "ep_0008",
+    "sequence": 20,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0015", "pkm_0016"],
+    "to": "party",
+    "reason": "Bug / Ghost Pairing"
+  },
+  {
+    "id": "evt_0044",
+    "episodeId": "ep_0008",
+    "sequence": 30,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0019", "pkm_0020"],
+    "to": "party",
+    "reason": "Dark / Electric Pairing"
+  },
+  {
+    "id": "evt_0045",
+    "episodeId": "ep_0008",
+    "sequence": 40,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0027", "pkm_0028"],
+    "to": "party",
+    "reason": "Water / Fighting Pairing"
+  },
+  {
+    "id": "evt_0046",
+    "episodeId": "ep_0008",
+    "sequence": 50,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0009", "pkm_0010"],
+    "to": "box",
+    "reason": "Retired for now"
+  },
+  {
+    "id": "evt_0047",
+    "episodeId": "ep_0008",
+    "sequence": 60,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0011", "pkm_0012"],
+    "to": "box",
+    "reason": "Retired for now"
+  },
+  {
+    "id": "evt_0048",
+    "episodeId": "ep_0008",
+    "sequence": 70,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0027", "pkm_0028"],
+    "to": "box"
+  },
+  {
+    "id": "evt_0049",
+    "episodeId": "ep_0008",
+    "sequence": 80,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0013", "pkm_0014"],
+    "to": "party",
+    "reason": "Steel / Bug Pairing"
+  },
+  {
+    "id": "evt_0050",
+    "episodeId": "ep_0008",
+    "sequence": 90,
+    "videoTimestampSeconds": 948,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Lopunny evolved!",
+    "type": "evolution",
+    "pokemonId": "pkm_0006",
+    "fromSpeciesId": 427,
+    "toSpeciesId": 428,
+    "level": 17
   }
 ]
