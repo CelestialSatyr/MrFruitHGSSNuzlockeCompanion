@@ -23,6 +23,7 @@ import {
   HGSS_MILESTONE_KEYS,
   reconstructHgssRun,
 } from "@nuzlocke/hgss";
+import { FlyingDeclarationField } from "./components/FlyingDeclarationField";
 import type {
   EditorBackupSummary,
   EditorBootstrapResponse,
@@ -58,6 +59,7 @@ import {
   nextEventSequence,
   normalizeEpisodeEventOrder,
 } from "./lib/editorData";
+import { assertEncounterTypingDeclarations } from "./lib/flyingDeclaration";
 
 type Section =
   "overview" | "configuration" | "notice" | "library" | "episodes" | "events" | "publish";
@@ -185,6 +187,7 @@ function createEventForm(dataset: RunDataset): EventDraftInput {
       shiny: false,
       natureId: "",
       abilityId: "",
+      flyingTypeDeclared: null,
       reason: "",
     },
     right: {
@@ -197,6 +200,7 @@ function createEventForm(dataset: RunDataset): EventDraftInput {
       shiny: false,
       natureId: "",
       abilityId: "",
+      flyingTypeDeclared: null,
       reason: "",
     },
     fromSpeciesId: "",
@@ -275,6 +279,7 @@ function eventToForm(dataset: RunDataset, event: RunEvent): EventDraftInput {
           shiny: pokemon?.shiny ?? false,
           natureId: pokemon?.natureId ?? "",
           abilityId: pokemon?.initialAbilityId ?? "",
+          flyingTypeDeclared: outcome.flyingTypeDeclared ?? null,
         };
       };
       form.left = mapSide(players[0] ?? "", form.left);
@@ -2089,8 +2094,9 @@ function Events({
     });
   }
 
-  function saveEvent() {
+  async function saveEvent() {
     try {
+      await assertEncounterTypingDeclarations(form);
       mutate((draft) =>
         editingId
           ? updateEventInDataset(draft, editingId, form, idPools)
@@ -2269,7 +2275,7 @@ function Events({
           </div>
           <div className="editor-inline-actions">
             {editingId ? <button onClick={reset}>Cancel</button> : null}
-            <button className="button-primary" onClick={saveEvent}>
+            <button className="button-primary" onClick={() => void saveEvent()}>
               {editingId ? "Save changes" : "Add event"}
             </button>
           </div>
@@ -2747,7 +2753,12 @@ function EncounterSide({
       <Field label="Outcome">
         <select
           value={side.result}
-          onChange={(event) => update({ result: event.target.value as typeof side.result })}
+          onChange={(event) =>
+            update({
+              result: event.target.value as typeof side.result,
+              flyingTypeDeclared: null,
+            })
+          }
         >
           <option value="caught">Caught</option>
           <option value="failed">Failed</option>
@@ -2758,7 +2769,13 @@ function EncounterSide({
         label="Species"
         value={side.speciesId}
         species={species}
-        onChange={(value) => update({ speciesId: value })}
+        onChange={(value) => update({ speciesId: value, flyingTypeDeclared: null })}
+      />
+      <FlyingDeclarationField
+        speciesId={side.speciesId}
+        result={side.result}
+        value={side.flyingTypeDeclared}
+        onChange={(value) => update({ flyingTypeDeclared: value })}
       />
       {side.result !== "caught" ? (
         <Field label="Reason" hint="Optional">

@@ -12,6 +12,8 @@ export * from "./schemas/run.ts";
 export * from "./schemas/series.ts";
 export * from "./schemas/soul-link.ts";
 export * from "./schemas/tags.ts";
+export * from "./pokemonTypes.ts";
+export * from "./partyPlanner.ts";
 
 export interface FoundationLayer {
   id: "site" | "editor" | "core";

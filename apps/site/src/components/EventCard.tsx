@@ -11,6 +11,7 @@ import {
 import type { HgssProgressionState } from "@nuzlocke/hgss";
 import { Link } from "react-router";
 import { GymBadgeIcon, JOHTO_BADGES, type JohtoBadgeId } from "./BadgeCase";
+import { PokemonPrimaryRuleBadges } from "./PokemonPrimaryRuleBadges";
 import { formatTimestamp, titleCase } from "../lib/format";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerForTheme, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
@@ -314,6 +315,8 @@ function DualSideVisual({
       outcome.result === "caught"
         ? dataset.pokemon.find((entry) => entry.id === outcome.pokemonId)
         : undefined;
+    const caughtPokemon =
+      outcome.result === "caught" ? state.pokemon.get(outcome.pokemonId) : undefined;
 
     const outcomeLabel =
       outcome.result === "failed"
@@ -345,6 +348,9 @@ function DualSideVisual({
         <small className={`event-side-visual__result event-side-visual__result--${outcome.result}`}>
           {outcomeLabel}
         </small>
+        {caughtPokemon ? (
+          <PokemonPrimaryRuleBadges dataset={dataset} pokemon={caughtPokemon} />
+        ) : null}
       </div>
     );
   }

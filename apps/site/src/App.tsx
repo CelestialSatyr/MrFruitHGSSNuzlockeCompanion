@@ -3,6 +3,7 @@ import { AppShell } from "./components/AppShell";
 import { EventDetailPage } from "./routes/EventDetailPage";
 import { MapPage } from "./routes/MapPage";
 import { OverviewPage } from "./routes/OverviewPage";
+import { PartyPlannerPage } from "./routes/PartyPlannerPage";
 import { PokemonDetailPage } from "./routes/PokemonDetailPage";
 import { PokemonIndexPage } from "./routes/PokemonIndexPage";
 import { RulesPage } from "./routes/RulesPage";
@@ -17,6 +18,7 @@ export function App() {
         <Route path="timeline" element={<TimelinePage />} />
         <Route path="pokemon" element={<PokemonIndexPage />} />
         <Route path="pokemon/:pokemonId" element={<PokemonDetailPage />} />
+        <Route path="party-planner" element={<PartyPlannerPage />} />
         <Route path="soul-links/:linkId" element={<SoulLinkDetailPage />} />
         <Route path="events/:eventId" element={<EventDetailPage />} />
         <Route path="map" element={<MapPage />} />

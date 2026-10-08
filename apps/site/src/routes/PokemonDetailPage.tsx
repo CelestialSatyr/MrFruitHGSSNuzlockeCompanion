@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { EventCard } from "../components/EventCard";
 import { SoulLinkCard } from "../components/SoulLinkCard";
 import { SpoilerGate } from "../components/SpoilerGate";
+import { PokemonPrimaryRuleBadges } from "../components/PokemonPrimaryRuleBadges";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
 import { getOfficialArtworkUrl, getSpeciesName } from "../lib/pokemon";
@@ -56,6 +57,7 @@ export function PokemonDetailPage() {
           <h1>{current.currentNickname ?? species}</h1>
           {current.currentNickname ? <p className="pokemon-hero__species">{species}</p> : null}
           <PokemonTypeChips speciesId={current.currentSpeciesId} />
+          <PokemonPrimaryRuleBadges dataset={dataset} pokemon={current} />
           {shiny ? <p className="hero-callout">✨ Shiny encounter</p> : null}
           <div className="profile-facts">
             <span>

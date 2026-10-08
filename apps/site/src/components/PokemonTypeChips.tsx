@@ -1,40 +1,24 @@
-import { useEffect, useState } from "react";
-import {
-  getCachedPokemonTypes,
-  loadPokemonTypes,
-  type PokemonTypeInfo,
-} from "../lib/pokemon-types";
+import { formatPokemonType } from "@nuzlocke/core";
+import { usePokemonTypes } from "../hooks/usePokemonTypes";
 
 export function PokemonTypeChips({ speciesId }: { speciesId: number }) {
-  const [types, setTypes] = useState<PokemonTypeInfo[]>(() => getCachedPokemonTypes(speciesId));
+  const { types, error } = usePokemonTypes(speciesId);
 
-  useEffect(() => {
-    let cancelled = false;
-    setTypes(getCachedPokemonTypes(speciesId));
-    void loadPokemonTypes(speciesId).then((value) => {
-      if (!cancelled) setTypes(value);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [speciesId]);
-
-  if (!types.length) {
+  if (error) {
     return (
-      <div className="type-chip-row">
+      <div className="type-chip-row" title={error}>
         <span className="type-chip type-chip--unknown">Type unavailable</span>
       </div>
     );
   }
 
+  if (!types) return null;
+
   return (
-    <div
-      className="type-chip-row"
-      aria-label={`Pokémon types: ${types.map((type) => type.label).join(", ")}`}
-    >
+    <div className="type-chip-row">
       {types.map((type) => (
-        <span key={type.id} className={`type-chip type-chip--${type.id}`}>
-          {type.label}
+        <span key={type} className={`type-chip type-chip--${type}`}>
+          {formatPokemonType(type)}
         </span>
       ))}
     </div>

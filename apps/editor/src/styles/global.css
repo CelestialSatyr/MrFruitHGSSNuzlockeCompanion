@@ -1065,3 +1065,22 @@ code {
   color: #8a2f27;
   padding: 0.62rem 0.7rem;
 }
+
+/* Party Planner / Flying Clause authoring */
+.typing-rule-pill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  min-height: 1.55rem;
+  padding: 0.24rem 0.55rem;
+  border: 1px solid #cfd7e2;
+  border-radius: 999px;
+  background: #f4f7fb;
+  color: #263449;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+.field .field-error {
+  color: #a63f36;
+  font-weight: 700;
+}

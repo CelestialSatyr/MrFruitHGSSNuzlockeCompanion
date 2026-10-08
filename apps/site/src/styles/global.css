@@ -1004,7 +1004,7 @@ p {
   left: 0;
   z-index: 40;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   border-top: 1px solid var(--border);
   background: rgba(9, 13, 20, 0.97);
   backdrop-filter: blur(18px);
@@ -4427,7 +4427,7 @@ a.player-profile-card:hover {
 .event-side-visual {
   min-width: 0;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
   place-items: center;
   align-content: center;
   gap: 0.35rem;
@@ -4995,4 +4995,21 @@ a.player-profile-card:hover {
 
 .pokemon-pair-row__member--silver .pokemon-history-card {
   border-color: var(--player-silver-border);
+}
+
+/* Permanent Nuzlocke primary typing metadata. */
+.primary-type-loading,
+.primary-type-warning {
+  display: block;
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 750;
+}
+.primary-type-warning {
+  color: var(--warning);
+}
+.event-side-visual .primary-type-badges {
+  justify-content: center;
+  margin-top: 0;
 }

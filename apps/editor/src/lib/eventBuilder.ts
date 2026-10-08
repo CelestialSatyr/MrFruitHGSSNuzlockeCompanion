@@ -68,6 +68,8 @@ export interface EncounterSideInput {
   shiny: boolean;
   natureId: string;
   abilityId: string;
+  /** null = not yet explicitly decided for an eligible Flying capture. */
+  flyingTypeDeclared: boolean | null;
   reason: string;
 }
 
@@ -127,6 +129,7 @@ function buildEncounterOutcome(
         : {}),
       ...(optionalText(side.nickname) ? { nickname: optionalText(side.nickname) } : {}),
       placement: side.placement,
+      ...(side.flyingTypeDeclared !== null ? { flyingTypeDeclared: side.flyingTypeDeclared } : {}),
     };
   }
 

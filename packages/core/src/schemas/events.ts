@@ -49,6 +49,8 @@ const CaughtEncounterOutcomeSchema = z
     level: z.number().int().positive().optional(),
     nickname: NonEmptyStringSchema.optional(),
     placement: z.enum(["party", "box"]).optional(),
+    /** Capture-time Flying Clause decision. Undefined is retained for historical data. */
+    flyingTypeDeclared: z.boolean().optional(),
   })
   .strict();
 

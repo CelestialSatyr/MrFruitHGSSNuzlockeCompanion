@@ -1,0 +1,435 @@
+.party-planner-page {
+  --planner-gold: rgba(229, 179, 75, 0.2);
+  --planner-silver: rgba(161, 181, 205, 0.18);
+}
+
+.party-planner-heading {
+  align-items: end;
+}
+
+.planner-mode-switch {
+  display: inline-flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-soft);
+}
+
+.planner-mode-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 0.9rem;
+  background: transparent;
+  color: var(--muted-strong);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.planner-mode-switch button.is-active {
+  background: var(--surface-raised);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border-strong);
+}
+
+.planner-rule-strip {
+  display: grid;
+  grid-template-columns: minmax(8rem, 1fr) minmax(16rem, 2fr) minmax(8rem, 1fr);
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background:
+    linear-gradient(
+      90deg,
+      var(--planner-gold),
+      transparent 35%,
+      transparent 65%,
+      var(--planner-silver)
+    ),
+    var(--surface-soft);
+}
+
+.planner-rule-strip > div:first-child,
+.planner-rule-strip > div:last-child {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.planner-rule-strip > div:last-child {
+  text-align: right;
+}
+
+.planner-rule-strip small,
+.planner-rule-strip span {
+  color: var(--muted);
+}
+
+.planner-rule-strip__rule {
+  display: grid;
+  gap: 0.2rem;
+  text-align: center;
+}
+
+.planner-state-card {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+}
+
+.planner-state-card span {
+  color: var(--muted);
+}
+
+.planner-state-card--warning {
+  border-color: rgba(226, 176, 65, 0.5);
+}
+
+.planner-state-card--error {
+  border-color: rgba(214, 91, 91, 0.55);
+}
+
+.planner-results-heading {
+  align-items: end;
+}
+
+.planner-results-heading p {
+  margin-bottom: 0;
+}
+
+.secondary-button {
+  border: 1px solid var(--border-strong);
+  border-radius: 0.7rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+}
+
+.secondary-button:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+.planner-recommendations {
+  display: grid;
+  gap: 1rem;
+}
+
+.planner-recommendation {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+}
+
+.planner-recommendation__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.planner-recommendation__heading > div:first-child {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.planner-recommendation__heading small {
+  color: var(--muted);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.planner-recommendation__heading strong {
+  font-size: 1.12rem;
+}
+
+.planner-score-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.planner-score-pills span {
+  padding: 0.35rem 0.55rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted-strong);
+  background: var(--surface-raised);
+  font-size: 0.76rem;
+}
+
+.planner-score-pills b {
+  color: var(--text);
+}
+
+.planner-pair-list {
+  display: grid;
+}
+
+.planner-pair-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(8rem, 0.42fr) minmax(0, 1fr);
+  align-items: stretch;
+  min-height: 6.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.planner-pair-row:last-child {
+  border-bottom: 0;
+}
+
+.planner-pair-row--selected {
+  background: rgba(112, 177, 119, 0.06);
+}
+
+.planner-pair-row--disabled {
+  opacity: 0.48;
+}
+
+.planner-pokemon {
+  display: grid;
+  grid-template-columns: 4.6rem minmax(0, 1fr);
+  gap: 0.7rem;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.planner-pokemon--left {
+  background: linear-gradient(90deg, var(--planner-gold), transparent);
+}
+
+.planner-pokemon--right {
+  grid-template-columns: minmax(0, 1fr) 4.6rem;
+  background: linear-gradient(270deg, var(--planner-silver), transparent);
+  text-align: right;
+}
+
+.planner-pokemon--right img {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.planner-pokemon--right .planner-pokemon__copy {
+  grid-column: 1;
+  grid-row: 1;
+  align-items: flex-end;
+}
+
+.planner-pokemon img {
+  width: 4.4rem;
+  height: 4.4rem;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.planner-pokemon__copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.14rem;
+}
+
+.planner-pokemon__copy > strong {
+  overflow: hidden;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.planner-pokemon__copy > small {
+  color: var(--muted);
+}
+
+.planner-pokemon__actual-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.2rem;
+}
+
+.planner-pokemon--right .planner-pokemon__actual-types,
+.planner-pokemon--right .primary-type-badges {
+  justify-content: flex-end;
+}
+
+.planner-pair-row__centre {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem;
+  align-items: center;
+  align-content: center;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.planner-pair-row__centre > small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.68rem;
+}
+
+.planner-pair-row__centre button,
+.planner-pair-row__centre > span:not(.planner-pair-row__line) {
+  min-width: 5.5rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  padding: 0.35rem 0.6rem;
+  background: var(--surface-raised);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.planner-pair-row__centre button {
+  cursor: pointer;
+}
+
+.planner-pair-row__centre button:disabled {
+  cursor: default;
+}
+
+.planner-pair-row__line {
+  height: 1px;
+  background: var(--border-strong);
+}
+
+.primary-type-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.35rem;
+}
+
+.primary-type-badges--compact {
+  margin-top: 0.25rem;
+}
+
+.primary-type-badge {
+  outline: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flying-declaration-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.35rem;
+  padding: 0.16rem 0.4rem;
+  border: 1px solid rgba(169, 153, 255, 0.42);
+  border-radius: 999px;
+  background: rgba(111, 102, 167, 0.16);
+  color: #c8c0ff;
+  font-size: 0.61rem;
+  font-weight: 800;
+}
+
+.planner-manual-section {
+  display: grid;
+  gap: 1rem;
+}
+
+.planner-manual-summary {
+  display: grid;
+  grid-template-columns: auto auto minmax(12rem, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+}
+
+.planner-manual-summary h2,
+.planner-manual-summary p {
+  margin: 0;
+}
+
+.planner-used-types {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.planner-used-types > small {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.planner-used-types > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.planner-pair-list--manual {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  background: var(--surface-soft);
+}
+
+@media (max-width: 800px) {
+  .party-planner-heading,
+  .planner-results-heading {
+    align-items: stretch;
+  }
+
+  .planner-rule-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .planner-rule-strip__rule {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .planner-pair-row {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-pair-row__centre {
+    grid-template-columns: 1fr auto 1fr;
+    padding-block: 0.2rem;
+  }
+
+  .planner-pokemon--right {
+    grid-template-columns: 4.6rem minmax(0, 1fr);
+    text-align: left;
+  }
+
+  .planner-pokemon--right img {
+    grid-column: 1;
+  }
+
+  .planner-pokemon--right .planner-pokemon__copy {
+    grid-column: 2;
+    align-items: flex-start;
+  }
+
+  .planner-pokemon--right .planner-pokemon__actual-types,
+  .planner-pokemon--right .primary-type-badges {
+    justify-content: flex-start;
+  }
+
+  .planner-manual-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-score-pills {
+    justify-content: flex-start;
+  }
+}

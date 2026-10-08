@@ -15,3 +15,5 @@ export * from "./availability.ts";
 export * from "./engine.ts";
 
 export * from "./data/main-story-locations.ts";
+
+export * from "./pokemonTypes.ts";
