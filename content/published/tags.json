@@ -4,6 +4,5 @@
     "label": "Clutch",
     "description": "A particularly close or unlikely survival or victory.",
     "style": "celebration"
-  },
-  { "id": "tag-4", "label": "Flying", "description": "For the Flying clause", "style": "info" }
+  }
 ]

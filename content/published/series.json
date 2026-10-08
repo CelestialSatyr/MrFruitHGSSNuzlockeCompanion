@@ -2,6 +2,16 @@
   "schemaVersion": 1,
   "id": "mr-fruit-hgss-soul-link",
   "title": "Mr Fruit HeartGold / SoulSilver Soul Link",
+  "siteNotice": {
+    "id": "site-notice",
+    "enabled": true,
+    "type": "info",
+    "title": "Party Planner has been added!",
+    "message": "This is specifically an addition for Fruit, but there is now a Party Planner, so you don't have to calculate it manually, there are 3 options given based on the current state of the party. And there is a manual mode as well, in case you want to go through it manually.",
+    "dismissible": true,
+    "linkLabel": "Visit the Party Planner",
+    "linkUrl": "/party-planner"
+  },
   "runs": [
     {
       "run": {
@@ -284,26 +294,6 @@
           "initialAbilityId": "soundproof"
         },
         {
-          "id": "pkm_0011",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0016",
-          "initialSpeciesId": 334,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "bashful",
-          "initialAbilityId": "soundproof"
-        },
-        {
-          "id": "pkm_0012",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0016",
-          "initialSpeciesId": 165,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "gentle",
-          "initialAbilityId": "anger-point"
-        },
-        {
           "id": "pkm_0013",
           "playerId": "player_fruit",
           "createdByEventId": "evt_0017",
@@ -322,26 +312,6 @@
           "shiny": false,
           "natureId": "gentle",
           "initialAbilityId": "run-away"
-        },
-        {
-          "id": "pkm_0017",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0028",
-          "initialSpeciesId": 48,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "hasty",
-          "initialAbilityId": "pickup"
-        },
-        {
-          "id": "pkm_0018",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0028",
-          "initialSpeciesId": 84,
-          "gender": "female",
-          "shiny": false,
-          "natureId": "bashful",
-          "initialAbilityId": "motor-drive"
         },
         {
           "id": "pkm_0015",
@@ -384,22 +354,6 @@
           "initialAbilityId": "chlorophyll"
         },
         {
-          "id": "pkm_0021",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0033",
-          "initialSpeciesId": 164,
-          "gender": "female",
-          "shiny": false
-        },
-        {
-          "id": "pkm_0022",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0033",
-          "initialSpeciesId": 241,
-          "gender": "female",
-          "shiny": false
-        },
-        {
           "id": "pkm_0023",
           "playerId": "player_fruit",
           "createdByEventId": "evt_0035",
@@ -433,6 +387,62 @@
           "createdByEventId": "evt_0040",
           "initialSpeciesId": 56,
           "gender": "male",
+          "shiny": false
+        },
+        {
+          "id": "pkm_0011",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0016",
+          "initialSpeciesId": 334,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "bashful",
+          "initialAbilityId": "soundproof"
+        },
+        {
+          "id": "pkm_0012",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0016",
+          "initialSpeciesId": 165,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "gentle",
+          "initialAbilityId": "anger-point"
+        },
+        {
+          "id": "pkm_0017",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0028",
+          "initialSpeciesId": 48,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "hasty",
+          "initialAbilityId": "pickup"
+        },
+        {
+          "id": "pkm_0018",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0028",
+          "initialSpeciesId": 84,
+          "gender": "female",
+          "shiny": false,
+          "natureId": "bashful",
+          "initialAbilityId": "motor-drive"
+        },
+        {
+          "id": "pkm_0021",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0033",
+          "initialSpeciesId": 164,
+          "gender": "female",
+          "shiny": false
+        },
+        {
+          "id": "pkm_0022",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0033",
+          "initialSpeciesId": 241,
+          "gender": "female",
           "shiny": false
         },
         {
@@ -483,19 +493,9 @@
           "createdByEventId": "evt_0008"
         },
         {
-          "id": "link_0006",
-          "pokemonIds": ["pkm_0011", "pkm_0012"],
-          "createdByEventId": "evt_0016"
-        },
-        {
           "id": "link_0007",
           "pokemonIds": ["pkm_0013", "pkm_0014"],
           "createdByEventId": "evt_0017"
-        },
-        {
-          "id": "link_0009",
-          "pokemonIds": ["pkm_0017", "pkm_0018"],
-          "createdByEventId": "evt_0028"
         },
         {
           "id": "link_0008",
@@ -508,11 +508,6 @@
           "createdByEventId": "evt_0032"
         },
         {
-          "id": "link_0011",
-          "pokemonIds": ["pkm_0021", "pkm_0022"],
-          "createdByEventId": "evt_0033"
-        },
-        {
           "id": "link_0012",
           "pokemonIds": ["pkm_0023", "pkm_0024"],
           "createdByEventId": "evt_0035"
@@ -521,6 +516,21 @@
           "id": "link_0013",
           "pokemonIds": ["pkm_0025", "pkm_0026"],
           "createdByEventId": "evt_0040"
+        },
+        {
+          "id": "link_0006",
+          "pokemonIds": ["pkm_0011", "pkm_0012"],
+          "createdByEventId": "evt_0016"
+        },
+        {
+          "id": "link_0009",
+          "pokemonIds": ["pkm_0017", "pkm_0018"],
+          "createdByEventId": "evt_0028"
+        },
+        {
+          "id": "link_0011",
+          "pokemonIds": ["pkm_0021", "pkm_0022"],
+          "createdByEventId": "evt_0033"
         },
         {
           "id": "link_0014",
@@ -718,12 +728,6 @@
           "label": "Clutch",
           "description": "A particularly close or unlikely survival or victory.",
           "style": "celebration"
-        },
-        {
-          "id": "tag-4",
-          "label": "Flying",
-          "description": "For the Flying clause",
-          "style": "info"
         }
       ],
       "events": [
@@ -1060,7 +1064,8 @@
               "speciesId": 334,
               "level": 6,
               "nickname": "DISPHTBDGE",
-              "placement": "party"
+              "placement": "party",
+              "flyingTypeDeclared": false
             },
             {
               "result": "caught",
@@ -1069,7 +1074,8 @@
               "speciesId": 165,
               "level": 6,
               "nickname": "DANAB",
-              "placement": "party"
+              "placement": "party",
+              "flyingTypeDeclared": false
             }
           ],
           "soulLinkId": "link_0006"
@@ -1286,7 +1292,8 @@
               "speciesId": 48,
               "level": 1,
               "nickname": "MUTTBEARD",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             },
             {
               "result": "caught",
@@ -1295,24 +1302,11 @@
               "speciesId": 84,
               "level": 1,
               "nickname": "PISTACHIO",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": true
             }
           ],
           "soulLinkId": "link_0009"
-        },
-        {
-          "id": "evt_0029",
-          "episodeId": "ep_0005",
-          "sequence": 40,
-          "videoTimestampSeconds": 2280,
-          "tone": "positive",
-          "importance": "minor",
-          "title": "We're calling Flying type for Doduo",
-          "description": "For the flying clause!",
-          "tags": [{ "tagId": "tag-4" }],
-          "type": "custom",
-          "pokemonIds": ["pkm_0018"],
-          "locationId": "new-bark-town"
         },
         {
           "id": "evt_0030",
@@ -1410,7 +1404,8 @@
               "speciesId": 164,
               "level": 10,
               "nickname": "IVY",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": true
             },
             {
               "result": "caught",
@@ -1419,24 +1414,11 @@
               "speciesId": 241,
               "level": 10,
               "nickname": "CHOCO",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             }
           ],
           "soulLinkId": "link_0011"
-        },
-        {
-          "id": "evt_0034",
-          "episodeId": "ep_0005",
-          "sequence": 90,
-          "videoTimestampSeconds": 4585,
-          "tone": "positive",
-          "importance": "normal",
-          "title": "We're calling Flying type for Noctowl",
-          "description": "For the flying clause!",
-          "tags": [{ "tagId": "tag-4" }],
-          "type": "custom",
-          "pokemonIds": ["pkm_0021"],
-          "locationId": "new-bark-town"
         },
         {
           "id": "evt_0035",
@@ -1626,7 +1608,8 @@
               "speciesId": 258,
               "level": 1,
               "nickname": "HUNTARCH",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             },
             {
               "result": "caught",
@@ -1635,7 +1618,8 @@
               "speciesId": 361,
               "level": 1,
               "nickname": "POOPYFLING",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             }
           ],
           "soulLinkId": "link_0014"

@@ -332,7 +332,8 @@
         "speciesId": 334,
         "level": 6,
         "nickname": "DISPHTBDGE",
-        "placement": "party"
+        "placement": "party",
+        "flyingTypeDeclared": false
       },
       {
         "result": "caught",
@@ -341,7 +342,8 @@
         "speciesId": 165,
         "level": 6,
         "nickname": "DANAB",
-        "placement": "party"
+        "placement": "party",
+        "flyingTypeDeclared": false
       }
     ],
     "soulLinkId": "link_0006"
@@ -558,7 +560,8 @@
         "speciesId": 48,
         "level": 1,
         "nickname": "MUTTBEARD",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": false
       },
       {
         "result": "caught",
@@ -567,24 +570,11 @@
         "speciesId": 84,
         "level": 1,
         "nickname": "PISTACHIO",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": true
       }
     ],
     "soulLinkId": "link_0009"
-  },
-  {
-    "id": "evt_0029",
-    "episodeId": "ep_0005",
-    "sequence": 40,
-    "videoTimestampSeconds": 2280,
-    "tone": "positive",
-    "importance": "minor",
-    "title": "We're calling Flying type for Doduo",
-    "description": "For the flying clause!",
-    "tags": [{ "tagId": "tag-4" }],
-    "type": "custom",
-    "pokemonIds": ["pkm_0018"],
-    "locationId": "new-bark-town"
   },
   {
     "id": "evt_0030",
@@ -682,7 +672,8 @@
         "speciesId": 164,
         "level": 10,
         "nickname": "IVY",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": true
       },
       {
         "result": "caught",
@@ -691,24 +682,11 @@
         "speciesId": 241,
         "level": 10,
         "nickname": "CHOCO",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": false
       }
     ],
     "soulLinkId": "link_0011"
-  },
-  {
-    "id": "evt_0034",
-    "episodeId": "ep_0005",
-    "sequence": 90,
-    "videoTimestampSeconds": 4585,
-    "tone": "positive",
-    "importance": "normal",
-    "title": "We're calling Flying type for Noctowl",
-    "description": "For the flying clause!",
-    "tags": [{ "tagId": "tag-4" }],
-    "type": "custom",
-    "pokemonIds": ["pkm_0021"],
-    "locationId": "new-bark-town"
   },
   {
     "id": "evt_0035",
@@ -898,7 +876,8 @@
         "speciesId": 258,
         "level": 1,
         "nickname": "HUNTARCH",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": false
       },
       {
         "result": "caught",
@@ -907,7 +886,8 @@
         "speciesId": 361,
         "level": 1,
         "nickname": "POOPYFLING",
-        "placement": "box"
+        "placement": "box",
+        "flyingTypeDeclared": false
       }
     ],
     "soulLinkId": "link_0014"
