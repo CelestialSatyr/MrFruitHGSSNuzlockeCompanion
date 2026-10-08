@@ -310,7 +310,7 @@ function ManualPlanner({
                       : "Add pair"}
                 </button>
               }
-              reason={availability.reason}
+              {...(availability.reason ? { reason: availability.reason } : {})}
             />
           );
         })}
