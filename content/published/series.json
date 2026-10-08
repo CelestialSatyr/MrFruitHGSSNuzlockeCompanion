@@ -195,6 +195,25 @@
               "height": 720
             }
           }
+        },
+        {
+          "id": "ep_0009",
+          "number": 9,
+          "status": "published",
+          "youtube": {
+            "videoId": "WxZ4ODiXCu4",
+            "url": "https://www.youtube.com/watch?v=WxZ4ODiXCu4",
+            "title": "From \"WE'RE SO BACK\" to \"IT'S SO OVER\" | Pokemon HGSS Soul Link Nuzlocke",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\nThe GOONERLOCKE Has Begun | Pokemon HGSS Soul Link Nuzlocke",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-10-08T18:00:17Z",
+            "durationSeconds": 3027,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/WxZ4ODiXCu4/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
         }
       ],
       "pokemon": [
@@ -374,22 +393,6 @@
           "initialAbilityId": "effect-spore"
         },
         {
-          "id": "pkm_0025",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0040",
-          "initialSpeciesId": 119,
-          "gender": "female",
-          "shiny": false
-        },
-        {
-          "id": "pkm_0026",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0040",
-          "initialSpeciesId": 56,
-          "gender": "male",
-          "shiny": false
-        },
-        {
           "id": "pkm_0011",
           "playerId": "player_fruit",
           "createdByEventId": "evt_0016",
@@ -464,6 +467,44 @@
           "shiny": false,
           "natureId": "lonely",
           "initialAbilityId": "serene-grace"
+        },
+        {
+          "id": "pkm_0025",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0040",
+          "initialSpeciesId": 119,
+          "gender": "female",
+          "shiny": false,
+          "natureId": "hardy",
+          "initialAbilityId": "plus"
+        },
+        {
+          "id": "pkm_0026",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0040",
+          "initialSpeciesId": 56,
+          "gender": "male",
+          "shiny": false
+        },
+        {
+          "id": "pkm_0029",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0056",
+          "initialSpeciesId": 131,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "naughty",
+          "initialAbilityId": "iron-fist"
+        },
+        {
+          "id": "pkm_0030",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0056",
+          "initialSpeciesId": 359,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "serious",
+          "initialAbilityId": "poison-heal"
         }
       ],
       "soulLinks": [
@@ -513,11 +554,6 @@
           "createdByEventId": "evt_0035"
         },
         {
-          "id": "link_0013",
-          "pokemonIds": ["pkm_0025", "pkm_0026"],
-          "createdByEventId": "evt_0040"
-        },
-        {
           "id": "link_0006",
           "pokemonIds": ["pkm_0011", "pkm_0012"],
           "createdByEventId": "evt_0016"
@@ -536,6 +572,16 @@
           "id": "link_0014",
           "pokemonIds": ["pkm_0027", "pkm_0028"],
           "createdByEventId": "evt_0042"
+        },
+        {
+          "id": "link_0013",
+          "pokemonIds": ["pkm_0025", "pkm_0026"],
+          "createdByEventId": "evt_0040"
+        },
+        {
+          "id": "link_0015",
+          "pokemonIds": ["pkm_0029", "pkm_0030"],
+          "createdByEventId": "evt_0056"
         }
       ],
       "rules": [
@@ -1558,7 +1604,8 @@
               "speciesId": 119,
               "level": 5,
               "nickname": "MIRIAM",
-              "placement": "party"
+              "placement": "party",
+              "flyingTypeDeclared": false
             },
             {
               "result": "caught",
@@ -1567,7 +1614,8 @@
               "speciesId": 56,
               "level": 6,
               "nickname": "CAUGHTAG",
-              "placement": "party"
+              "placement": "party",
+              "flyingTypeDeclared": false
             }
           ],
           "soulLinkId": "link_0013"
@@ -1703,7 +1751,7 @@
         {
           "id": "evt_0050",
           "episodeId": "ep_0008",
-          "sequence": 90,
+          "sequence": 100,
           "videoTimestampSeconds": 948,
           "tone": "positive",
           "importance": "normal",
@@ -1713,6 +1761,106 @@
           "fromSpeciesId": 427,
           "toSpeciesId": 428,
           "level": 17
+        },
+        {
+          "id": "evt_0051",
+          "episodeId": "ep_0008",
+          "sequence": 90,
+          "videoTimestampSeconds": 616,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Metapod Evolved!",
+          "type": "evolution",
+          "pokemonId": "pkm_0015",
+          "fromSpeciesId": 11,
+          "toSpeciesId": 12,
+          "level": 16
+        },
+        {
+          "id": "evt_0052",
+          "episodeId": "ep_0009",
+          "sequence": 10,
+          "videoTimestampSeconds": 1285,
+          "tone": "negative",
+          "importance": "major",
+          "title": "Never punished..",
+          "description": ".. At least for the Gyarados",
+          "type": "pokemon-death",
+          "pokemonId": "pkm_0005",
+          "locationId": "azalea-town",
+          "opponentName": "Gyarados",
+          "cause": "Knocked out by a Gyarados' Thrash"
+        },
+        {
+          "id": "evt_0053",
+          "episodeId": "ep_0009",
+          "sequence": 20,
+          "videoTimestampSeconds": 1718,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pokemonIds": ["pkm_0023", "pkm_0024"],
+          "to": "party",
+          "reason": "Gound / Grass"
+        },
+        {
+          "id": "evt_0054",
+          "episodeId": "ep_0009",
+          "sequence": 30,
+          "videoTimestampSeconds": 1993,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Cut unlocked!",
+          "type": "progression-changed",
+          "flag": { "kind": "capability", "id": "cut", "value": true }
+        },
+        {
+          "id": "evt_0055",
+          "episodeId": "ep_0009",
+          "sequence": 40,
+          "videoTimestampSeconds": 2400,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Headbutt unlocked!",
+          "type": "progression-changed",
+          "flag": { "kind": "capability", "id": "headbutt", "value": true }
+        },
+        {
+          "id": "evt_0056",
+          "episodeId": "ep_0009",
+          "sequence": 50,
+          "videoTimestampSeconds": 2880,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "And the first encounter for the episode!",
+          "description": "They can indeed eat their food now",
+          "type": "encounter",
+          "locationId": "azalea-town",
+          "opportunityId": "azalea-main",
+          "acquisitionType": "wild",
+          "outcomes": [
+            {
+              "result": "caught",
+              "playerId": "player_fruit",
+              "pokemonId": "pkm_0029",
+              "speciesId": 131,
+              "level": 7,
+              "nickname": "MONGELLY",
+              "placement": "box",
+              "flyingTypeDeclared": false
+            },
+            {
+              "result": "caught",
+              "playerId": "player_blue",
+              "pokemonId": "pkm_0030",
+              "speciesId": 359,
+              "level": 7,
+              "nickname": "STOPMOBLOX",
+              "placement": "box",
+              "flyingTypeDeclared": false
+            }
+          ],
+          "soulLinkId": "link_0015"
         }
       ]
     }

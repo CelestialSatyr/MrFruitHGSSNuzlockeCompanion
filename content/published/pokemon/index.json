@@ -175,22 +175,6 @@
     "initialAbilityId": "effect-spore"
   },
   {
-    "id": "pkm_0025",
-    "playerId": "player_fruit",
-    "createdByEventId": "evt_0040",
-    "initialSpeciesId": 119,
-    "gender": "female",
-    "shiny": false
-  },
-  {
-    "id": "pkm_0026",
-    "playerId": "player_blue",
-    "createdByEventId": "evt_0040",
-    "initialSpeciesId": 56,
-    "gender": "male",
-    "shiny": false
-  },
-  {
     "id": "pkm_0011",
     "playerId": "player_fruit",
     "createdByEventId": "evt_0016",
@@ -265,5 +249,43 @@
     "shiny": false,
     "natureId": "lonely",
     "initialAbilityId": "serene-grace"
+  },
+  {
+    "id": "pkm_0025",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0040",
+    "initialSpeciesId": 119,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "hardy",
+    "initialAbilityId": "plus"
+  },
+  {
+    "id": "pkm_0026",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0040",
+    "initialSpeciesId": 56,
+    "gender": "male",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0029",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0056",
+    "initialSpeciesId": 131,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "naughty",
+    "initialAbilityId": "iron-fist"
+  },
+  {
+    "id": "pkm_0030",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0056",
+    "initialSpeciesId": 359,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "poison-heal"
   }
 ]
