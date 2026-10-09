@@ -252,9 +252,6 @@ function TeamPokemonCard({ pokemon, theme }: { pokemon: PokemonState; theme: Pla
         {pokemon.currentNickname ? <small>{species}</small> : null}
         <PokemonTypeChips speciesId={pokemon.currentSpeciesId} />
       </div>
-      {pokemon.currentLevel ? (
-        <span className="team-pokemon-card__level">Lv. {pokemon.currentLevel}</span>
-      ) : null}
     </Link>
   );
 }

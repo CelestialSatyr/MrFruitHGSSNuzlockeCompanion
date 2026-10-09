@@ -1,44 +1,93 @@
 import { useMemo, useState, type ReactNode } from "react";
 import {
   analyseManualParty,
+  DEFAULT_PARTY_PLANNER_RANKING,
   findPartyRecommendations,
   getPairAvailability,
   type PartyPlannerPair,
   type PartyPlannerPokemon,
+  type PartyPlannerRankingCriterion,
   type PartyPlannerRecommendation,
 } from "@nuzlocke/core";
 import { Link } from "react-router";
 import { PrimaryTypeBadge } from "../components/PrimaryTypeBadge";
-import { usePokemonTypeMap } from "../hooks/usePokemonTypes";
+import { usePokemonPlannerDataMap } from "../hooks/usePokemonTypes";
 import { buildPartyPlannerData, collectPartyPlannerSpeciesIds } from "../lib/partyPlannerData";
 import { getHgssSpriteUrl } from "../lib/pokemon";
+import { getPlayerTheme } from "../lib/player-theme";
 import { useRunView } from "../context/RunViewContext";
 import "../styles/party-planner.css";
 
 type PlannerMode = "automatic" | "manual";
+
+interface RankingItem {
+  criterion: PartyPlannerRankingCriterion;
+  enabled: boolean;
+}
+
+const RANKING_META: Record<
+  PartyPlannerRankingCriterion,
+  { label: string; shortLabel: string; direction: "Maximise" | "Minimise"; description: string }
+> = {
+  pairCount: {
+    label: "Linked pairs",
+    shortLabel: "pairs",
+    direction: "Maximise",
+    description: "Prefer parties containing more complete Soul Link pairs.",
+  },
+  uniqueTypeCount: {
+    label: "Unique current types",
+    shortLabel: "type variety",
+    direction: "Maximise",
+    description: "Prefer broader coverage from the Pokémon's current actual typings.",
+  },
+  overlapCount: {
+    label: "Typing overlap",
+    shortLabel: "overlap",
+    direction: "Minimise",
+    description: "Prefer fewer repeated current typings across the complete party.",
+  },
+  totalBaseStats: {
+    label: "Total base stats",
+    shortLabel: "BST",
+    direction: "Maximise",
+    description: "Prefer the highest combined BST from the Pokémon's current species.",
+  },
+};
+
+function createDefaultRanking(): RankingItem[] {
+  return DEFAULT_PARTY_PLANNER_RANKING.map((criterion) => ({ criterion, enabled: true }));
+}
 
 export function PartyPlannerPage() {
   const { dataset, state } = useRunView();
   const [mode, setMode] = useState<PlannerMode>("automatic");
   const [selectedPairIds, setSelectedPairIds] = useState<string[]>([]);
   const [rerollToken, setRerollToken] = useState(0);
+  const [rankingItems, setRankingItems] = useState<RankingItem[]>(createDefaultRanking);
   const speciesIds = useMemo(() => collectPartyPlannerSpeciesIds(dataset, state), [dataset, state]);
-  const { typesBySpecies, loading, error } = usePokemonTypeMap(speciesIds);
+  const { dataBySpecies, loading, error } = usePokemonPlannerDataMap(speciesIds);
 
   const plannerData = useMemo(
-    () => buildPartyPlannerData(dataset, state, typesBySpecies),
-    [dataset, state, typesBySpecies],
+    () => buildPartyPlannerData(dataset, state, dataBySpecies),
+    [dataset, state, dataBySpecies],
+  );
+
+  const activeRanking = useMemo(
+    () => rankingItems.filter((item) => item.enabled).map((item) => item.criterion),
+    [rankingItems],
   );
 
   const recommendations = useMemo(() => {
     // rerollToken intentionally invalidates the calculation. Exact score ties
-    // are randomly ordered, giving Mr Fruit another set of equally-good teams.
+    // are randomly ordered, giving another set of equally-ranked teams.
     void rerollToken;
     return findPartyRecommendations(plannerData.pairs, {
       maxPairs: 6,
       resultCount: 3,
+      ranking: activeRanking,
     });
-  }, [plannerData.pairs, rerollToken]);
+  }, [activeRanking, plannerData.pairs, rerollToken]);
 
   const pairById = useMemo(
     () => new Map(plannerData.pairs.map((pair) => [pair.id, pair])),
@@ -59,17 +108,46 @@ export function PartyPlannerPage() {
     setSelectedPairIds((current) => [...current, pair.id]);
   }
 
+  function setRankingEnabled(criterion: PartyPlannerRankingCriterion, enabled: boolean) {
+    setRankingItems((current) =>
+      current.map((item) => (item.criterion === criterion ? { ...item, enabled } : item)),
+    );
+  }
+
+  function moveRanking(criterion: PartyPlannerRankingCriterion, direction: -1 | 1) {
+    setRankingItems((current) => {
+      const index = current.findIndex((item) => item.criterion === criterion);
+      const target = index + direction;
+      if (index < 0 || target < 0 || target >= current.length) return current;
+      const next = [...current];
+      const item = next[index];
+      const targetItem = next[target];
+      if (!item || !targetItem) return current;
+      next[index] = targetItem;
+      next[target] = item;
+      return next;
+    });
+  }
+
+  function resetRanking() {
+    setRankingItems(createDefaultRanking());
+  }
+
   const leftPlayer = dataset.players.find((player) => player.id === dataset.run.playerIds[0]);
   const rightPlayer = dataset.players.find((player) => player.id === dataset.run.playerIds[1]);
+  const leftTheme = leftPlayer ? getPlayerTheme(leftPlayer) : "silver";
+  const rightTheme = rightPlayer ? getPlayerTheme(rightPlayer) : "gold";
 
   return (
-    <div className="page-stack party-planner-page">
+    <div
+      className={`page-stack party-planner-page party-planner-page--left-${leftTheme} party-planner-page--right-${rightTheme}`}
+    >
       <header className="page-heading party-planner-heading">
         <div>
           <p className="eyebrow">Team building</p>
           <h1>Party Planner</h1>
           <p>
-            Build the largest legal Soul Link party. Primary typings are unique across both teams;
+            Build and compare legal Soul Link parties. Primary typings are unique across both teams;
             every link is selected as a pair.
           </p>
         </div>
@@ -99,14 +177,14 @@ export function PartyPlannerPage() {
 
       {loading ? (
         <section className="planner-state-card">
-          <strong>Loading party typings…</strong>
-          <span>The planner is resolving HeartGold/SoulSilver typings for the alive links.</span>
+          <strong>Loading party data…</strong>
+          <span>The planner is resolving typings and base stats for the alive links.</span>
         </section>
       ) : null}
 
       {error ? (
         <section className="planner-state-card planner-state-card--error">
-          <strong>Typing data could not be loaded.</strong>
+          <strong>Pokémon data could not be loaded.</strong>
           <span>{error}</span>
         </section>
       ) : null}
@@ -138,7 +216,12 @@ export function PartyPlannerPage() {
         mode === "automatic" ? (
           <AutomaticPlanner
             recommendations={recommendations}
+            rankingItems={rankingItems}
+            activeRanking={activeRanking}
             onReroll={() => setRerollToken((value) => value + 1)}
+            onSetRankingEnabled={setRankingEnabled}
+            onMoveRanking={moveRanking}
+            onResetRanking={resetRanking}
           />
         ) : (
           <ManualPlanner
@@ -183,10 +266,20 @@ function PlannerRuleStrip({
 
 function AutomaticPlanner({
   recommendations,
+  rankingItems,
+  activeRanking,
   onReroll,
+  onSetRankingEnabled,
+  onMoveRanking,
+  onResetRanking,
 }: {
   recommendations: PartyPlannerRecommendation[];
+  rankingItems: RankingItem[];
+  activeRanking: PartyPlannerRankingCriterion[];
   onReroll(): void;
+  onSetRankingEnabled(criterion: PartyPlannerRankingCriterion, enabled: boolean): void;
+  onMoveRanking(criterion: PartyPlannerRankingCriterion, direction: -1 | 1): void;
+  onResetRanking(): void;
 }) {
   if (!recommendations.length) {
     return (
@@ -203,12 +296,27 @@ function AutomaticPlanner({
         <div>
           <p className="eyebrow">Automatic</p>
           <h2>Top party options</h2>
-          <p>Pair count is ranked first, then total type variety, then the least typing overlap.</p>
+          <p>
+            Enable the criteria you care about and arrange them from highest to lowest priority.
+          </p>
         </div>
         <button type="button" className="secondary-button" onClick={onReroll}>
           Reroll tied options
         </button>
       </div>
+
+      <RankingControls
+        items={rankingItems}
+        onSetEnabled={onSetRankingEnabled}
+        onMove={onMoveRanking}
+        onReset={onResetRanking}
+      />
+
+      {!activeRanking.length ? (
+        <div className="planner-ranking-empty">
+          All ranking criteria are disabled. Legal parties are currently ordered randomly.
+        </div>
+      ) : null}
 
       <div className="planner-recommendations">
         {recommendations.map((recommendation, index) => (
@@ -230,6 +338,84 @@ function AutomaticPlanner({
             </div>
           </article>
         ))}
+      </div>
+    </section>
+  );
+}
+
+function RankingControls({
+  items,
+  onSetEnabled,
+  onMove,
+  onReset,
+}: {
+  items: RankingItem[];
+  onSetEnabled(criterion: PartyPlannerRankingCriterion, enabled: boolean): void;
+  onMove(criterion: PartyPlannerRankingCriterion, direction: -1 | 1): void;
+  onReset(): void;
+}) {
+  let enabledPriority = 0;
+
+  return (
+    <section className="planner-ranking-card" aria-label="Automatic ranking priorities">
+      <header className="planner-ranking-card__heading">
+        <div>
+          <small>Ranking priorities</small>
+          <strong>Highest priority is evaluated first</strong>
+        </div>
+        <button type="button" className="secondary-button" onClick={onReset}>
+          Reset defaults
+        </button>
+      </header>
+
+      <div className="planner-ranking-list">
+        {items.map((item, index) => {
+          const meta = RANKING_META[item.criterion];
+          const priority = item.enabled ? ++enabledPriority : undefined;
+          return (
+            <div
+              className={`planner-ranking-row${item.enabled ? "" : " planner-ranking-row--disabled"}`}
+              key={item.criterion}
+            >
+              <label className="planner-ranking-toggle">
+                <input
+                  type="checkbox"
+                  checked={item.enabled}
+                  onChange={(event) => onSetEnabled(item.criterion, event.target.checked)}
+                />
+                <span className="planner-ranking-priority">
+                  {priority === undefined ? "Off" : `#${priority}`}
+                </span>
+                <span className="planner-ranking-copy">
+                  <strong>{meta.label}</strong>
+                  <small>
+                    {meta.direction} · {meta.description}
+                  </small>
+                </span>
+              </label>
+              <div className="planner-ranking-move" aria-label={`Move ${meta.label}`}>
+                <button
+                  type="button"
+                  onClick={() => onMove(item.criterion, -1)}
+                  disabled={index === 0}
+                  aria-label={`Move ${meta.label} up`}
+                  title="Higher priority"
+                >
+                  ↑
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onMove(item.criterion, 1)}
+                  disabled={index === items.length - 1}
+                  aria-label={`Move ${meta.label} down`}
+                  title="Lower priority"
+                >
+                  ↓
+                </button>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -338,10 +524,22 @@ function PlannerPairRow({
     >
       <PlannerPokemon pokemon={pair.left} side="left" />
       <div className="planner-pair-row__centre">
-        <span className="planner-pair-row__line" aria-hidden="true" />
-        {centre}
+        <div className="planner-pair-row__primary planner-pair-row__primary--left">
+          <PrimaryTypeBadge
+            type={pair.left.primaryType}
+            flyingTypeDeclared={pair.left.flyingTypeDeclared}
+            compact
+          />
+        </div>
+        <div className="planner-pair-row__control">{centre}</div>
+        <div className="planner-pair-row__primary planner-pair-row__primary--right">
+          <PrimaryTypeBadge
+            type={pair.right.primaryType}
+            flyingTypeDeclared={pair.right.flyingTypeDeclared}
+            compact
+          />
+        </div>
         {reason ? <small>{reason}</small> : null}
-        <span className="planner-pair-row__line" aria-hidden="true" />
       </div>
       <PlannerPokemon pokemon={pair.right} side="right" />
     </article>
@@ -365,11 +563,6 @@ function PlannerPokemon({
       <div className="planner-pokemon__copy">
         <strong>{pokemon.nickname ?? pokemon.speciesName}</strong>
         {pokemon.nickname ? <small>{pokemon.speciesName}</small> : null}
-        <PrimaryTypeBadge
-          type={pokemon.primaryType}
-          flyingTypeDeclared={pokemon.flyingTypeDeclared}
-          compact
-        />
         <div className="planner-pokemon__actual-types" aria-label="Current typings">
           {pokemon.actualTypes.map((type) => (
             <span key={type} className={`type-chip type-chip--${type}`}>
@@ -377,6 +570,7 @@ function PlannerPokemon({
             </span>
           ))}
         </div>
+        <small className="planner-pokemon__bst">BST {pokemon.baseStatTotal}</small>
       </div>
     </Link>
   );
@@ -390,6 +584,9 @@ function ScorePills({ score }: { score: PartyPlannerRecommendation["score"] }) {
       </span>
       <span>
         <b>{score.overlapCount}</b> overlaps
+      </span>
+      <span>
+        <b>{score.totalBaseStats.toLocaleString()}</b> total BST
       </span>
     </div>
   );

@@ -14,13 +14,51 @@ interface PokeApiPastTypes {
   types: PokeApiTypeSlot[];
 }
 
+interface PokeApiStatSlot {
+  base_stat: number;
+  stat: NamedResource;
+}
+
 interface PokeApiPokemon {
   types: PokeApiTypeSlot[];
   past_types?: PokeApiPastTypes[];
+  stats?: PokeApiStatSlot[];
+}
+
+export interface HgssPokemonPlannerData {
+  types: readonly PokemonType[];
+  baseStatTotal: number;
 }
 
 const typeSet = new Set<string>(POKEMON_TYPES);
-const promiseCache = new Map<number, Promise<readonly PokemonType[]>>();
+const payloadPromiseCache = new Map<number, Promise<PokeApiPokemon>>();
+
+// A small set of pre-Gen-VI/VII BST values differs from modern PokéAPI data.
+// HGSS uses Generation IV mechanics, whose base stats match these historical values.
+const HGSS_BASE_STAT_TOTAL_OVERRIDES: Readonly<Record<number, number>> = {
+  12: 385,
+  15: 385,
+  18: 469,
+  25: 300,
+  26: 475,
+  31: 495,
+  34: 495,
+  36: 473,
+  40: 425,
+  45: 480,
+  62: 500,
+  65: 490,
+  71: 480,
+  76: 485,
+  181: 500,
+  182: 480,
+  184: 410,
+  189: 450,
+  267: 385,
+  295: 480,
+  398: 475,
+  407: 505,
+};
 
 const GENERATION_NUMBER: Record<string, number> = {
   "generation-i": 1,
@@ -62,24 +100,60 @@ export function resolveHgssPokemonTypes(payload: PokeApiPokemon): readonly Pokem
   return resolved;
 }
 
-export function getHgssPokemonTypes(speciesId: number): Promise<readonly PokemonType[]> {
-  const existing = promiseCache.get(speciesId);
+export function resolvePokemonBaseStatTotal(payload: PokeApiPokemon): number {
+  const stats = payload.stats ?? [];
+  const total = stats.reduce((sum, entry) => sum + entry.base_stat, 0);
+  if (!Number.isFinite(total) || total <= 0) {
+    throw new Error("PokéAPI returned no recognised base-stat data.");
+  }
+  return total;
+}
+
+export function resolveHgssPokemonBaseStatTotal(
+  speciesId: number,
+  payload: PokeApiPokemon,
+): number {
+  return HGSS_BASE_STAT_TOTAL_OVERRIDES[speciesId] ?? resolvePokemonBaseStatTotal(payload);
+}
+
+function getPokemonPayload(speciesId: number): Promise<PokeApiPokemon> {
+  const existing = payloadPromiseCache.get(speciesId);
   if (existing) return existing;
 
   const request = fetch(`https://pokeapi.co/api/v2/pokemon/${speciesId}`)
     .then(async (response) => {
       if (!response.ok) {
-        throw new Error(`Could not load Pokémon typing for #${speciesId} (${response.status}).`);
+        throw new Error(`Could not load Pokémon data for #${speciesId} (${response.status}).`);
       }
-      return resolveHgssPokemonTypes((await response.json()) as PokeApiPokemon);
+      return (await response.json()) as PokeApiPokemon;
     })
     .catch((error) => {
-      promiseCache.delete(speciesId);
+      payloadPromiseCache.delete(speciesId);
       throw error;
     });
 
-  promiseCache.set(speciesId, request);
+  payloadPromiseCache.set(speciesId, request);
   return request;
+}
+
+export function getHgssPokemonTypes(speciesId: number): Promise<readonly PokemonType[]> {
+  return getPokemonPayload(speciesId).then(resolveHgssPokemonTypes);
+}
+
+export function getPokemonBaseStatTotal(speciesId: number): Promise<number> {
+  return getPokemonPayload(speciesId).then((payload) =>
+    resolveHgssPokemonBaseStatTotal(speciesId, payload),
+  );
+}
+
+export async function getHgssPokemonPlannerData(
+  speciesId: number,
+): Promise<HgssPokemonPlannerData> {
+  const payload = await getPokemonPayload(speciesId);
+  return {
+    types: resolveHgssPokemonTypes(payload),
+    baseStatTotal: resolveHgssPokemonBaseStatTotal(speciesId, payload),
+  };
 }
 
 export async function getHgssPokemonTypeMap(
@@ -92,6 +166,16 @@ export async function getHgssPokemonTypeMap(
   return new Map(entries);
 }
 
+export async function getHgssPokemonPlannerDataMap(
+  speciesIds: readonly number[],
+): Promise<Map<number, HgssPokemonPlannerData>> {
+  const unique = [...new Set(speciesIds.filter((id) => Number.isFinite(id) && id > 0))];
+  const entries = await Promise.all(
+    unique.map(async (id) => [id, await getHgssPokemonPlannerData(id)] as const),
+  );
+  return new Map(entries);
+}
+
 export function clearHgssPokemonTypeCache(): void {
-  promiseCache.clear();
+  payloadPromiseCache.clear();
 }

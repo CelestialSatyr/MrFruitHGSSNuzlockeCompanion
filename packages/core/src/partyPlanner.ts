@@ -10,6 +10,8 @@ export interface PartyPlannerPokemon {
   primaryType: PokemonType;
   /** Current in-game typings. Used only for diversity scoring. */
   actualTypes: readonly PokemonType[];
+  /** Base Stat Total for the Pokémon's current species. */
+  baseStatTotal: number;
   /** Historical capture decision; useful for UI badges. */
   flyingTypeDeclared: boolean;
   shiny?: boolean;
@@ -26,7 +28,18 @@ export interface PartyPlannerScore {
   uniqueTypeCount: number;
   overlapCount: number;
   typeOccurrences: number;
+  totalBaseStats: number;
 }
+
+export type PartyPlannerRankingCriterion =
+  "pairCount" | "uniqueTypeCount" | "overlapCount" | "totalBaseStats";
+
+export const DEFAULT_PARTY_PLANNER_RANKING: readonly PartyPlannerRankingCriterion[] = [
+  "pairCount",
+  "uniqueTypeCount",
+  "overlapCount",
+  "totalBaseStats",
+];
 
 export interface PartyPlannerRecommendation {
   pairIds: string[];
@@ -51,6 +64,7 @@ interface PlannerState {
   primaryMask: number;
   actualMask: number;
   typeOccurrences: number;
+  totalBaseStats: number;
   pairIds: string[];
 }
 
@@ -87,6 +101,10 @@ function actualOccurrenceCount(pair: PartyPlannerPair): number {
   return pair.left.actualTypes.length + pair.right.actualTypes.length;
 }
 
+function baseStatTotalFor(pair: PartyPlannerPair): number {
+  return pair.left.baseStatTotal + pair.right.baseStatTotal;
+}
+
 function scoreState(state: PlannerState): PartyPlannerScore {
   const uniqueTypeCount = popcount(state.actualMask);
   return {
@@ -94,18 +112,53 @@ function scoreState(state: PlannerState): PartyPlannerScore {
     uniqueTypeCount,
     overlapCount: state.typeOccurrences - uniqueTypeCount,
     typeOccurrences: state.typeOccurrences,
+    totalBaseStats: state.totalBaseStats,
   };
 }
 
-export function comparePartyPlannerScores(a: PartyPlannerScore, b: PartyPlannerScore): number {
-  if (a.pairCount !== b.pairCount) return b.pairCount - a.pairCount;
-  if (a.uniqueTypeCount !== b.uniqueTypeCount) return b.uniqueTypeCount - a.uniqueTypeCount;
-  if (a.overlapCount !== b.overlapCount) return a.overlapCount - b.overlapCount;
+function normaliseRanking(
+  ranking: readonly PartyPlannerRankingCriterion[] | undefined,
+): PartyPlannerRankingCriterion[] {
+  if (ranking === undefined) return [...DEFAULT_PARTY_PLANNER_RANKING];
+
+  const seen = new Set<PartyPlannerRankingCriterion>();
+  return ranking.filter((criterion) => {
+    if (seen.has(criterion)) return false;
+    seen.add(criterion);
+    return true;
+  });
+}
+
+export function comparePartyPlannerScores(
+  a: PartyPlannerScore,
+  b: PartyPlannerScore,
+  ranking: readonly PartyPlannerRankingCriterion[] = DEFAULT_PARTY_PLANNER_RANKING,
+): number {
+  for (const criterion of ranking) {
+    switch (criterion) {
+      case "pairCount":
+        if (a.pairCount !== b.pairCount) return b.pairCount - a.pairCount;
+        break;
+      case "uniqueTypeCount":
+        if (a.uniqueTypeCount !== b.uniqueTypeCount) {
+          return b.uniqueTypeCount - a.uniqueTypeCount;
+        }
+        break;
+      case "overlapCount":
+        if (a.overlapCount !== b.overlapCount) return a.overlapCount - b.overlapCount;
+        break;
+      case "totalBaseStats":
+        if (a.totalBaseStats !== b.totalBaseStats) {
+          return b.totalBaseStats - a.totalBaseStats;
+        }
+        break;
+    }
+  }
   return 0;
 }
 
 function exactStateKey(state: PlannerState): string {
-  return `${state.primaryMask}:${state.actualMask}:${state.typeOccurrences}:${state.pairIds.length}`;
+  return `${state.primaryMask}:${state.actualMask}:${state.typeOccurrences}:${state.totalBaseStats}:${state.pairIds.length}`;
 }
 
 function teamKey(pairIds: readonly string[]): string {
@@ -144,21 +197,18 @@ function validateCandidate(pair: PartyPlannerPair): string | undefined {
   if (!pair.left.actualTypes.length || !pair.right.actualTypes.length) {
     return `Soul Link ${pair.id} is missing current typing data.`;
   }
+  if (pair.left.baseStatTotal <= 0 || pair.right.baseStatTotal <= 0) {
+    return `Soul Link ${pair.id} is missing base-stat data.`;
+  }
   return undefined;
 }
 
 /**
  * Exact optimiser for the Party Planner.
  *
- * Ranking is, in order:
- * 1. most Soul Link pairs (up to maxPairs)
- * 2. most unique current typings across all Pokémon
- * 3. least total typing overlap
- * 4. arbitrary/random ordering for mathematically tied teams
- *
- * The sparse DP is exact. States can be merged when they have the same used
- * primary types, current-type union, occurrence count and pair count because
- * those values fully determine both future feasibility and final score.
+ * The caller controls the ranking criteria and their priority order. The
+ * default remains: pair count, type diversity, overlap, then total BST.
+ * Disabled criteria are simply omitted from `ranking`.
  */
 export function findPartyRecommendations(
   candidates: readonly PartyPlannerPair[],
@@ -166,11 +216,13 @@ export function findPartyRecommendations(
     maxPairs?: number;
     resultCount?: number;
     random?: () => number;
+    ranking?: readonly PartyPlannerRankingCriterion[];
   } = {},
 ): PartyPlannerRecommendation[] {
   const maxPairs = options.maxPairs ?? 6;
   const resultCount = options.resultCount ?? 3;
   const random = options.random ?? Math.random;
+  const ranking = normaliseRanking(options.ranking);
 
   if (maxPairs < 1 || resultCount < 1) return [];
 
@@ -182,6 +234,7 @@ export function findPartyRecommendations(
     primaryMask: 0,
     actualMask: 0,
     typeOccurrences: 0,
+    totalBaseStats: 0,
     pairIds: [],
   };
   states.set(exactStateKey(empty), [empty]);
@@ -190,6 +243,7 @@ export function findPartyRecommendations(
     const pairPrimaryMask = primaryMaskFor(pair);
     const pairActualMask = actualMaskFor(pair);
     const pairOccurrences = actualOccurrenceCount(pair);
+    const pairBaseStats = baseStatTotalFor(pair);
     const snapshot = [...states.values()].flatMap((bucket) => [...bucket]);
 
     for (const state of snapshot) {
@@ -202,6 +256,7 @@ export function findPartyRecommendations(
           primaryMask: state.primaryMask | pairPrimaryMask,
           actualMask: state.actualMask | pairActualMask,
           typeOccurrences: state.typeOccurrences + pairOccurrences,
+          totalBaseStats: state.totalBaseStats + pairBaseStats,
           pairIds: [...state.pairIds, pair.id],
         },
         resultCount,
@@ -232,7 +287,7 @@ export function findPartyRecommendations(
   }
 
   recommendations.sort((a, b) => {
-    const score = comparePartyPlannerScores(a.score, b.score);
+    const score = comparePartyPlannerScores(a.score, b.score, ranking);
     return score !== 0 ? score : a.tieBreaker - b.tieBreaker;
   });
 
@@ -246,6 +301,7 @@ export function analyseManualParty(
 ): ManualPartyAnalysis {
   let actualMask = 0;
   let typeOccurrences = 0;
+  let totalBaseStats = 0;
   const primaryTypes = new Set<PokemonType>();
 
   for (const pair of selectedPairs) {
@@ -253,6 +309,7 @@ export function analyseManualParty(
     primaryTypes.add(pair.right.primaryType);
     actualMask |= actualMaskFor(pair);
     typeOccurrences += actualOccurrenceCount(pair);
+    totalBaseStats += baseStatTotalFor(pair);
   }
 
   const actualTypes = POKEMON_TYPES.filter((type) => (actualMask & bitFor(type)) !== 0);
@@ -265,6 +322,7 @@ export function analyseManualParty(
       uniqueTypeCount: actualTypes.length,
       overlapCount: typeOccurrences - actualTypes.length,
       typeOccurrences,
+      totalBaseStats,
     },
   };
 }

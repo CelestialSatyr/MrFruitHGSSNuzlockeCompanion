@@ -6,7 +6,7 @@ import type {
   RunDataset,
   RunState,
 } from "@nuzlocke/core";
-import type { HgssProgressionState } from "@nuzlocke/hgss";
+import type { HgssPokemonPlannerData, HgssProgressionState } from "@nuzlocke/hgss";
 import { getSpeciesName } from "./pokemon";
 
 export interface PartyPlannerDataResult {
@@ -77,11 +77,13 @@ export function resolvePokemonRuleTyping(
 function makePlannerPokemon(
   dataset: RunDataset,
   pokemon: PokemonState,
+  dataBySpecies: ReadonlyMap<number, HgssPokemonPlannerData>,
   typesBySpecies: ReadonlyMap<number, readonly PokemonType[]>,
   unresolvedFlyingPokemonIds: string[],
 ): PartyPlannerPokemon | undefined {
   const resolved = resolvePokemonRuleTyping(dataset, pokemon, typesBySpecies);
-  if (!resolved) return undefined;
+  const currentData = dataBySpecies.get(pokemon.currentSpeciesId);
+  if (!resolved || !currentData) return undefined;
   if (resolved.requiresFlyingDeclaration) {
     unresolvedFlyingPokemonIds.push(pokemon.id);
     return undefined;
@@ -96,6 +98,7 @@ function makePlannerPokemon(
     speciesName: getSpeciesName(pokemon.currentSpeciesId),
     primaryType,
     actualTypes: currentTypes,
+    baseStatTotal: currentData.baseStatTotal,
     flyingTypeDeclared,
     shiny: pokemon.source.shiny,
   };
@@ -104,12 +107,15 @@ function makePlannerPokemon(
 export function buildPartyPlannerData(
   dataset: RunDataset,
   state: RunState<HgssProgressionState>,
-  typesBySpecies: ReadonlyMap<number, readonly PokemonType[]>,
+  dataBySpecies: ReadonlyMap<number, HgssPokemonPlannerData>,
 ): PartyPlannerDataResult {
   const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
   const unresolvedFlyingPokemonIds: string[] = [];
   const invalidPairIds: string[] = [];
   const pairs: PartyPlannerPair[] = [];
+  const typesBySpecies = new Map(
+    [...dataBySpecies].map(([speciesId, data]) => [speciesId, data.types] as const),
+  );
 
   for (const link of state.soulLinks.values()) {
     if (link.status !== "active") continue;
@@ -123,10 +129,17 @@ export function buildPartyPlannerData(
     const rightState = linked.find((pokemon) => pokemon.playerId === rightPlayerId);
     if (!leftState || !rightState) continue;
 
-    const left = makePlannerPokemon(dataset, leftState, typesBySpecies, unresolvedFlyingPokemonIds);
+    const left = makePlannerPokemon(
+      dataset,
+      leftState,
+      dataBySpecies,
+      typesBySpecies,
+      unresolvedFlyingPokemonIds,
+    );
     const right = makePlannerPokemon(
       dataset,
       rightState,
+      dataBySpecies,
       typesBySpecies,
       unresolvedFlyingPokemonIds,
     );

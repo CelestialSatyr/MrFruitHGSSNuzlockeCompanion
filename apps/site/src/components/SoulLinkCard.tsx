@@ -19,14 +19,19 @@ function lifeLabel(pokemon: PokemonState): string {
 }
 
 export function SoulLinkCard({ link, dataset, pokemonById, compact = false }: SoulLinkCardProps) {
-  const [leftId, rightId] = link.pokemonIds;
-  const left = pokemonById.get(leftId);
-  const right = pokemonById.get(rightId);
+  const linkedPokemon = link.pokemonIds
+    .map((pokemonId) => pokemonById.get(pokemonId))
+    .filter((pokemon): pokemon is PokemonState => pokemon !== undefined);
+  const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
+  if (!leftPlayerId || !rightPlayerId) return null;
+
+  const left = linkedPokemon.find((pokemon) => pokemon.playerId === leftPlayerId);
+  const right = linkedPokemon.find((pokemon) => pokemon.playerId === rightPlayerId);
   if (!left || !right) return null;
 
   const playerById = new Map<string, Player>(dataset.players.map((player) => [player.id, player]));
-  const leftPlayer = playerById.get(left.playerId);
-  const rightPlayer = playerById.get(right.playerId);
+  const leftPlayer = playerById.get(leftPlayerId);
+  const rightPlayer = playerById.get(rightPlayerId);
 
   return (
     <article

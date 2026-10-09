@@ -2226,13 +2226,6 @@ a.player-profile-card:hover {
   color: var(--muted);
   font-size: 0.74rem;
 }
-.team-pokemon-card__level {
-  color: var(--muted-strong);
-  font-size: 0.72rem;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 .type-chip-row {
   display: flex;
   flex-wrap: wrap;
@@ -3902,7 +3895,7 @@ a.player-profile-card:hover {
   overflow-wrap: anywhere;
 }
 
-/* HeartGold always enters from the right / centre edge. SoulSilver mirrors it from the left. */
+/* Legacy theme-specific defaults; final mirrored direction is player-order driven below. */
 .run-player-column--gold {
   background: linear-gradient(to left, rgba(217, 173, 66, 0.15), transparent 72%);
 }
@@ -4380,7 +4373,7 @@ a.player-profile-card:hover {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Single-player HeartGold still enters from the right; SoulSilver mirrors from the left. */
+/* Legacy theme-specific defaults; player identity overrides direction below. */
 .event-card--gold:not(.event-card--dual) {
   background: linear-gradient(to left, var(--player-gold-soft), var(--surface) 38%);
 }
@@ -4388,7 +4381,7 @@ a.player-profile-card:hover {
   background: linear-gradient(to right, var(--player-silver-soft), var(--surface) 38%);
 }
 
-/* Dual-player moments deliberately map HeartGold to the visual left and SoulSilver to the right. */
+/* Legacy dual-player default; player-order variables override this below. */
 .event-card--dual {
   background: linear-gradient(
     90deg,
@@ -4546,7 +4539,7 @@ a.player-profile-card:hover {
   color: #d99797;
 }
 
-/* Gym battles use the same HeartGold-left / SoulSilver-right rule. */
+/* Legacy gym gradient; player-order variables override this below. */
 .event-card--gym {
   background:
     radial-gradient(circle at 10% 50%, rgba(217, 173, 66, 0.16), transparent 25%),
@@ -5012,4 +5005,88 @@ a.player-profile-card:hover {
 .event-side-visual .primary-type-badges {
   justify-content: center;
   margin-top: 0;
+}
+
+/* ============================================================
+   PLAYER-ORDERED MIRRORED GRADIENTS
+   Player 1 is always the visual left; Player 2 is always right.
+   Theme colours follow the player instead of deciding layout order.
+   ============================================================ */
+.event-card--left-gold {
+  --event-left-soft: var(--player-gold-soft);
+}
+.event-card--left-silver {
+  --event-left-soft: var(--player-silver-soft);
+}
+.event-card--right-gold {
+  --event-right-soft: var(--player-gold-soft);
+}
+.event-card--right-silver {
+  --event-right-soft: var(--player-silver-soft);
+}
+
+.event-card--dual {
+  background: linear-gradient(
+    90deg,
+    var(--event-left-soft, var(--player-silver-soft)),
+    var(--surface) 31%,
+    var(--surface) 69%,
+    var(--event-right-soft, var(--player-gold-soft))
+  );
+}
+
+.event-card--dual .event-owner--dual,
+.event-owner--dual {
+  background: linear-gradient(
+    90deg,
+    var(--event-left-soft, var(--player-silver-soft)),
+    var(--event-right-soft, var(--player-gold-soft))
+  );
+}
+
+.event-card--player-left.event-card--gold:not(.event-card--dual) {
+  background: linear-gradient(90deg, var(--player-gold-soft), var(--surface) 38%);
+}
+.event-card--player-left.event-card--silver:not(.event-card--dual) {
+  background: linear-gradient(90deg, var(--player-silver-soft), var(--surface) 38%);
+}
+.event-card--player-right.event-card--gold:not(.event-card--dual) {
+  background: linear-gradient(270deg, var(--player-gold-soft), var(--surface) 38%);
+}
+.event-card--player-right.event-card--silver:not(.event-card--dual) {
+  background: linear-gradient(270deg, var(--player-silver-soft), var(--surface) 38%);
+}
+
+.event-side-visual--left.event-side-visual--gold {
+  background: linear-gradient(90deg, rgba(217, 173, 66, 0.19), rgba(7, 10, 15, 0.3) 72%);
+}
+.event-side-visual--left.event-side-visual--silver {
+  background: linear-gradient(90deg, rgba(195, 204, 216, 0.18), rgba(7, 10, 15, 0.3) 72%);
+}
+.event-side-visual--right.event-side-visual--gold {
+  background: linear-gradient(270deg, rgba(217, 173, 66, 0.19), rgba(7, 10, 15, 0.3) 72%);
+}
+.event-side-visual--right.event-side-visual--silver {
+  background: linear-gradient(270deg, rgba(195, 204, 216, 0.18), rgba(7, 10, 15, 0.3) 72%);
+}
+
+.event-card--gym {
+  background:
+    radial-gradient(
+      circle at 10% 50%,
+      var(--event-left-soft, var(--player-silver-soft)),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 90% 50%,
+      var(--event-right-soft, var(--player-gold-soft)),
+      transparent 25%
+    ),
+    linear-gradient(
+      90deg,
+      var(--event-left-soft, var(--player-silver-soft)),
+      rgba(16, 23, 34, 0.98) 38%,
+      rgba(16, 23, 34, 0.98) 62%,
+      var(--event-right-soft, var(--player-gold-soft))
+    );
 }

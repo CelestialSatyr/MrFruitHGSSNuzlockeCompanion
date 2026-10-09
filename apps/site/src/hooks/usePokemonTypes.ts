@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import type { PokemonType } from "@nuzlocke/core";
-import { getHgssPokemonTypeMap, getHgssPokemonTypes } from "@nuzlocke/hgss";
+import {
+  getHgssPokemonPlannerDataMap,
+  getHgssPokemonTypeMap,
+  getHgssPokemonTypes,
+  type HgssPokemonPlannerData,
+} from "@nuzlocke/hgss";
 
 export function usePokemonTypes(speciesId: number | undefined) {
   const [types, setTypes] = useState<readonly PokemonType[] | undefined>();
@@ -65,4 +70,43 @@ export function usePokemonTypeMap(speciesIds: readonly number[]) {
   }, [key]);
 
   return { typesBySpecies, error, loading };
+}
+
+export function usePokemonPlannerDataMap(speciesIds: readonly number[]) {
+  const key = useMemo(() => [...new Set(speciesIds)].sort((a, b) => a - b).join(","), [speciesIds]);
+  const [dataBySpecies, setDataBySpecies] = useState<Map<number, HgssPokemonPlannerData>>(
+    () => new Map(),
+  );
+  const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const ids = key ? key.split(",").map(Number) : [];
+    setError(undefined);
+    if (!ids.length) {
+      setDataBySpecies(new Map());
+      setLoading(false);
+      return () => undefined;
+    }
+
+    setLoading(true);
+    void getHgssPokemonPlannerDataMap(ids)
+      .then((value) => {
+        if (cancelled) return;
+        setDataBySpecies(value);
+        setLoading(false);
+      })
+      .catch((value: unknown) => {
+        if (cancelled) return;
+        setError(value instanceof Error ? value.message : String(value));
+        setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [key]);
+
+  return { dataBySpecies, error, loading };
 }

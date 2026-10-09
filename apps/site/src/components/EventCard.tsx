@@ -295,22 +295,30 @@ function EventVisual({ event, state }: { event: RunEvent; state: RunState<HgssPr
 }
 
 function DualSideVisual({
-  theme,
+  playerId,
+  side,
   event,
   dataset,
   state,
 }: {
-  theme: PlayerTheme;
+  playerId: PlayerId | undefined;
+  side: "left" | "right";
   event: RunEvent;
   dataset: RunDataset;
   state: RunState<HgssProgressionState>;
 }) {
-  const player = getPlayerForTheme(dataset, theme);
-  const playerId = player?.id;
+  const player = dataset.players.find((entry) => entry.id === playerId);
+  const theme: PlayerTheme = player ? getPlayerTheme(player) : side === "left" ? "silver" : "gold";
 
   if (event.type === "encounter") {
     const outcome = event.outcomes.find((entry) => entry.playerId === playerId);
-    if (!outcome) return <div className={`event-side-visual event-side-visual--${theme}`} />;
+    if (!outcome) {
+      return (
+        <div
+          className={`event-side-visual event-side-visual--${side} event-side-visual--${theme}`}
+        />
+      );
+    }
     const authored =
       outcome.result === "caught"
         ? dataset.pokemon.find((entry) => entry.id === outcome.pokemonId)
@@ -327,12 +335,10 @@ function DualSideVisual({
 
     return (
       <div
-        className={`event-side-visual event-side-visual--${theme} event-side-visual--outcome-${outcome.result}`}
+        className={`event-side-visual event-side-visual--${side} event-side-visual--${theme} event-side-visual--outcome-${outcome.result}`}
       >
         <span className="event-side-visual__owner">
-          {player?.shortName ??
-            player?.displayName ??
-            (theme === "gold" ? "HeartGold" : "SoulSilver")}
+          {player?.shortName ?? player?.displayName ?? (side === "left" ? "Player 1" : "Player 2")}
         </span>
         <div className="event-side-visual__sprites">
           {outcome.speciesId ? (
@@ -362,11 +368,9 @@ function DualSideVisual({
     .slice(0, 3);
 
   return (
-    <div className={`event-side-visual event-side-visual--${theme}`}>
+    <div className={`event-side-visual event-side-visual--${side} event-side-visual--${theme}`}>
       <span className="event-side-visual__owner">
-        {player?.shortName ??
-          player?.displayName ??
-          (theme === "gold" ? "HeartGold" : "SoulSilver")}
+        {player?.shortName ?? player?.displayName ?? (side === "left" ? "Player 1" : "Player 2")}
       </span>
       <div className="event-side-visual__sprites">
         {pokemon.length ? (
@@ -394,10 +398,13 @@ function GymBattleCard({
   const participants = event.participantPokemonIds
     .map((id) => state.pokemon.get(id))
     .filter((pokemon): pokemon is PokemonState => pokemon !== undefined);
-  const goldPlayer = getPlayerForTheme(dataset, "gold");
-  const silverPlayer = getPlayerForTheme(dataset, "silver");
-  const gold = participants.filter((pokemon) => pokemon.playerId === goldPlayer?.id);
-  const silver = participants.filter((pokemon) => pokemon.playerId === silverPlayer?.id);
+  const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
+  const leftPlayer = dataset.players.find((player) => player.id === leftPlayerId);
+  const rightPlayer = dataset.players.find((player) => player.id === rightPlayerId);
+  const leftTheme: PlayerTheme = leftPlayer ? getPlayerTheme(leftPlayer) : "silver";
+  const rightTheme: PlayerTheme = rightPlayer ? getPlayerTheme(rightPlayer) : "gold";
+  const left = participants.filter((pokemon) => pokemon.playerId === leftPlayerId);
+  const right = participants.filter((pokemon) => pokemon.playerId === rightPlayerId);
   const badge =
     event.badgeId && JOHTO_BADGES.some((entry) => entry.id === event.badgeId)
       ? (event.badgeId as JohtoBadgeId)
@@ -405,7 +412,7 @@ function GymBattleCard({
 
   return (
     <article
-      className={`event-card event-card--gym event-card--dual${compact ? " event-card--compact" : ""}`}
+      className={`event-card event-card--gym event-card--dual event-card--left-${leftTheme} event-card--right-${rightTheme}${compact ? " event-card--compact" : ""}`}
     >
       <div
         className={`gym-event__badge${badge ? ` gym-event__badge--${badge}` : ""}`}
@@ -429,11 +436,11 @@ function GymBattleCard({
         </h3>
         <p>{eventSummary(event, dataset)}</p>
         <div className="gym-event__teams">
-          <GymTeam label={goldPlayer?.displayName ?? "HeartGold"} theme="gold" pokemon={gold} />
+          <GymTeam label={leftPlayer?.displayName ?? "Player 1"} theme={leftTheme} pokemon={left} />
           <GymTeam
-            label={silverPlayer?.displayName ?? "SoulSilver"}
-            theme="silver"
-            pokemon={silver}
+            label={rightPlayer?.displayName ?? "Player 2"}
+            theme={rightTheme}
+            pokemon={right}
           />
         </div>
       </div>
@@ -553,16 +560,42 @@ export function EventCard({ event, dataset, state, compact = false }: EventCardP
   }
 
   const accent = getPlayerAccent(event, dataset, state);
+  const participatingPlayerIds = [...new Set(eventPlayerIds(event, state))];
+  const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
+  const leftPlayer = dataset.players.find((player) => player.id === leftPlayerId);
+  const rightPlayer = dataset.players.find((player) => player.id === rightPlayerId);
+  const leftTheme: PlayerTheme = leftPlayer ? getPlayerTheme(leftPlayer) : "silver";
+  const rightTheme: PlayerTheme = rightPlayer ? getPlayerTheme(rightPlayer) : "gold";
+  const singlePlayerSide =
+    participatingPlayerIds.length === 1
+      ? participatingPlayerIds[0] === leftPlayerId
+        ? "left"
+        : participatingPlayerIds[0] === rightPlayerId
+          ? "right"
+          : undefined
+      : undefined;
   const unsuccessfulEncounter =
     event.type === "encounter" && event.outcomes.some((outcome) => outcome.result !== "caught");
-  const className = `event-card event-card--${event.tone} event-card--${accent}${accent === "dual" ? " event-card--paired-layout" : ""}${unsuccessfulEncounter ? " event-card--encounter-unsuccessful" : ""}${event.importance === "major" ? " event-card--major" : ""}${compact ? " event-card--compact" : ""}`;
+  const className = `event-card event-card--${event.tone} event-card--${accent} event-card--left-${leftTheme} event-card--right-${rightTheme}${singlePlayerSide ? ` event-card--player-${singlePlayerSide}` : ""}${accent === "dual" ? " event-card--paired-layout" : ""}${unsuccessfulEncounter ? " event-card--encounter-unsuccessful" : ""}${event.importance === "major" ? " event-card--major" : ""}${compact ? " event-card--compact" : ""}`;
 
   if (accent === "dual") {
     return (
       <article className={className}>
-        <DualSideVisual theme="gold" event={event} dataset={dataset} state={state} />
+        <DualSideVisual
+          playerId={leftPlayerId}
+          side="left"
+          event={event}
+          dataset={dataset}
+          state={state}
+        />
         <EventBody event={event} dataset={dataset} state={state} accent={accent} />
-        <DualSideVisual theme="silver" event={event} dataset={dataset} state={state} />
+        <DualSideVisual
+          playerId={rightPlayerId}
+          side="right"
+          event={event}
+          dataset={dataset}
+          state={state}
+        />
       </article>
     );
   }
