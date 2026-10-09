@@ -287,5 +287,85 @@
     "shiny": false,
     "natureId": "serious",
     "initialAbilityId": "poison-heal"
+  },
+  {
+    "id": "pkm_0033",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0065",
+    "initialSpeciesId": 415,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "naughty",
+    "initialAbilityId": "limber"
+  },
+  {
+    "id": "pkm_0034",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0065",
+    "initialSpeciesId": 79,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "rash",
+    "initialAbilityId": "inner-focus"
+  },
+  {
+    "id": "pkm_0035",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0066",
+    "initialSpeciesId": 451,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "brave",
+    "initialAbilityId": "unaware"
+  },
+  {
+    "id": "pkm_0036",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0066",
+    "initialSpeciesId": 343,
+    "gender": "unknown",
+    "shiny": false,
+    "natureId": "careful",
+    "initialAbilityId": "immunity"
+  },
+  {
+    "id": "pkm_0037",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0067",
+    "initialSpeciesId": 40,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "bold",
+    "initialAbilityId": "anger-point"
+  },
+  {
+    "id": "pkm_0038",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0067",
+    "initialSpeciesId": 383,
+    "gender": "unknown",
+    "shiny": false,
+    "natureId": "quiet",
+    "initialAbilityId": "limber"
+  },
+  {
+    "id": "pkm_0031",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0061",
+    "initialSpeciesId": 50,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "mild",
+    "initialAbilityId": "iron-fist"
+  },
+  {
+    "id": "pkm_0032",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0061",
+    "initialSpeciesId": 331,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "modest",
+    "initialAbilityId": "rock-head"
   }
 ]
