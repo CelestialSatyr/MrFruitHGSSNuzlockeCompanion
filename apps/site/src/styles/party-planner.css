@@ -453,8 +453,7 @@
   justify-content: center;
 }
 
-.planner-pair-row__control button,
-.planner-pair-row__control > span {
+.planner-pair-row__control button {
   min-width: 5.5rem;
   border: 1px solid var(--border-strong);
   border-radius: 999px;
@@ -464,10 +463,16 @@
   font: inherit;
   font-size: 0.72rem;
   font-weight: 800;
+  cursor: pointer;
 }
 
-.planner-pair-row__control button {
-  cursor: pointer;
+.planner-pair-row__dot {
+  width: 0.58rem;
+  height: 0.58rem;
+  border-radius: 50%;
+  background: var(--muted);
+  box-shadow: 0 0 0 0.22rem var(--surface-raised);
+  opacity: 0.78;
 }
 
 .planner-pair-row__control button:disabled {

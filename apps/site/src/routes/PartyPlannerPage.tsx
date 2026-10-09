@@ -333,7 +333,11 @@ function AutomaticPlanner({
             </header>
             <div className="planner-pair-list">
               {recommendation.pairs.map((pair) => (
-                <PlannerPairRow key={pair.id} pair={pair} centre={<span>Selected</span>} />
+                <PlannerPairRow
+                  key={pair.id}
+                  pair={pair}
+                  centre={<span className="planner-pair-row__dot" aria-hidden="true" />}
+                />
               ))}
             </div>
           </article>
