@@ -1340,5 +1340,79 @@
       }
     ],
     "soulLinkId": "link_0019"
+  },
+  {
+    "id": "evt_0068",
+    "episodeId": "ep_0011",
+    "sequence": 10,
+    "videoTimestampSeconds": 756,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "First encounter for the episode!",
+    "description": "Using the re-roll from the Glalie token.",
+    "type": "encounter",
+    "locationId": "route-34",
+    "opportunityId": "route-34-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0039",
+        "speciesId": 338,
+        "level": 10,
+        "nickname": "SAURON",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0040",
+        "speciesId": 66,
+        "level": 11,
+        "nickname": "MYWIFE",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0020"
+  },
+  {
+    "id": "evt_0069",
+    "episodeId": "ep_0011",
+    "sequence": 20,
+    "videoTimestampSeconds": 1080,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0025", "pkm_0026"],
+    "to": "box"
+  },
+  {
+    "id": "evt_0070",
+    "episodeId": "ep_0011",
+    "sequence": 30,
+    "videoTimestampSeconds": 1080,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0027", "pkm_0028"],
+    "to": "party"
+  },
+  {
+    "id": "evt_0071",
+    "episodeId": "ep_0011",
+    "sequence": 40,
+    "videoTimestampSeconds": 1165,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Mudkip evolved!",
+    "description": "Marshtomp is in the house",
+    "type": "evolution",
+    "pokemonId": "pkm_0027",
+    "fromSpeciesId": 258,
+    "toSpeciesId": 259,
+    "level": 16
   }
 ]

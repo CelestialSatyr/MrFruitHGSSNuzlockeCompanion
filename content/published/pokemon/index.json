@@ -367,5 +367,25 @@
     "shiny": false,
     "natureId": "modest",
     "initialAbilityId": "rock-head"
+  },
+  {
+    "id": "pkm_0039",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0068",
+    "initialSpeciesId": 338,
+    "gender": "unknown",
+    "shiny": false,
+    "natureId": "hardy",
+    "initialAbilityId": "shield-dust"
+  },
+  {
+    "id": "pkm_0040",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0068",
+    "initialSpeciesId": 66,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "quirky",
+    "initialAbilityId": "arena-trap"
   }
 ]
