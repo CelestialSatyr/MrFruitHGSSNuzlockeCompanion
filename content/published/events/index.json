@@ -1414,5 +1414,70 @@
     "fromSpeciesId": 258,
     "toSpeciesId": 259,
     "level": 16
+  },
+  {
+    "id": "evt_0072",
+    "episodeId": "ep_0012",
+    "sequence": 10,
+    "videoTimestampSeconds": 1425,
+    "tone": "negative",
+    "importance": "major",
+    "title": "A sacrifice for the ages to come",
+    "description": "Let's hope it's not in vain!",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0037",
+    "locationId": "goldenrod-city",
+    "opponentName": "Crawdaunt",
+    "cause": "A sacrifice to get new healing items"
+  },
+  {
+    "id": "evt_0073",
+    "episodeId": "ep_0012",
+    "sequence": 20,
+    "videoTimestampSeconds": 1485,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Ask and you shall receive!",
+    "description": "The crit that mattered",
+    "tags": [{ "tagId": "clutch" }],
+    "type": "special-moment",
+    "pokemonIds": ["pkm_0027"]
+  },
+  {
+    "id": "evt_0074",
+    "episodeId": "ep_0012",
+    "sequence": 30,
+    "videoTimestampSeconds": 1500,
+    "tone": "positive",
+    "importance": "major",
+    "title": "And Whitney has been defeated!",
+    "description": "The third gym badge got!",
+    "type": "gym-battle",
+    "gymId": "goldenrod-gym",
+    "leaderName": "Whitney",
+    "result": "win",
+    "participantPokemonIds": [
+      "pkm_0013",
+      "pkm_0014",
+      "pkm_0015",
+      "pkm_0016",
+      "pkm_0019",
+      "pkm_0020",
+      "pkm_0027",
+      "pkm_0028",
+      "pkm_0039",
+      "pkm_0040"
+    ],
+    "badgeId": "plain"
+  },
+  {
+    "id": "evt_0075",
+    "episodeId": "ep_0011",
+    "sequence": 50,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pokemonIds": ["pkm_0023", "pkm_0024"],
+    "to": "box"
   }
 ]
