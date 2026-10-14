@@ -1548,7 +1548,7 @@
         "speciesId": 405,
         "level": 12,
         "nickname": "RONINSHADW",
-        "placement": "party",
+        "placement": "box",
         "flyingTypeDeclared": false
       },
       {
@@ -1558,7 +1558,7 @@
         "speciesId": 444,
         "level": 13,
         "nickname": "BRONGO",
-        "placement": "party",
+        "placement": "box",
         "flyingTypeDeclared": false
       }
     ],
