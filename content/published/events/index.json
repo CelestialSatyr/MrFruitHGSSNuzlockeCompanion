@@ -1479,5 +1479,89 @@
     "type": "party-changed",
     "pokemonIds": ["pkm_0023", "pkm_0024"],
     "to": "box"
+  },
+  {
+    "id": "evt_0076",
+    "episodeId": "ep_0013",
+    "sequence": 10,
+    "videoTimestampSeconds": 1894,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Hey Grok, what encounter is this?",
+    "description": "Woah, turns out it's the first of the episode!",
+    "type": "encounter",
+    "locationId": "route-36",
+    "opportunityId": "route-36-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0041",
+        "speciesId": 27,
+        "level": 13,
+        "nickname": "SNEATT",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0042",
+        "speciesId": 341,
+        "level": 20,
+        "nickname": "EUPHOGLENN",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0021"
+  },
+  {
+    "id": "evt_0077",
+    "episodeId": "ep_0013",
+    "sequence": 20,
+    "videoTimestampSeconds": 1525,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "progression-changed",
+    "flag": { "kind": "milestone", "id": "sudowoodoCleared", "value": true }
+  },
+  {
+    "id": "evt_0078",
+    "episodeId": "ep_0013",
+    "sequence": 30,
+    "videoTimestampSeconds": 3049,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "The actual Route 35 encounter!",
+    "description": "Once we went through the entire pool of dupes",
+    "type": "encounter",
+    "locationId": "route-35",
+    "opportunityId": "route-35-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0043",
+        "speciesId": 405,
+        "level": 12,
+        "nickname": "RONINSHADW",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0044",
+        "speciesId": 444,
+        "level": 13,
+        "nickname": "BRONGO",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0022"
   }
 ]

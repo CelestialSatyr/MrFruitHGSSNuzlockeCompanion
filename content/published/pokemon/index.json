@@ -387,5 +387,45 @@
     "shiny": false,
     "natureId": "quirky",
     "initialAbilityId": "arena-trap"
+  },
+  {
+    "id": "pkm_0041",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0076",
+    "initialSpeciesId": 27,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "lax",
+    "initialAbilityId": "volt-absorb"
+  },
+  {
+    "id": "pkm_0042",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0076",
+    "initialSpeciesId": 341,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "bashful",
+    "initialAbilityId": "poison-heal"
+  },
+  {
+    "id": "pkm_0043",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0078",
+    "initialSpeciesId": 405,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "water-absorb"
+  },
+  {
+    "id": "pkm_0044",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0078",
+    "initialSpeciesId": 444,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "hardy",
+    "initialAbilityId": "gluttony"
   }
 ]
