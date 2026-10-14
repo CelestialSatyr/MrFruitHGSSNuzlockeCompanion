@@ -5,12 +5,15 @@ import {
   type HgssOpportunityState,
   type HgssProgressionState,
 } from "@nuzlocke/hgss";
-import type { RunState } from "@nuzlocke/core";
+import type { PokemonId, RunDataset, RunState } from "@nuzlocke/core";
 import { useEffect, useRef, useState, type PointerEvent } from "react";
+import { Link } from "react-router";
 import { deriveMapLocationStatus, mapStatusLabel, type MapLocationStatus } from "../lib/map-status";
+import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import "../styles/map-zoom-labels.css";
 
 interface HgssRunMapProps {
+  dataset: RunDataset;
   state: RunState<HgssProgressionState>;
   selectedLocationId: string | undefined;
   onSelectLocation(locationId: string | undefined): void;
@@ -25,6 +28,96 @@ const JOHTO_MAP_URL = `${import.meta.env.BASE_URL}JohtoMap.png`;
 const JOHTO_MAP_WIDTH = 1961;
 const JOHTO_MAP_HEIGHT = 1316;
 const JOHTO_MAP_ASPECT = JOHTO_MAP_WIDTH / JOHTO_MAP_HEIGHT;
+
+type LocationEncounterResult = "caught" | "failed" | "skipped";
+
+interface LocationEncounterMember {
+  result: LocationEncounterResult;
+  pokemonId?: PokemonId | undefined;
+  label: string;
+  speciesName?: string | undefined;
+  speciesId?: number | undefined;
+  shiny: boolean;
+  reason?: string | undefined;
+}
+
+interface LocationEncounterRow {
+  eventId: string;
+  opportunityLabel: string;
+  result: LocationEncounterResult;
+  soulLinkId: string | undefined;
+  linkStatus: "active" | "lost" | "retired" | undefined;
+  left: LocationEncounterMember | undefined;
+  right: LocationEncounterMember | undefined;
+}
+
+function buildLocationEncounterRows(
+  locationId: string,
+  dataset: RunDataset,
+  state: RunState<HgssProgressionState>,
+): LocationEncounterRow[] {
+  const processed = new Set(state.processedEventIds);
+  const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
+  const location = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === locationId);
+
+  return dataset.events.flatMap((event) => {
+    if (event.type !== "encounter" || event.locationId !== locationId || !processed.has(event.id)) {
+      return [];
+    }
+
+    const toMember = (playerId: string | undefined): LocationEncounterMember | undefined => {
+      if (!playerId) return undefined;
+      const outcome = event.outcomes.find((entry) => entry.playerId === playerId);
+      if (!outcome) return undefined;
+
+      if (outcome.result === "caught") {
+        const pokemon = state.pokemon.get(outcome.pokemonId);
+        const authored = dataset.pokemon.find((entry) => entry.id === outcome.pokemonId);
+        const speciesName = getSpeciesName(outcome.speciesId);
+        return {
+          result: "caught",
+          pokemonId: outcome.pokemonId,
+          label: pokemon?.currentNickname ?? outcome.nickname ?? speciesName,
+          speciesName,
+          speciesId: outcome.speciesId,
+          shiny: authored?.shiny ?? false,
+        };
+      }
+
+      const speciesName = outcome.speciesId ? getSpeciesName(outcome.speciesId) : undefined;
+      return {
+        result: outcome.result,
+        label:
+          speciesName ?? (outcome.result === "failed" ? "Failed encounter" : "Skipped encounter"),
+        ...(speciesName ? { speciesName } : {}),
+        ...(outcome.speciesId ? { speciesId: outcome.speciesId } : {}),
+        shiny: false,
+        ...(outcome.reason ? { reason: outcome.reason } : {}),
+      };
+    };
+
+    const statuses = event.outcomes.map((outcome) => outcome.result);
+    const result: LocationEncounterResult = statuses.every((status) => status === "caught")
+      ? "caught"
+      : statuses.some((status) => status === "failed")
+        ? "failed"
+        : "skipped";
+    const link = event.soulLinkId ? state.soulLinks.get(event.soulLinkId) : undefined;
+    const opportunity = location?.opportunities.find((entry) => entry.id === event.opportunityId);
+
+    return [
+      {
+        eventId: event.id,
+        opportunityLabel: opportunity?.label ?? event.opportunityId,
+        result,
+        soulLinkId: event.soulLinkId,
+        linkStatus: link?.status,
+        left: toMember(leftPlayerId),
+        right: toMember(rightPlayerId),
+      },
+    ];
+  });
+}
 
 const MAJOR_LABEL_IDS = new Set([
   "new-bark-town",
@@ -128,11 +221,13 @@ function LocationPeek({
   location,
   status,
   entries,
+  encounters,
   onOpenPlanner,
 }: {
   location: HgssLocation;
   status: MapLocationStatus;
   entries: readonly HgssOpportunityState[];
+  encounters: readonly LocationEncounterRow[];
   onOpenPlanner(): void;
 }) {
   const available = entries.filter((entry) => entry.availability === "available").length;
@@ -171,9 +266,46 @@ function LocationPeek({
         </span>
       </div>
 
+      {encounters.length ? (
+        <div className="map-location-peek__catches">
+          <strong>Encounter history</strong>
+          {encounters.map((row) => {
+            const tint =
+              row.result === "failed" || row.linkStatus === "lost"
+                ? "danger"
+                : row.result === "caught"
+                  ? "success"
+                  : "neutral";
+            return (
+              <div
+                className={`map-location-catch map-location-catch--${row.result} map-location-catch--${tint}`}
+                key={row.eventId}
+              >
+                <MapEncounterMember member={row.left} />
+                <span className="map-location-catch__link" aria-label="Encounter pair">
+                  ↔
+                </span>
+                <MapEncounterMember member={row.right} />
+                <small
+                  className={`map-location-catch__status map-location-catch__status--${row.result}`}
+                >
+                  {row.opportunityLabel} ·{" "}
+                  {row.result === "caught"
+                    ? "Caught"
+                    : row.result === "failed"
+                      ? "Failed"
+                      : "Skipped"}
+                  {row.linkStatus ? ` · ${row.linkStatus} link` : ""}
+                </small>
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
+
       {entries.length ? (
         <div className="map-location-peek__opportunities">
-          {entries.slice(0, 4).map((entry) => (
+          {entries.map((entry) => (
             <span key={entry.opportunity.id}>
               <i
                 className={`map-location-peek__dot map-location-peek__dot--${entry.availability}`}
@@ -192,7 +324,54 @@ function LocationPeek({
   );
 }
 
+function MapEncounterMember({ member }: { member: LocationEncounterMember | undefined }) {
+  if (!member) {
+    return <span className="map-location-catch__empty">Not recorded</span>;
+  }
+
+  const content = (
+    <>
+      {member.speciesId ? (
+        <img src={getHgssSpriteUrl(member.speciesId, member.shiny)} alt="" loading="lazy" />
+      ) : null}
+      <span>
+        <b>{member.label}</b>
+        <small>
+          {member.result === "caught"
+            ? member.label !== member.speciesName
+              ? member.speciesName
+              : "Caught"
+            : `${member.result === "failed" ? "Failed" : "Skipped"}${member.reason ? ` · ${member.reason}` : ""}`}
+        </small>
+      </span>
+    </>
+  );
+
+  if (member.result === "caught" && member.pokemonId) {
+    return (
+      <Link
+        className="map-location-catch__member"
+        to={`/pokemon/${member.pokemonId}`}
+        title={
+          member.label === member.speciesName
+            ? member.speciesName
+            : `${member.label} · ${member.speciesName ?? "Caught Pokémon"}`
+        }
+      >
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <span className={`map-location-catch__member map-location-catch__member--${member.result}`}>
+      {content}
+    </span>
+  );
+}
+
 export function HgssRunMap({
+  dataset,
   state,
   selectedLocationId,
   onSelectLocation,
@@ -227,6 +406,9 @@ export function HgssRunMap({
   const selectedStatus = selectedLocation
     ? deriveMapLocationStatus(selectedLocation, selectedEntries, state)
     : undefined;
+  const selectedEncounters = selectedLocation
+    ? buildLocationEncounterRows(selectedLocation.id, dataset, state)
+    : [];
 
   function clampZoom(value: number) {
     return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value));
@@ -384,6 +566,7 @@ export function HgssRunMap({
             location={selectedLocation}
             status={selectedStatus}
             entries={selectedEntries}
+            encounters={selectedEncounters}
             onOpenPlanner={() => onOpenPlanner(selectedLocation.id)}
           />
         ) : (

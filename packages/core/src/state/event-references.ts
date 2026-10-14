@@ -34,7 +34,14 @@ export function getEventReferences(event: RunEvent): EventReferences {
       pokemonIds.push(event.pokemonId);
       break;
     case "party-changed":
-      pokemonIds.push(...event.pokemonIds);
+      if (event.pairChanges?.length) {
+        for (const change of event.pairChanges) {
+          pokemonIds.push(...change.pokemonIds);
+          soulLinkIds.push(change.soulLinkId);
+        }
+      } else {
+        pokemonIds.push(...(event.pokemonIds ?? []));
+      }
       break;
     case "gym-battle":
     case "major-battle":

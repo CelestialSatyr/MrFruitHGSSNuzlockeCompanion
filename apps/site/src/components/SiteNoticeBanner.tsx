@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router";
 import type { SiteNotice } from "@nuzlocke/core";
 
 const NOTICE_LABELS: Record<SiteNotice["type"], string> = {
@@ -69,7 +70,8 @@ export function SiteNoticeBanner({ notice }: { notice: SiteNotice }) {
 
   if (!notice.enabled || !notice.message.trim() || dismissed) return null;
 
-  const externalLink = Boolean(notice.linkUrl && /^https?:\/\//i.test(notice.linkUrl));
+  const linkUrl = notice.linkUrl?.trim() || undefined;
+  const externalLink = Boolean(linkUrl && /^https?:\/\//i.test(linkUrl));
   const alertRole = notice.type === "warning" || notice.type === "error" ? "alert" : "status";
 
   return (
@@ -90,14 +92,16 @@ export function SiteNoticeBanner({ notice }: { notice: SiteNotice }) {
           </div>
           <p>{notice.message}</p>
 
-          {notice.linkUrl?.trim() ? (
-            <a
-              className="site-notice__link"
-              href={notice.linkUrl}
-              {...(externalLink ? { target: "_blank", rel: "noreferrer" } : {})}
-            >
-              {notice.linkLabel?.trim() || "Learn more"} →
-            </a>
+          {linkUrl ? (
+            externalLink ? (
+              <a className="site-notice__link" href={linkUrl} target="_blank" rel="noreferrer">
+                {notice.linkLabel?.trim() || "Learn more"} →
+              </a>
+            ) : (
+              <Link className="site-notice__link" to={linkUrl}>
+                {notice.linkLabel?.trim() || "Learn more"} →
+              </Link>
+            )
           ) : null}
         </div>
 

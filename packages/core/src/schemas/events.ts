@@ -142,15 +142,62 @@ export const EvolutionEventSchema = z
     message: "An evolution must change the Pokémon species.",
   });
 
+const PartyChangePairSchema = z
+  .object({
+    soulLinkId: SoulLinkIdSchema,
+    pokemonIds: z.tuple([PokemonIdSchema, PokemonIdSchema]),
+    to: z.enum(["party", "box"]),
+  })
+  .strict();
+
 export const PartyChangedEventSchema = z
   .object({
     ...EventBaseShape,
     type: z.literal("party-changed"),
-    pokemonIds: z.array(PokemonIdSchema).min(1).max(2),
-    to: z.enum(["party", "box", "retired"]),
+    /**
+     * New authoring shape: one event can move several complete Soul Link pairs,
+     * and each pair may independently go to the party or the box.
+     */
+    pairChanges: z.array(PartyChangePairSchema).min(1).max(6).optional(),
+    /** Legacy shape retained so existing published history remains readable. */
+    pokemonIds: z.array(PokemonIdSchema).min(1).max(12).optional(),
+    /** Legacy destination retained for older events (and manual retirement history). */
+    to: z.enum(["party", "box", "retired"]).optional(),
     reason: NonEmptyStringSchema.optional(),
   })
-  .strict();
+  .strict()
+  .superRefine((event, context) => {
+    const hasPairChanges = Boolean(event.pairChanges?.length);
+    const hasLegacyChange = Boolean(event.pokemonIds?.length && event.to);
+
+    if (!hasPairChanges && !hasLegacyChange) {
+      context.addIssue({
+        code: "custom",
+        path: ["pairChanges"],
+        message: "A party change must contain at least one Soul Link pair movement.",
+      });
+    }
+
+    if (hasPairChanges && hasLegacyChange) {
+      context.addIssue({
+        code: "custom",
+        path: ["pairChanges"],
+        message: "Use either pairChanges or the legacy pokemonIds/to fields, not both.",
+      });
+    }
+
+    const seenLinks = new Set<string>();
+    for (const change of event.pairChanges ?? []) {
+      if (seenLinks.has(change.soulLinkId)) {
+        context.addIssue({
+          code: "custom",
+          path: ["pairChanges"],
+          message: `Soul Link ${change.soulLinkId} is listed more than once in this party change.`,
+        });
+      }
+      seenLinks.add(change.soulLinkId);
+    }
+  });
 
 export const LevelMilestoneEventSchema = z
   .object({

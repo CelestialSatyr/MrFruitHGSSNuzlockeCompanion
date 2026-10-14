@@ -37,8 +37,8 @@ export type PartyPlannerRankingCriterion =
 export const DEFAULT_PARTY_PLANNER_RANKING: readonly PartyPlannerRankingCriterion[] = [
   "pairCount",
   "uniqueTypeCount",
-  "overlapCount",
   "totalBaseStats",
+  "overlapCount",
 ];
 
 export interface PartyPlannerRecommendation {
@@ -207,7 +207,7 @@ function validateCandidate(pair: PartyPlannerPair): string | undefined {
  * Exact optimiser for the Party Planner.
  *
  * The caller controls the ranking criteria and their priority order. The
- * default remains: pair count, type diversity, overlap, then total BST.
+ * default remains: pair count, type diversity, total BST, then overlap.
  * Disabled criteria are simply omitted from `ranking`.
  */
 export function findPartyRecommendations(

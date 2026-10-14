@@ -68,7 +68,13 @@ export function applyRunEvent<TGameState>(
       break;
     }
     case "party-changed":
-      applyPartyChange(state, event.pokemonIds, event.to, event.id);
+      if (event.pairChanges?.length) {
+        for (const change of event.pairChanges) {
+          applyPartyChange(state, [...change.pokemonIds], change.to, event.id);
+        }
+      } else if (event.pokemonIds?.length && event.to) {
+        applyPartyChange(state, event.pokemonIds, event.to, event.id);
+      }
       break;
     case "level-milestone": {
       const pokemon = state.pokemon.get(event.pokemonId);
@@ -337,7 +343,7 @@ function recordEventHistory<TGameState>(
     }
   }
 
-  if (event.type === "party-changed" && event.to === "retired") {
+  if (event.type === "party-changed" && event.to === "retired" && event.pokemonIds?.length) {
     for (const pokemonId of event.pokemonIds) {
       const pokemon = state.pokemon.get(pokemonId);
       if (pokemon?.soulLinkId === undefined) continue;

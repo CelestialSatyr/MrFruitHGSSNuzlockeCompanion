@@ -1,9 +1,13 @@
 import type { Player, PokemonState, RunDataset, SoulLinkState } from "@nuzlocke/core";
+import { useState } from "react";
 import { Link } from "react-router";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
+import { usePokemonTypeMap } from "../hooks/usePokemonTypes";
+import { getPokemonCatchLocationName } from "../lib/encounter-locations";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerGameLabel, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
+import { matchesSearch, normalizeSearchText } from "../lib/search";
 
 interface PairRow {
   id: string;
@@ -15,6 +19,7 @@ interface PairRow {
 
 export function PokemonIndexPage() {
   const { dataset, state } = useRunView();
+  const [searchQuery, setSearchQuery] = useState("");
   const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
   const leftPlayer = dataset.players.find((player) => player.id === leftPlayerId);
   const rightPlayer = dataset.players.find((player) => player.id === rightPlayerId);
@@ -61,9 +66,39 @@ export function PokemonIndexPage() {
 
   rows.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 
+  const speciesIds = [
+    ...new Set([...state.pokemon.values()].map((pokemon) => pokemon.currentSpeciesId)),
+  ];
+  const { typesBySpecies, loading: typesLoading } = usePokemonTypeMap(speciesIds);
+  const searchActive = normalizeSearchText(searchQuery).length > 0;
+  const visibleRows = searchActive
+    ? rows.filter((row) =>
+        matchesSearch(
+          [row.left, row.right]
+            .filter((pokemon): pokemon is PokemonState => pokemon !== undefined)
+            .flatMap((pokemon) => {
+              const player = dataset.players.find((entry) => entry.id === pokemon.playerId);
+              const types = typesBySpecies.get(pokemon.currentSpeciesId) ?? [];
+              return [
+                pokemon.currentNickname ?? "",
+                getSpeciesName(pokemon.currentSpeciesId),
+                getSpeciesName(pokemon.source.initialSpeciesId),
+                player?.displayName ?? "",
+                player?.shortName ?? "",
+                getPokemonCatchLocationName(dataset, pokemon) ?? "",
+                ...types,
+              ];
+            })
+            .concat(row.link?.status ?? "unlinked", "soul link", "pair")
+            .join(" "),
+          searchQuery,
+        ),
+      )
+    : rows;
+
   return (
     <div className="page-stack page-stack--tight">
-      <header className="page-heading">
+      <header className="page-heading roster-heading">
         <div>
           <p className="eyebrow">Linked history</p>
           <h1>Soul Link Roster</h1>
@@ -73,7 +108,25 @@ export function PokemonIndexPage() {
             {rightPlayer?.displayName ?? "Player two"}.
           </p>
         </div>
+        <label className="roster-search-control">
+          <span>Search roster</span>
+          <input
+            type="search"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            placeholder="Nickname, species, type…"
+            autoComplete="off"
+          />
+        </label>
       </header>
+
+      {searchActive ? (
+        <div className="roster-search-summary" aria-live="polite">
+          Showing <strong>{visibleRows.length}</strong> of {rows.length} linked row
+          {rows.length === 1 ? "" : "s"} for <strong>“{searchQuery.trim()}”</strong>
+          {typesLoading ? <span> · Loading typing data…</span> : null}
+        </div>
+      ) : null}
 
       <div className="pokemon-pair-board">
         <div
@@ -93,18 +146,21 @@ export function PokemonIndexPage() {
           <PlayerHeading player={rightPlayer} side="right" />
         </div>
 
-        {rows.length ? (
-          rows.map((row) => (
+        {visibleRows.length ? (
+          visibleRows.map((row) => (
             <PokemonPairRow
               key={row.id}
               row={row}
               leftPlayer={leftPlayer}
               rightPlayer={rightPlayer}
+              dataset={dataset}
             />
           ))
         ) : (
           <div className="pokemon-pair-empty">
-            No Pokémon are visible at this spoiler point yet.
+            {searchActive
+              ? "No Soul Link pairs match that roster search."
+              : "No Pokémon are visible at this spoiler point yet."}
           </div>
         )}
       </div>
@@ -148,14 +204,21 @@ function PokemonPairRow({
   row,
   leftPlayer,
   rightPlayer,
+  dataset,
 }: {
   row: PairRow;
   leftPlayer: Player | undefined;
   rightPlayer: Player | undefined;
+  dataset: RunDataset;
 }) {
   const status = row.link?.status ?? "unlinked";
   const leftTheme = leftPlayer ? getPlayerTheme(leftPlayer) : undefined;
   const rightTheme = rightPlayer ? getPlayerTheme(rightPlayer) : undefined;
+  const catchLocations = [row.left, row.right]
+    .filter((pokemon): pokemon is PokemonState => pokemon !== undefined)
+    .map((pokemon) => getPokemonCatchLocationName(dataset, pokemon))
+    .filter((location): location is string => Boolean(location));
+  const catchLocation = [...new Set(catchLocations)].join(" / ");
 
   return (
     <article className={`pokemon-pair-row pokemon-pair-row--${status}`}>
@@ -171,17 +234,20 @@ function PokemonPairRow({
 
       <div className="pokemon-pair-row__bridge">
         <span aria-hidden="true" />
-        {row.link ? (
-          <Link to={`/soul-links/${row.link.id}`}>
-            {row.link.status === "active"
-              ? "Active link"
-              : row.link.status === "lost"
-                ? "Link lost"
-                : "Retired"}
-          </Link>
-        ) : (
-          <strong>Unlinked</strong>
-        )}
+        <div className="pokemon-pair-row__bridge-copy">
+          {row.link ? (
+            <Link to={`/soul-links/${row.link.id}`}>
+              {row.link.status === "active"
+                ? "Active link"
+                : row.link.status === "lost"
+                  ? "Link lost"
+                  : "Retired"}
+            </Link>
+          ) : (
+            <strong>Unlinked</strong>
+          )}
+          {catchLocation ? <small>{catchLocation}</small> : null}
+        </div>
         <span aria-hidden="true" />
       </div>
 
@@ -229,7 +295,6 @@ function PokemonHistoryCard({
         <div className="pokemon-history-card__meta">
           <span>{pokemon.lifeStatus.replaceAll("-", " ")}</span>
           <span>{pokemon.placement}</span>
-          {pokemon.currentLevel ? <span>Lv. {pokemon.currentLevel}</span> : null}
         </div>
       </div>
     </Link>

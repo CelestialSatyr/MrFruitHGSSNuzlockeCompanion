@@ -166,6 +166,7 @@ export function MapPage() {
         <div className="map-stage">
           <div className="map-stage__canvas">
             <HgssRunMap
+              dataset={dataset}
               state={effectiveState}
               selectedLocationId={selectedLocationId}
               onSelectLocation={selectLocation}

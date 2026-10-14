@@ -558,9 +558,32 @@ function validateEventAgainstState<TGameState>(
       break;
     }
     case "party-changed":
-      if (event.to !== "retired") {
-        for (const pokemonId of event.pokemonIds)
+      if (event.pairChanges?.length) {
+        for (const change of event.pairChanges) {
+          const link = state.soulLinks.get(change.soulLinkId);
+          if (link !== undefined) {
+            const expected = [...link.pokemonIds].sort();
+            const provided = [...change.pokemonIds].sort();
+            if (expected[0] !== provided[0] || expected[1] !== provided[1]) {
+              issues.push(
+                error(
+                  "party-change-link-mismatch",
+                  `${event.id} lists Pokémon that do not belong to ${change.soulLinkId}.`,
+                  event.id,
+                  event.id,
+                ),
+              );
+            }
+          }
+
+          for (const pokemonId of change.pokemonIds) {
+            validatePokemonCanAct(event, pokemonId, state, issues);
+          }
+        }
+      } else if (event.to !== "retired") {
+        for (const pokemonId of event.pokemonIds ?? []) {
           validatePokemonCanAct(event, pokemonId, state, issues);
+        }
       }
       break;
     case "level-milestone":

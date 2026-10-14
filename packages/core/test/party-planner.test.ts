@@ -81,7 +81,7 @@ describe("Party Planner", () => {
     expect(best?.score.uniqueTypeCount).toBe(8);
   });
 
-  it("minimises overlap after unique type count by default", () => {
+  it("minimises overlap after higher-priority default criteria tie", () => {
     const candidates = [
       pair("a", "water", "fire", ["water", "flying"], ["fire", "flying"]),
       pair("b", "grass", "electric", ["grass"], ["electric"]),
@@ -92,6 +92,18 @@ describe("Party Planner", () => {
     const [best] = findPartyRecommendations(candidates, { maxPairs: 2, random: () => 0.5 });
     expect(best?.score.uniqueTypeCount).toBe(5);
     expect(best?.score.overlapCount).toBe(0);
+  });
+
+  it("uses total BST before overlap in the default ranking", () => {
+    const candidates = [
+      pair("clean", "water", "fire", ["water", "flying"], ["fire"], 300, 300),
+      pair("strong", "water", "fire", ["water", "flying"], ["fire", "flying"], 600, 600),
+    ];
+
+    const [best] = findPartyRecommendations(candidates, { maxPairs: 1, random: () => 0.5 });
+    expect(best?.pairIds).toEqual(["strong"]);
+    expect(best?.score.totalBaseStats).toBe(1200);
+    expect(best?.score.overlapCount).toBe(1);
   });
 
   it("uses total BST after the default typing criteria tie", () => {

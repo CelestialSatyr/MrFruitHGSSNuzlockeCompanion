@@ -9,6 +9,7 @@ import { Link } from "react-router";
 import { BadgeCase } from "../components/BadgeCase";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
 import { useRunView } from "../context/RunViewContext";
+import { getPokemonCatchLocationName } from "../lib/encounter-locations";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerGameLabel, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
 import "../styles/overview-team-mirror.css";
@@ -77,7 +78,12 @@ export function OverviewPage() {
                   <div className="team-list">
                     {party.length ? (
                       party.map((pokemon) => (
-                        <TeamPokemonCard key={pokemon.id} pokemon={pokemon} theme={theme} />
+                        <TeamPokemonCard
+                          key={pokemon.id}
+                          pokemon={pokemon}
+                          theme={theme}
+                          catchLocation={getPokemonCatchLocationName(dataset, pokemon)}
+                        />
                       ))
                     ) : (
                       <div className={`team-empty${planningStage ? " team-empty--planning" : ""}`}>
@@ -231,7 +237,15 @@ function PlayerProfileCard({
   );
 }
 
-function TeamPokemonCard({ pokemon, theme }: { pokemon: PokemonState; theme: PlayerTheme }) {
+function TeamPokemonCard({
+  pokemon,
+  theme,
+  catchLocation,
+}: {
+  pokemon: PokemonState;
+  theme: PlayerTheme;
+  catchLocation: string | undefined;
+}) {
   const species = getSpeciesName(pokemon.currentSpeciesId);
 
   return (
@@ -250,6 +264,9 @@ function TeamPokemonCard({ pokemon, theme }: { pokemon: PokemonState; theme: Pla
       <div className="team-pokemon-card__copy">
         <strong>{pokemon.currentNickname ?? species}</strong>
         {pokemon.currentNickname ? <small>{species}</small> : null}
+        {catchLocation ? (
+          <span className="pokemon-catch-location">Caught · {catchLocation}</span>
+        ) : null}
         <PokemonTypeChips speciesId={pokemon.currentSpeciesId} />
       </div>
     </Link>

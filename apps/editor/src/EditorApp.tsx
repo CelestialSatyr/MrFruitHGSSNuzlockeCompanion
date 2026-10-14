@@ -173,6 +173,7 @@ function createEventForm(dataset: RunDataset): EventDraftInput {
     annotations: [],
     pokemonIds: [],
     soulLinkIds: [],
+    partyChanges: [],
     pokemonId: "",
     locationId: location?.id ?? "",
     opportunityId: location?.opportunities[0]?.id ?? "",
@@ -298,8 +299,27 @@ function eventToForm(dataset: RunDataset, event: RunEvent): EventDraftInput {
       form.nickname = event.toNickname;
       break;
     case "party-changed":
-      form.pokemonIds = [...event.pokemonIds];
-      form.destination = event.to;
+      if (event.pairChanges?.length) {
+        form.partyChanges = event.pairChanges.map((change) => ({
+          soulLinkId: change.soulLinkId,
+          destination: change.to,
+        }));
+        form.pokemonIds = [];
+        form.destination = "party";
+      } else {
+        form.pokemonIds = [...(event.pokemonIds ?? [])];
+        form.destination = event.to ?? "party";
+        const legacyIds = new Set(event.pokemonIds ?? []);
+        form.partyChanges =
+          event.to === "party" || event.to === "box"
+            ? dataset.soulLinks
+                .filter((link) => link.pokemonIds.every((pokemonId) => legacyIds.has(pokemonId)))
+                .map((link) => ({
+                  soulLinkId: link.id,
+                  destination: event.to as "party" | "box",
+                }))
+            : [];
+      }
       form.reason = event.reason ?? "";
       break;
     case "level-milestone":
@@ -374,6 +394,14 @@ function eventToForm(dataset: RunDataset, event: RunEvent): EventDraftInput {
   }
 
   return form;
+}
+
+function encounterMapLabel(event: RunEvent): string | undefined {
+  if (event.type !== "encounter") return undefined;
+  const location = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === event.locationId);
+  const opportunity = location?.opportunities.find((entry) => entry.id === event.opportunityId);
+  if (!location) return event.locationId;
+  return `${location.name} · ${opportunity?.label ?? event.opportunityId}`;
 }
 
 function titleCase(value: string): string {
@@ -2058,7 +2086,6 @@ function Events({
   const [abilities, setAbilities] = useState<PokemonAbilityOption[]>([]);
 
   const state = useMemo(() => reconstructHgssRun(dataset, { episodeStatus: "all" }), [dataset]);
-  const location = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === form.locationId);
   const idPools = useMemo<EventIdPools>(
     () => ({
       eventIds: series.runs.flatMap((run) => run.events.map((event) => event.id)),
@@ -2222,6 +2249,7 @@ function Events({
                             {event.videoTimestampSeconds !== undefined
                               ? ` · ${formatTimestampInput(event.videoTimestampSeconds)}`
                               : ""}
+                            {encounterMapLabel(event) ? ` · ${encounterMapLabel(event)}` : ""}
                           </small>
                         </button>
                         <div className="event-list-actions">
@@ -2510,7 +2538,6 @@ function Events({
             dataset={dataset}
             form={form}
             patch={patch}
-            location={location}
             species={species}
             abilities={abilities}
           />
@@ -2535,33 +2562,17 @@ function Events({
           />
         ) : null}
         {form.type === "party-changed" ? (
-          <>
-            <PokemonMulti
-              dataset={dataset}
-              value={form.pokemonIds}
-              onChange={(value) => patch({ pokemonIds: value })}
-            />
-            <div className="form-grid">
-              <Field label="Destination">
-                <select
-                  value={form.destination}
-                  onChange={(event) =>
-                    patch({ destination: event.target.value as EventDraftInput["destination"] })
-                  }
-                >
-                  <option value="party">Party</option>
-                  <option value="box">Box</option>
-                  <option value="retired">Retired</option>
-                </select>
-              </Field>
-              <Field label="Reason">
-                <input
-                  value={form.reason}
-                  onChange={(event) => patch({ reason: event.target.value })}
-                />
-              </Field>
-            </div>
-          </>
+          <PartyChangePairsEditor
+            dataset={dataset}
+            state={state}
+            species={species}
+            changes={form.partyChanges}
+            legacyPokemonIds={form.pokemonIds}
+            legacyDestination={form.destination}
+            reason={form.reason}
+            onChange={(partyChanges) => patch({ partyChanges, pokemonIds: [] })}
+            onReasonChange={(reason) => patch({ reason })}
+          />
         ) : null}
         {form.type === "gym-battle" ? (
           <>
@@ -2603,6 +2614,8 @@ function Events({
             </div>
             <PokemonMulti
               dataset={dataset}
+              state={state}
+              species={species}
               value={form.pokemonIds}
               onChange={(value) => patch({ pokemonIds: value })}
             />
@@ -2622,6 +2635,8 @@ function Events({
             </Field>
             <PokemonMulti
               dataset={dataset}
+              state={state}
+              species={species}
               value={form.pokemonIds}
               onChange={(value) => patch({ pokemonIds: value })}
             />
@@ -2675,11 +2690,15 @@ function Events({
           <>
             <PokemonMulti
               dataset={dataset}
+              state={state}
+              species={species}
               value={form.pokemonIds}
               onChange={(value) => patch({ pokemonIds: value })}
             />
             <LinkMulti
               dataset={dataset}
+              state={state}
+              species={species}
               value={form.soulLinkIds}
               onChange={(value) => patch({ soulLinkIds: value })}
             />
@@ -2866,58 +2885,69 @@ function EncounterFields({
   dataset,
   form,
   patch,
-  location,
   species,
   abilities,
 }: {
   dataset: RunDataset;
   form: EventDraftInput;
   patch(value: Partial<EventDraftInput>): void;
-  location: (typeof HGSS_MAIN_STORY_LOCATIONS)[number] | undefined;
   species: PokemonSpeciesOption[];
   abilities: PokemonAbilityOption[];
 }) {
-  const locationOptions = HGSS_MAIN_STORY_LOCATIONS.map((entry) => ({
-    value: entry.id,
-    label: entry.name,
-  }));
+  const encounterOptions = HGSS_MAIN_STORY_LOCATIONS.flatMap((location) =>
+    location.opportunities.map((opportunity) => {
+      const recordedCount = dataset.events.filter(
+        (event) =>
+          event.type === "encounter" &&
+          event.locationId === location.id &&
+          event.opportunityId === opportunity.id,
+      ).length;
+      return {
+        value: `${location.id}::${opportunity.id}`,
+        label: `${location.name} · ${opportunity.label} · ${titleCase(opportunity.kind)}${
+          opportunity.defaultEnabled ? "" : " · rules-dependent"
+        }${recordedCount ? ` · ${recordedCount} recorded` : ""}`,
+      };
+    }),
+  );
+  const selectedEncounterValue =
+    form.locationId && form.opportunityId ? `${form.locationId}::${form.opportunityId}` : "";
 
   return (
     <>
       <div className="form-grid">
         <FilteredSelect
-          label="Location"
-          value={form.locationId}
-          options={locationOptions}
-          placeholder="Search locations…"
+          label="Map encounter"
+          value={selectedEncounterValue}
+          options={encounterOptions}
+          placeholder="Search route, static encounter, gift…"
+          hint="Generated from the same encounter definitions as the interactive map. The same opportunity may be recorded multiple times for Dupes Clause rerolls or other rule-valid repeat attempts."
           onChange={(value) => {
-            const nextLocation = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === value);
+            const [locationId = "", opportunityId = ""] = value.split("::");
+            const nextLocation = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === locationId);
+            const opportunity = nextLocation?.opportunities.find(
+              (entry) => entry.id === opportunityId,
+            );
             patch({
-              locationId: value,
-              opportunityId: nextLocation?.opportunities[0]?.id ?? "",
-              acquisitionType: nextLocation?.opportunities[0]?.kind ?? "wild",
+              locationId,
+              opportunityId,
+              acquisitionType: opportunity?.kind ?? "wild",
             });
           }}
         />
-        <Field label="Opportunity">
-          <select
-            value={form.opportunityId}
-            onChange={(event) => {
-              const opportunity = location?.opportunities.find(
-                (entry) => entry.id === event.target.value,
-              );
-              patch({
-                opportunityId: event.target.value,
-                acquisitionType: opportunity?.kind ?? form.acquisitionType,
-              });
-            }}
-          >
-            {location?.opportunities.map((opportunity) => (
-              <option key={opportunity.id} value={opportunity.id}>
-                {opportunity.label} · {opportunity.kind}
-              </option>
-            ))}
-          </select>
+        <Field label="Recorded as">
+          <div className="editor-readonly-summary">
+            <strong>
+              {HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === form.locationId)?.name ??
+                "No location selected"}
+            </strong>
+            <small>
+              {HGSS_MAIN_STORY_LOCATIONS.find(
+                (entry) => entry.id === form.locationId,
+              )?.opportunities.find((entry) => entry.id === form.opportunityId)?.label ??
+                "Choose a map encounter"}
+            </small>
+          </div>
         </Field>
       </div>
       <div className="outcome-grid">
@@ -2959,30 +2989,26 @@ function PokemonFields({
 
   return (
     <>
-      <Field label="Pokémon">
-        <select
-          value={form.pokemonId}
-          onChange={(event) => {
-            const pokemon = state.pokemon.get(event.target.value as never);
-            patch({
-              pokemonId: event.target.value,
-              fromSpeciesId: pokemon ? String(pokemon.currentSpeciesId) : "",
-              previousValue: pokemon?.currentNickname ?? "",
-            });
-          }}
-        >
-          <option value="">Select Pokémon…</option>
-          {dataset.pokemon.map((pokemon) => {
-            const statePokemon = state.pokemon.get(pokemon.id);
-            return (
-              <option key={pokemon.id} value={pokemon.id}>
-                {statePokemon?.currentNickname || pokemon.id} · #
-                {statePokemon?.currentSpeciesId ?? pokemon.initialSpeciesId}
-              </option>
-            );
-          })}
-        </select>
-      </Field>
+      <FilteredSelect
+        label="Pokémon"
+        value={form.pokemonId}
+        options={[
+          { value: "", label: "Select Pokémon…" },
+          ...dataset.pokemon.map((pokemon) => ({
+            value: pokemon.id,
+            label: editorPokemonLabel(dataset, state, species, pokemon.id),
+          })),
+        ]}
+        placeholder="Search current Pokémon…"
+        onChange={(value) => {
+          const pokemon = state.pokemon.get(value as never);
+          patch({
+            pokemonId: value,
+            fromSpeciesId: pokemon ? String(pokemon.currentSpeciesId) : "",
+            previousValue: pokemon?.currentNickname ?? "",
+          });
+        }}
+      />
       {form.type === "evolution" ? (
         <div className="form-grid form-grid--3">
           <SpeciesSelect
@@ -3250,12 +3276,252 @@ function AbilitySelect({
   );
 }
 
+function editorSpeciesName(species: PokemonSpeciesOption[], speciesId: number): string {
+  const match = species.find((entry) => entry.id === speciesId);
+  return match ? titleCase(match.name.replaceAll("-", " ")) : `Pokémon #${speciesId}`;
+}
+
+function editorPokemonLabel(
+  dataset: RunDataset,
+  state: ReturnType<typeof reconstructHgssRun>,
+  species: PokemonSpeciesOption[],
+  pokemonId: string,
+): string {
+  const authored = dataset.pokemon.find((entry) => entry.id === pokemonId);
+  if (!authored) return "Unknown Pokémon";
+
+  const current = state.pokemon.get(pokemonId as never);
+  const currentSpeciesId = current?.currentSpeciesId ?? authored.initialSpeciesId;
+  const speciesName = editorSpeciesName(species, currentSpeciesId);
+  const nickname = current?.currentNickname?.trim();
+  const player = dataset.players.find((entry) => entry.id === authored.playerId);
+  const owner = player?.shortName ?? player?.displayName ?? "Unknown player";
+  const pokemonName =
+    nickname && nickname.toLowerCase() !== speciesName.toLowerCase()
+      ? `${nickname} · ${speciesName}`
+      : speciesName;
+
+  return `${pokemonName} · ${owner}`;
+}
+
+function editorSoulLinkLabel(
+  dataset: RunDataset,
+  state: ReturnType<typeof reconstructHgssRun>,
+  species: PokemonSpeciesOption[],
+  soulLinkId: string,
+): string {
+  const link = dataset.soulLinks.find((entry) => entry.id === soulLinkId);
+  if (!link) return "Unknown Soul Link";
+  return link.pokemonIds
+    .map((pokemonId) => editorPokemonLabel(dataset, state, species, pokemonId))
+    .join(" ↔ ");
+}
+
+function PartyChangePairsEditor({
+  dataset,
+  state,
+  species,
+  changes,
+  legacyPokemonIds,
+  legacyDestination,
+  reason,
+  onChange,
+  onReasonChange,
+}: {
+  dataset: RunDataset;
+  state: ReturnType<typeof reconstructHgssRun>;
+  species: PokemonSpeciesOption[];
+  changes: EventDraftInput["partyChanges"];
+  legacyPokemonIds: string[];
+  legacyDestination: EventDraftInput["destination"];
+  reason: string;
+  onChange(value: EventDraftInput["partyChanges"]): void;
+  onReasonChange(value: string): void;
+}) {
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pairQuery, setPairQuery] = useState("");
+  const selectedIds = useMemo(() => new Set(changes.map((change) => change.soulLinkId)), [changes]);
+  const isLegacyRetirement = legacyDestination === "retired" && legacyPokemonIds.length > 0;
+
+  const availablePairs = useMemo(() => {
+    const normalizedQuery = pairQuery.trim().toLowerCase();
+    return dataset.soulLinks
+      .filter((link) => !selectedIds.has(link.id))
+      .map((link) => ({
+        id: link.id,
+        label: editorSoulLinkLabel(dataset, state, species, link.id),
+      }))
+      .filter((entry) =>
+        normalizedQuery.length === 0 ? true : entry.label.toLowerCase().includes(normalizedQuery),
+      )
+      .slice(0, 8);
+  }, [dataset, state, species, selectedIds, pairQuery]);
+
+  function addPair(soulLinkId: string) {
+    if (selectedIds.has(soulLinkId)) return;
+    onChange([...changes, { soulLinkId, destination: "party" }]);
+    setPairQuery("");
+    setPickerOpen(false);
+  }
+
+  function removePair(soulLinkId: string) {
+    onChange(changes.filter((change) => change.soulLinkId !== soulLinkId));
+  }
+
+  function setDestination(soulLinkId: string, destination: "party" | "box") {
+    onChange(
+      changes.map((change) =>
+        change.soulLinkId === soulLinkId ? { ...change, destination } : change,
+      ),
+    );
+  }
+
+  return (
+    <>
+      <Field
+        label="Soul Link pairs"
+        hint="Add only the pairs moved in this event, then choose Party or Box for each one."
+      >
+        <div className="party-pair-editor">
+          {changes.length ? (
+            <div className="party-pair-editor__selected">
+              {changes.map((change) => {
+                const label = editorSoulLinkLabel(dataset, state, species, change.soulLinkId);
+                return (
+                  <div className="party-pair-editor__row" key={change.soulLinkId}>
+                    <div className="party-pair-editor__pair">
+                      <span className="party-pair-editor__pair-label">{label}</span>
+                    </div>
+                    <select
+                      aria-label={`Destination for ${label}`}
+                      value={change.destination}
+                      onChange={(event) =>
+                        setDestination(change.soulLinkId, event.target.value as "party" | "box")
+                      }
+                    >
+                      <option value="party">Party</option>
+                      <option value="box">Box</option>
+                    </select>
+                    <button
+                      type="button"
+                      className="party-pair-editor__remove"
+                      onClick={() => removePair(change.soulLinkId)}
+                      aria-label={`Remove ${label}`}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="party-pair-editor__empty">No pairs added to this event yet.</div>
+          )}
+
+          {dataset.soulLinks.length > changes.length ? (
+            pickerOpen ? (
+              <div className="party-pair-picker">
+                <div className="party-pair-picker__toolbar">
+                  <input
+                    autoFocus
+                    type="search"
+                    value={pairQuery}
+                    placeholder="Search nickname, species or player…"
+                    onChange={(event) => setPairQuery(event.target.value)}
+                    onKeyDown={(event) => {
+                      const first = availablePairs[0];
+                      if (event.key === "Enter" && first) {
+                        event.preventDefault();
+                        addPair(first.id);
+                      }
+                      if (event.key === "Escape") {
+                        event.preventDefault();
+                        setPairQuery("");
+                        setPickerOpen(false);
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPairQuery("");
+                      setPickerOpen(false);
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+                <div
+                  className="party-pair-picker__results"
+                  role="listbox"
+                  aria-label="Soul Link pair search results"
+                >
+                  {availablePairs.length ? (
+                    availablePairs.map((entry) => (
+                      <button
+                        type="button"
+                        role="option"
+                        aria-selected="false"
+                        className="party-pair-picker__result"
+                        key={entry.id}
+                        onClick={() => addPair(entry.id)}
+                      >
+                        <span>{entry.label}</span>
+                        <strong>Add</strong>
+                      </button>
+                    ))
+                  ) : (
+                    <div className="party-pair-picker__empty">
+                      No unselected Soul Link pairs match that search.
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="party-pair-editor__add"
+                onClick={() => setPickerOpen(true)}
+              >
+                + Add pair
+              </button>
+            )
+          ) : dataset.soulLinks.length ? (
+            <div className="party-pair-editor__complete">
+              All available Soul Link pairs are already added.
+            </div>
+          ) : (
+            <div className="party-pair-editor__empty">
+              No Soul Link pairs have been created yet.
+            </div>
+          )}
+        </div>
+      </Field>
+
+      {isLegacyRetirement && !changes.length ? (
+        <div className="editor-inline-note">
+          This is a legacy retirement event. It will remain unchanged unless you add a Soul Link
+          pair above and convert it into a Party/Box movement.
+        </div>
+      ) : null}
+
+      <Field label="Reason" hint="Optional">
+        <input value={reason} onChange={(event) => onReasonChange(event.target.value)} />
+      </Field>
+    </>
+  );
+}
+
 function PokemonMulti({
   dataset,
+  state,
+  species,
   value,
   onChange,
 }: {
   dataset: RunDataset;
+  state: ReturnType<typeof reconstructHgssRun>;
+  species: PokemonSpeciesOption[];
   value: string[];
   onChange(value: string[]): void;
 }) {
@@ -3276,7 +3542,7 @@ function PokemonMulti({
       >
         {dataset.pokemon.map((pokemon) => (
           <option key={pokemon.id} value={pokemon.id}>
-            {pokemon.id} · species #{pokemon.initialSpeciesId}
+            {editorPokemonLabel(dataset, state, species, pokemon.id)}
           </option>
         ))}
       </select>
@@ -3286,10 +3552,14 @@ function PokemonMulti({
 
 function LinkMulti({
   dataset,
+  state,
+  species,
   value,
   onChange,
 }: {
   dataset: RunDataset;
+  state: ReturnType<typeof reconstructHgssRun>;
+  species: PokemonSpeciesOption[];
   value: string[];
   onChange(value: string[]): void;
 }) {
@@ -3310,7 +3580,7 @@ function LinkMulti({
       >
         {dataset.soulLinks.map((link) => (
           <option key={link.id} value={link.id}>
-            {link.id} · {link.pokemonIds.join(" + ")}
+            {editorSoulLinkLabel(dataset, state, species, link.id)}
           </option>
         ))}
       </select>

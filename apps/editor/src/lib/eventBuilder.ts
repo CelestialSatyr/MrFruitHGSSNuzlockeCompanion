@@ -7,7 +7,7 @@ import {
   type RunDataset,
   type RunEvent,
 } from "@nuzlocke/core";
-import { reconstructHgssRun } from "@nuzlocke/hgss";
+import { HGSS_MAIN_STORY_LOCATIONS, reconstructHgssRun } from "@nuzlocke/hgss";
 import { nextOpaqueId, parseTimestampInput } from "./editorData";
 
 export interface EventIdPools {
@@ -29,6 +29,7 @@ export interface EventDraftInput {
   annotations: Array<{ kind: EventAnnotation["kind"]; text: string; ruleId: string }>;
   pokemonIds: string[];
   soulLinkIds: string[];
+  partyChanges: Array<{ soulLinkId: string; destination: "party" | "box" }>;
   pokemonId: string;
   locationId: string;
   opportunityId: string;
@@ -172,6 +173,25 @@ function upsertEventInDataset(
 
   switch (input.type) {
     case "encounter": {
+      const mapLocation = HGSS_MAIN_STORY_LOCATIONS.find(
+        (location) => location.id === input.locationId,
+      );
+      if (!mapLocation) {
+        throw new Error("Choose a valid encounter from the interactive-map encounter list.");
+      }
+      const mapOpportunity = mapLocation.opportunities.find(
+        (opportunity) => opportunity.id === input.opportunityId,
+      );
+      if (!mapOpportunity) {
+        throw new Error(
+          `${mapLocation.name} does not contain encounter opportunity ${input.opportunityId || "(none)"}. Reselect the map encounter.`,
+        );
+      }
+      if (input.acquisitionType !== mapOpportunity.kind) {
+        throw new Error(
+          `${mapLocation.name} · ${mapOpportunity.label} must use acquisition type ${mapOpportunity.kind}.`,
+        );
+      }
       const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
       if (!leftPlayerId || !rightPlayerId) throw new Error("A Soul Link run requires two players.");
 
@@ -276,15 +296,53 @@ function upsertEventInDataset(
         toNickname: input.nickname.trim(),
       };
       break;
-    case "party-changed":
-      rawEvent = {
-        ...base,
-        type: "party-changed",
-        pokemonIds: input.pokemonIds.length ? input.pokemonIds : [input.pokemonId],
-        to: input.destination,
-        ...(optionalText(input.reason) ? { reason: optionalText(input.reason) } : {}),
-      };
+    case "party-changed": {
+      if (input.partyChanges.length) {
+        const seen = new Set<string>();
+        const pairChanges = input.partyChanges.map((change) => {
+          if (seen.has(change.soulLinkId)) {
+            throw new Error(`Soul Link ${change.soulLinkId} is selected more than once.`);
+          }
+          seen.add(change.soulLinkId);
+
+          const link = dataset.soulLinks.find((entry) => entry.id === change.soulLinkId);
+          if (!link) throw new Error(`Unknown Soul Link ${change.soulLinkId}.`);
+
+          return {
+            soulLinkId: link.id,
+            pokemonIds: [...link.pokemonIds] as [string, string],
+            to: change.destination,
+          };
+        });
+
+        rawEvent = {
+          ...base,
+          type: "party-changed",
+          pairChanges,
+          ...(optionalText(input.reason) ? { reason: optionalText(input.reason) } : {}),
+        };
+      } else {
+        const legacyPartyEvent =
+          previousEvent?.type === "party-changed" &&
+          !previousEvent.pairChanges?.length &&
+          Boolean(previousEvent.pokemonIds?.length && previousEvent.to);
+        if (!legacyPartyEvent) {
+          throw new Error("Select at least one Soul Link pair to move.");
+        }
+
+        const legacyPokemonIds = input.pokemonIds.length
+          ? input.pokemonIds
+          : [...(previousEvent.pokemonIds ?? [])];
+        rawEvent = {
+          ...base,
+          type: "party-changed",
+          pokemonIds: legacyPokemonIds,
+          to: input.destination,
+          ...(optionalText(input.reason) ? { reason: optionalText(input.reason) } : {}),
+        };
+      }
       break;
+    }
     case "level-milestone":
       rawEvent = {
         ...base,

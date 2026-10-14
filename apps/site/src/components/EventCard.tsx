@@ -12,6 +12,7 @@ import type { HgssProgressionState } from "@nuzlocke/hgss";
 import { Link } from "react-router";
 import { GymBadgeIcon, JOHTO_BADGES, type JohtoBadgeId } from "./BadgeCase";
 import { PokemonPrimaryRuleBadges } from "./PokemonPrimaryRuleBadges";
+import { getEventLocationName } from "../lib/encounter-locations";
 import { formatTimestamp, titleCase } from "../lib/format";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerForTheme, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
@@ -112,10 +113,11 @@ function eventSummary(event: RunEvent, dataset: RunDataset): string {
   switch (event.type) {
     case "encounter": {
       const caught = event.outcomes.filter((outcome) => outcome.result === "caught");
+      const locationName = getEventLocationName(event) ?? titleCase(event.locationId);
       if (caught.length === 2) {
-        return `${caught.map((outcome) => getSpeciesName(outcome.speciesId)).join(" and ")} became linked at ${titleCase(event.locationId)}.`;
+        return `${caught.map((outcome) => getSpeciesName(outcome.speciesId)).join(" and ")} became linked at ${locationName}.`;
       }
-      return `The encounter at ${titleCase(event.locationId)} did not produce a Soul Link.`;
+      return `The encounter at ${locationName} did not produce a Soul Link.`;
     }
     case "evolution":
       return `${getSpeciesName(event.fromSpeciesId)} evolved into ${getSpeciesName(event.toSpeciesId)}${event.level ? ` at level ${event.level}` : ""}.`;
@@ -131,8 +133,19 @@ function eventSummary(event: RunEvent, dataset: RunDataset): string {
       return event.description;
     case "nickname-changed":
       return `Renamed to ${event.toNickname}.`;
-    case "party-changed":
-      return `Moved ${event.pokemonIds.length} Pokémon to ${event.to}.`;
+    case "party-changed": {
+      if (event.pairChanges?.length) {
+        const partyCount = event.pairChanges.filter((change) => change.to === "party").length;
+        const boxCount = event.pairChanges.length - partyCount;
+        const parts = [
+          partyCount ? `${partyCount} ${partyCount === 1 ? "pair" : "pairs"} to the party` : "",
+          boxCount ? `${boxCount} ${boxCount === 1 ? "pair" : "pairs"} to the box` : "",
+        ].filter(Boolean);
+        return `Moved ${parts.join(" and ")}.`;
+      }
+      const count = event.pokemonIds?.length ?? 0;
+      return `Moved ${count} Pokémon to ${event.to ?? "a new location"}.`;
+    }
     case "level-milestone":
       return event.label ?? `Reached level ${event.level}.`;
     case "major-battle":
@@ -493,6 +506,7 @@ function EventBody({
       return dataset.pokemon.find((entry) => entry.id === outcome.pokemonId)?.shiny === true;
     });
   const playerLabel = playerAccentLabel(accent, dataset);
+  const locationName = getEventLocationName(event);
   const hasTags = shinyEncounter || Boolean(event.tags?.length);
 
   return (
@@ -503,6 +517,7 @@ function EventBody({
           <EventTimestamp episode={episode} seconds={event.videoTimestampSeconds} />
         ) : null}
         <span>{titleCase(event.type)}</span>
+        {locationName ? <span className="event-location">◇ {locationName}</span> : null}
         {playerLabel ? (
           <span className={`event-owner event-owner--${accent}`}>{playerLabel}</span>
         ) : null}

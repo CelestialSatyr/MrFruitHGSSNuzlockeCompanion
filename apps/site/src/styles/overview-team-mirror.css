@@ -52,6 +52,12 @@
     justify-content: flex-end;
   }
 
+  .run-player-column--left .team-pokemon-card .pokemon-catch-location {
+    margin-left: auto;
+    margin-right: 0;
+    text-align: right;
+  }
+
   .run-player-column--left .team-pokemon-card .team-pokemon-card__sprite {
     grid-column: 3;
     grid-row: 1;

@@ -10,7 +10,7 @@ import {
   type RunSeries,
   type SemanticValidationIssue,
 } from "@nuzlocke/core";
-import { hgssGameStateAdapter } from "@nuzlocke/hgss";
+import { HGSS_MAIN_STORY_LOCATIONS, hgssGameStateAdapter } from "@nuzlocke/hgss";
 import type {
   EditorBackupSummary,
   EditorPublishedSummary,
@@ -49,8 +49,49 @@ function applyKnownRunMigrations(dataset: RunDataset): RunDataset {
       ? { ...player, displayName: "BlueWestlo", shortName: "Blue" }
       : player,
   );
-  return players.some((player, index) => player !== dataset.players[index])
-    ? parseRunDataset({ ...dataset, players })
+
+  // Earlier editor builds did not expose every map opportunity clearly. If Route 36
+  // contains duplicate "main" encounters, reclassify the one that is unambiguously
+  // the Sudowoodo static encounter so the map can track both opportunities separately.
+  const route36MainEvents = dataset.events.filter(
+    (event) =>
+      event.type === "encounter" &&
+      event.locationId === "route-36" &&
+      event.opportunityId === "route-36-main",
+  );
+  const alreadyHasSudowoodoOpportunity = dataset.events.some(
+    (event) =>
+      event.type === "encounter" &&
+      event.locationId === "route-36" &&
+      event.opportunityId === "route-36-sudowoodo",
+  );
+  const shouldRepairRoute36 = route36MainEvents.length > 1 && !alreadyHasSudowoodoOpportunity;
+  let repairedRoute36Sudowoodo = false;
+  const events = dataset.events.map((event) => {
+    if (
+      !shouldRepairRoute36 ||
+      repairedRoute36Sudowoodo ||
+      event.type !== "encounter" ||
+      event.locationId !== "route-36" ||
+      event.opportunityId !== "route-36-main"
+    ) {
+      return event;
+    }
+
+    const text = `${event.title ?? ""} ${event.description ?? ""}`.toLowerCase();
+    const isSudowoodo =
+      event.acquisitionType === "static" ||
+      event.outcomes.some((outcome) => outcome.speciesId === 185) ||
+      text.includes("sudowoodo");
+    if (!isSudowoodo) return event;
+    repairedRoute36Sudowoodo = true;
+    return { ...event, opportunityId: "route-36-sudowoodo", acquisitionType: "static" as const };
+  });
+
+  const changedPlayers = players.some((player, index) => player !== dataset.players[index]);
+  const changedEvents = events.some((event, index) => event !== dataset.events[index]);
+  return changedPlayers || changedEvents
+    ? parseRunDataset({ ...dataset, players, events })
     : dataset;
 }
 
@@ -132,6 +173,49 @@ export async function writeDraftSeries(paths: EditorPaths, input: unknown): Prom
   return series;
 }
 
+function validateHgssEncounterMapSync(dataset: RunDataset): SemanticValidationIssue[] {
+  const issues: SemanticValidationIssue[] = [];
+
+  for (const event of dataset.events) {
+    if (event.type !== "encounter") continue;
+    const location = HGSS_MAIN_STORY_LOCATIONS.find((entry) => entry.id === event.locationId);
+    if (!location) {
+      issues.push({
+        severity: "error",
+        code: "unknown-map-location",
+        message: `${event.id} uses location ${event.locationId}, which is not present on the HGSS interactive map.`,
+        entityId: event.id,
+        eventId: event.id,
+      });
+      continue;
+    }
+
+    const opportunity = location.opportunities.find((entry) => entry.id === event.opportunityId);
+    if (!opportunity) {
+      issues.push({
+        severity: "error",
+        code: "unknown-map-opportunity",
+        message: `${event.id} uses ${location.name} / ${event.opportunityId}, which is not a tracked map encounter.`,
+        entityId: event.id,
+        eventId: event.id,
+      });
+      continue;
+    }
+
+    if (event.acquisitionType !== opportunity.kind) {
+      issues.push({
+        severity: "error",
+        code: "map-opportunity-kind-mismatch",
+        message: `${event.id} records ${location.name} · ${opportunity.label} as ${event.acquisitionType}; the map defines it as ${opportunity.kind}.`,
+        entityId: event.id,
+        eventId: event.id,
+      });
+    }
+  }
+
+  return issues;
+}
+
 export function validateSeries(input: unknown): EditorValidationSummary {
   const schema = RunSeriesSchema.safeParse(input);
   if (!schema.success) {
@@ -148,7 +232,10 @@ export function validateSeries(input: unknown): EditorValidationSummary {
   const semanticIssues: SemanticValidationIssue[] = [];
   for (const dataset of schema.data.runs) {
     const result = validateRunDatasetSemantics(dataset, hgssGameStateAdapter);
-    for (const issue of result.issues) {
+    const coreIssues = result.issues.filter(
+      (issue) => issue.code !== "encounter-opportunity-reused",
+    );
+    for (const issue of [...coreIssues, ...validateHgssEncounterMapSync(dataset)]) {
       semanticIssues.push({
         ...issue,
         message: `[${dataset.run.title}] ${issue.message}`,

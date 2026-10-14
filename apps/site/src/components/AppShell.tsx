@@ -1,7 +1,9 @@
 import { NavLink, Outlet } from "react-router";
+import { GlobalSearch } from "./GlobalSearch";
 import { SettingsMenu } from "./SettingsMenu";
 import { RunSelector } from "./RunSelector";
 import { SiteFooter } from "./SiteFooter";
+import { SiteNoticeBanner } from "./SiteNoticeBanner";
 import { SpoilerWelcomeDialog } from "./SpoilerWelcomeDialog";
 import { useRunView } from "../context/RunViewContext";
 
@@ -19,7 +21,7 @@ function navClassName({ isActive }: { isActive: boolean }) {
 }
 
 export function AppShell() {
-  const { dataset, isDraftPreview, spoilerPromptOpen } = useRunView();
+  const { series, dataset, isDraftPreview, spoilerPromptOpen } = useRunView();
 
   const playerOneId = dataset.run.playerIds[0];
   const playerOne = dataset.players.find((player) => player.id === playerOneId);
@@ -34,6 +36,12 @@ export function AppShell() {
       >
         {isDraftPreview ? (
           <div className="draft-preview-banner">LOCAL DRAFT PREVIEW · Not public</div>
+        ) : null}
+        {series.siteNotice ? (
+          <SiteNoticeBanner
+            key={`${series.siteNotice.id}:${series.siteNotice.type}:${series.siteNotice.title ?? ""}:${series.siteNotice.message}:${series.siteNotice.linkLabel ?? ""}:${series.siteNotice.linkUrl ?? ""}`}
+            notice={series.siteNotice}
+          />
         ) : null}
         <header className="site-header">
           <div className="site-header__inner">
@@ -55,6 +63,7 @@ export function AppShell() {
               ))}
             </nav>
 
+            <GlobalSearch />
             <RunSelector />
             <SettingsMenu />
           </div>
