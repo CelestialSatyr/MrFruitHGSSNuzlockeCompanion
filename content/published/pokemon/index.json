@@ -409,6 +409,42 @@
     "initialAbilityId": "poison-heal"
   },
   {
+    "id": "pkm_0047",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0082",
+    "initialSpeciesId": 16,
+    "gender": "female",
+    "shiny": false,
+    "initialAbilityId": "download"
+  },
+  {
+    "id": "pkm_0048",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0082",
+    "initialSpeciesId": 105,
+    "gender": "male",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0045",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0081",
+    "initialSpeciesId": 357,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "bashful",
+    "initialAbilityId": "water-absorb"
+  },
+  {
+    "id": "pkm_0046",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0081",
+    "initialSpeciesId": 190,
+    "gender": "male",
+    "shiny": false,
+    "initialAbilityId": "speed-boost"
+  },
+  {
     "id": "pkm_0043",
     "playerId": "player_fruit",
     "createdByEventId": "evt_0078",
