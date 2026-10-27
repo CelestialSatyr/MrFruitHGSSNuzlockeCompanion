@@ -2324,5 +2324,171 @@
     "fromSpeciesId": 449,
     "toSpeciesId": 450,
     "level": 34
+  },
+  {
+    "id": "evt_0109",
+    "episodeId": "ep_0021",
+    "sequence": 10,
+    "videoTimestampSeconds": 88,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "A new party has been formed!",
+    "type": "party-changed",
+    "pairChanges": [
+      { "soulLinkId": "link_0035", "pokemonIds": ["pkm_0069", "pkm_0070"], "to": "party" },
+      { "soulLinkId": "link_0007", "pokemonIds": ["pkm_0013", "pkm_0014"], "to": "party" },
+      { "soulLinkId": "link_0020", "pokemonIds": ["pkm_0039", "pkm_0040"], "to": "box" },
+      { "soulLinkId": "link_0023", "pokemonIds": ["pkm_0045", "pkm_0046"], "to": "box" }
+    ]
+  },
+  {
+    "id": "evt_0110",
+    "episodeId": "ep_0021",
+    "sequence": 20,
+    "videoTimestampSeconds": 793,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the first encounter for the episode!",
+    "description": "With yet another bug Pokemon! (Although, fun fact, Medicham is among my personal top 3 favorite pokemon of all time)",
+    "type": "encounter",
+    "locationId": "cliff-cave",
+    "opportunityId": "cliff-cave-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0071",
+        "speciesId": 308,
+        "level": 23,
+        "nickname": "LUX",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0072",
+        "speciesId": 47,
+        "level": 19,
+        "nickname": "POPPY",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0036"
+  },
+  {
+    "id": "evt_0111",
+    "episodeId": "ep_0021",
+    "sequence": 30,
+    "videoTimestampSeconds": 1040,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the immediate second encounter afterwards!",
+    "type": "encounter",
+    "locationId": "route-47",
+    "opportunityId": "route-47-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0073",
+        "speciesId": 41,
+        "level": 11,
+        "nickname": "CHEESELY",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0074",
+        "speciesId": 264,
+        "level": 23,
+        "nickname": "GOOSE",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0037"
+  },
+  {
+    "id": "evt_0112",
+    "episodeId": "ep_0021",
+    "sequence": 40,
+    "videoTimestampSeconds": 1447,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Rest in piece, Brongo",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0044",
+    "locationId": "route-47",
+    "opponentName": "Sharpedo",
+    "cause": "A critical hit by an Ice Fang"
+  },
+  {
+    "id": "evt_0113",
+    "episodeId": "ep_0021",
+    "sequence": 50,
+    "videoTimestampSeconds": 1732,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the third encounter for the episode!",
+    "type": "encounter",
+    "locationId": "route-48",
+    "opportunityId": "route-48-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0075",
+        "speciesId": 52,
+        "level": 20,
+        "nickname": "CHEERIOS",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0076",
+        "speciesId": 472,
+        "level": 25,
+        "nickname": "GOOMZTX",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0038"
+  },
+  {
+    "id": "evt_0114",
+    "episodeId": "ep_0021",
+    "sequence": 60,
+    "videoTimestampSeconds": 2408,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the encounter for the Safari Zone...",
+    "type": "encounter",
+    "locationId": "safari-zone",
+    "opportunityId": "safari-zone-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "skipped",
+        "playerId": "player_fruit",
+        "speciesId": 109,
+        "reason": "Had to skip because the Farfetch'd dipped.."
+      },
+      {
+        "result": "failed",
+        "playerId": "player_blue",
+        "speciesId": 83,
+        "reason": "Just straight up left..."
+      }
+    ]
   }
 ]

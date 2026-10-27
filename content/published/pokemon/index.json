@@ -682,5 +682,65 @@
     "shiny": false,
     "natureId": "naughty",
     "initialAbilityId": "rivalry"
+  },
+  {
+    "id": "pkm_0073",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0111",
+    "initialSpeciesId": 41,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "calm",
+    "initialAbilityId": "truant"
+  },
+  {
+    "id": "pkm_0074",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0111",
+    "initialSpeciesId": 264,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "quick-feet"
+  },
+  {
+    "id": "pkm_0075",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0113",
+    "initialSpeciesId": 52,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "mild",
+    "initialAbilityId": "truant"
+  },
+  {
+    "id": "pkm_0076",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0113",
+    "initialSpeciesId": 472,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "impish",
+    "initialAbilityId": "stench"
+  },
+  {
+    "id": "pkm_0071",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0110",
+    "initialSpeciesId": 308,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "unaware"
+  },
+  {
+    "id": "pkm_0072",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0110",
+    "initialSpeciesId": 47,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "wonder-guard"
   }
 ]
