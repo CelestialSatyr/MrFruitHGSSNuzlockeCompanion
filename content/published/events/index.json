@@ -1853,5 +1853,155 @@
       }
     ],
     "soulLinkId": "link_0028"
+  },
+  {
+    "id": "evt_0090",
+    "episodeId": "ep_0016",
+    "sequence": 10,
+    "videoTimestampSeconds": 2184,
+    "tone": "positive",
+    "importance": "major",
+    "title": "And the Gym Battle against Morty!",
+    "type": "gym-battle",
+    "gymId": "ecruteak-gym",
+    "leaderName": "Morty",
+    "result": "win",
+    "participantPokemonIds": [
+      "pkm_0015",
+      "pkm_0016",
+      "pkm_0023",
+      "pkm_0024",
+      "pkm_0021",
+      "pkm_0022",
+      "pkm_0029",
+      "pkm_0030",
+      "pkm_0039",
+      "pkm_0040",
+      "pkm_0043",
+      "pkm_0044"
+    ],
+    "badgeId": "fog"
+  },
+  {
+    "id": "evt_0091",
+    "episodeId": "ep_0017",
+    "sequence": 10,
+    "videoTimestampSeconds": 1235,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "Another victim of the Wobbuffet Maffia",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0022",
+    "locationId": "route-39",
+    "opponentName": "Wobbuffet",
+    "cause": "Counter has claimed another victim.."
+  },
+  {
+    "id": "evt_0092",
+    "episodeId": "ep_0017",
+    "sequence": 20,
+    "videoTimestampSeconds": 1590,
+    "tone": "neutral",
+    "importance": "normal",
+    "type": "party-changed",
+    "pairChanges": [
+      { "soulLinkId": "link_0023", "pokemonIds": ["pkm_0045", "pkm_0046"], "to": "party" }
+    ]
+  },
+  {
+    "id": "evt_0093",
+    "episodeId": "ep_0017",
+    "sequence": 30,
+    "videoTimestampSeconds": 2390,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "First encounter for the episode!",
+    "type": "encounter",
+    "locationId": "route-39",
+    "opportunityId": "route-39-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0057",
+        "speciesId": 238,
+        "level": 17,
+        "nickname": "MUFFIN",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0058",
+        "speciesId": 489,
+        "level": 17,
+        "nickname": "SONION",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0029"
+  },
+  {
+    "id": "evt_0094",
+    "episodeId": "ep_0017",
+    "sequence": 40,
+    "videoTimestampSeconds": 2511,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Armor Fossil found by Fruit!",
+    "description": "Technically not linked to Blue's Armor Fossil (That was the Skull Fossil Fruit purchased), but they're using it for a new encounter!",
+    "type": "special-moment",
+    "pokemonIds": ["pkm_0057"]
+  },
+  {
+    "id": "evt_0095",
+    "episodeId": "ep_0017",
+    "sequence": 50,
+    "videoTimestampSeconds": 2953,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the encounter for Olivine City is...",
+    "type": "encounter",
+    "locationId": "olivine-city",
+    "opportunityId": "olivine-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0059",
+        "speciesId": 213,
+        "level": 14,
+        "nickname": "MIKE HUNT",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0060",
+        "speciesId": 170,
+        "level": 10,
+        "nickname": "SUNSUNSK4S",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0030"
+  },
+  {
+    "id": "evt_0096",
+    "episodeId": "ep_0017",
+    "sequence": 60,
+    "videoTimestampSeconds": 3220,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Root Fossil found by Mike Hunt..",
+    "description": "So we're waiting for a new fossil to pair it with!",
+    "type": "special-moment",
+    "pokemonIds": ["pkm_0059"]
   }
 ]

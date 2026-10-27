@@ -543,5 +543,45 @@
     "shiny": false,
     "natureId": "docile",
     "initialAbilityId": "snow-cloak"
+  },
+  {
+    "id": "pkm_0059",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0095",
+    "initialSpeciesId": 213,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "skill-link"
+  },
+  {
+    "id": "pkm_0060",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0095",
+    "initialSpeciesId": 170,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "effect-spore"
+  },
+  {
+    "id": "pkm_0057",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0093",
+    "initialSpeciesId": 238,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "bold",
+    "initialAbilityId": "limber"
+  },
+  {
+    "id": "pkm_0058",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0093",
+    "initialSpeciesId": 489,
+    "gender": "genderless",
+    "shiny": false,
+    "natureId": "hardy",
+    "initialAbilityId": "storm-drain"
   }
 ]
