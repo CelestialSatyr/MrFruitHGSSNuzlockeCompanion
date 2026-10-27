@@ -742,5 +742,85 @@
     "shiny": false,
     "natureId": "serious",
     "initialAbilityId": "wonder-guard"
+  },
+  {
+    "id": "pkm_0077",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0115",
+    "initialSpeciesId": 172,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "calm",
+    "initialAbilityId": "dry-skin"
+  },
+  {
+    "id": "pkm_0078",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0115",
+    "initialSpeciesId": 368,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "modest",
+    "initialAbilityId": "volt-absorb"
+  },
+  {
+    "id": "pkm_0079",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0116",
+    "initialSpeciesId": 473,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "careful",
+    "initialAbilityId": "adaptability"
+  },
+  {
+    "id": "pkm_0080",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0116",
+    "initialSpeciesId": 278,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "bashful",
+    "initialAbilityId": "magic-guard"
+  },
+  {
+    "id": "pkm_0081",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0117",
+    "initialSpeciesId": 116,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "lonely",
+    "initialAbilityId": "oblivious"
+  },
+  {
+    "id": "pkm_0082",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0117",
+    "initialSpeciesId": 283,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "rash",
+    "initialAbilityId": "heatproof"
+  },
+  {
+    "id": "pkm_0083",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0118",
+    "initialSpeciesId": 250,
+    "gender": "genderless",
+    "shiny": false,
+    "natureId": "hardy",
+    "initialAbilityId": "limber"
+  },
+  {
+    "id": "pkm_0084",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0118",
+    "initialSpeciesId": 64,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "jolly",
+    "initialAbilityId": "filter"
   }
 ]

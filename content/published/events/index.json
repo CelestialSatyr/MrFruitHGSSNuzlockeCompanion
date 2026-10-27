@@ -2490,5 +2490,151 @@
         "reason": "Just straight up left..."
       }
     ]
+  },
+  {
+    "id": "evt_0115",
+    "episodeId": "ep_0022",
+    "sequence": 10,
+    "videoTimestampSeconds": 186,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "First encounter of the episode!",
+    "type": "encounter",
+    "locationId": "safari-zone-gate",
+    "opportunityId": "safari-zone-gate-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0077",
+        "speciesId": 172,
+        "level": 17,
+        "nickname": "REDTURTLE",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0078",
+        "speciesId": 368,
+        "level": 17,
+        "nickname": "GREO",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0039"
+  },
+  {
+    "id": "evt_0116",
+    "episodeId": "ep_0022",
+    "sequence": 20,
+    "videoTimestampSeconds": 1581,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the second encounter for the episode!",
+    "type": "encounter",
+    "locationId": "route-43",
+    "opportunityId": "route-43-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0079",
+        "speciesId": 473,
+        "level": 17,
+        "nickname": "CABBAGE",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0080",
+        "speciesId": 278,
+        "level": 17,
+        "nickname": "ITSSTARLET",
+        "placement": "box",
+        "flyingTypeDeclared": true
+      }
+    ],
+    "soulLinkId": "link_0040"
+  },
+  {
+    "id": "evt_0117",
+    "episodeId": "ep_0022",
+    "sequence": 30,
+    "videoTimestampSeconds": 1935,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Technically a Route 43 encounter..",
+    "description": "As no encounters were done in Mahogany Village..",
+    "tags": [{ "tagId": "illegal-capture" }],
+    "type": "encounter",
+    "locationId": "route-43",
+    "opportunityId": "route-43-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0081",
+        "speciesId": 116,
+        "level": 18,
+        "nickname": "SETHIROTH",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0082",
+        "speciesId": 283,
+        "level": 15,
+        "nickname": "RANGOON",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0041"
+  },
+  {
+    "id": "evt_0118",
+    "episodeId": "ep_0022",
+    "sequence": 40,
+    "videoTimestampSeconds": 2764,
+    "tone": "positive",
+    "importance": "major",
+    "title": "And the Lake of Rage encounter!",
+    "description": "The first Fire type has been found!",
+    "type": "encounter",
+    "locationId": "lake-of-rage",
+    "opportunityId": "lake-of-rage-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0083",
+        "speciesId": 250,
+        "level": 12,
+        "nickname": "BIGOLFARTY",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0084",
+        "speciesId": 64,
+        "nickname": "LEON",
+        "placement": "party",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0042"
   }
 ]
