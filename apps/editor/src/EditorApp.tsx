@@ -2612,13 +2612,13 @@ function Events({
                 </select>
               </Field>
             </div>
-            <PokemonMulti
-              dataset={dataset}
-              state={state}
-              species={species}
-              value={form.pokemonIds}
-              onChange={(value) => patch({ pokemonIds: value })}
-            />
+            <div className="editor-readonly-summary">
+              <strong>Party participants are automatic</strong>
+              <span>
+                This Gym battle uses both players’ current party layout at this point in the
+                timeline. Record any Party / box changes before the battle event.
+              </span>
+            </div>
           </>
         ) : null}
         {form.type === "major-battle" ? (

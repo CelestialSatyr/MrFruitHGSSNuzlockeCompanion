@@ -399,12 +399,32 @@ function upsertEventInDataset(
       };
       break;
     case "gym-battle": {
-      const state = reconstructHgssRun(dataset, { episodeStatus: "all" });
-      const participants = input.pokemonIds.length
-        ? input.pokemonIds
-        : [...state.pokemon.values()]
-            .filter((entry) => entry.lifeStatus === "alive" && entry.placement === "party")
-            .map((entry) => entry.id);
+      const targetEpisode = dataset.episodes.find((episode) => episode.id === input.episodeId);
+      if (!targetEpisode) throw new Error("Choose a valid episode before adding the Gym battle.");
+
+      const stateBeforeBattle = reconstructHgssRun(
+        {
+          ...dataset,
+          events: dataset.events.filter((event) => {
+            if (event.id === eventId) return false;
+            const episode = dataset.episodes.find((entry) => entry.id === event.episodeId);
+            if (!episode) return false;
+            if (episode.number !== targetEpisode.number)
+              return episode.number < targetEpisode.number;
+            if (event.sequence !== input.sequence) return event.sequence < input.sequence;
+            return event.id.localeCompare(eventId) < 0;
+          }),
+        },
+        { episodeStatus: "all" },
+      );
+      const participants = [...stateBeforeBattle.pokemon.values()]
+        .filter((entry) => entry.lifeStatus === "alive" && entry.placement === "party")
+        .map((entry) => entry.id);
+      if (!participants.length) {
+        throw new Error(
+          "The Gym battle has no current party Pokémon. Record the Party / box changes before the Gym battle, then save it again.",
+        );
+      }
       rawEvent = {
         ...base,
         type: "gym-battle",

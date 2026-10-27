@@ -108,7 +108,7 @@ function eventTitle(event: RunEvent): string {
   }
 }
 
-function eventSummary(event: RunEvent, dataset: RunDataset): string {
+function eventSummary(event: RunEvent, dataset: RunDataset): string | undefined {
   if (event.description) return event.description;
   switch (event.type) {
     case "encounter": {
@@ -151,7 +151,7 @@ function eventSummary(event: RunEvent, dataset: RunDataset): string {
     case "major-battle":
       return `${event.battleName}: ${event.result}.`;
     case "progression-changed":
-      return `${titleCase(event.flag.id)} set to ${String(event.flag.value)}.`;
+      return undefined;
     case "rule-ruling":
       return event.details;
     case "custom":
@@ -422,6 +422,7 @@ function GymBattleCard({
     event.badgeId && JOHTO_BADGES.some((entry) => entry.id === event.badgeId)
       ? (event.badgeId as JohtoBadgeId)
       : undefined;
+  const summary = eventSummary(event, dataset);
 
   return (
     <article
@@ -447,7 +448,7 @@ function GymBattleCard({
         <h3>
           <Link to={`/events/${event.id}`}>{eventTitle(event)}</Link>
         </h3>
-        <p>{eventSummary(event, dataset)}</p>
+        {summary ? <p>{summary}</p> : null}
         <div className="gym-event__teams">
           <GymTeam label={leftPlayer?.displayName ?? "Player 1"} theme={leftTheme} pokemon={left} />
           <GymTeam
@@ -508,6 +509,7 @@ function EventBody({
   const playerLabel = playerAccentLabel(accent, dataset);
   const locationName = getEventLocationName(event);
   const hasTags = shinyEncounter || Boolean(event.tags?.length);
+  const summary = eventSummary(event, dataset);
 
   return (
     <div className={`event-card__body${accent === "dual" ? " event-card__body--center" : ""}`}>
@@ -546,7 +548,7 @@ function EventBody({
       <h3>
         <Link to={`/events/${event.id}`}>{eventTitle(event)}</Link>
       </h3>
-      <p>{eventSummary(event, dataset)}</p>
+      {summary ? <p>{summary}</p> : null}
 
       {relatedPokemon.length > 0 && event.type !== "encounter" ? (
         <div className="event-card__references">
