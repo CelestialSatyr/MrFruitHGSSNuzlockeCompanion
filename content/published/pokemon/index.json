@@ -662,5 +662,25 @@
     "shiny": false,
     "natureId": "relaxed",
     "initialAbilityId": "cute-charm"
+  },
+  {
+    "id": "pkm_0069",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0104",
+    "initialSpeciesId": 248,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "brave",
+    "initialAbilityId": "oblivious"
+  },
+  {
+    "id": "pkm_0070",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0104",
+    "initialSpeciesId": 132,
+    "gender": "genderless",
+    "shiny": false,
+    "natureId": "naughty",
+    "initialAbilityId": "rivalry"
   }
 ]
