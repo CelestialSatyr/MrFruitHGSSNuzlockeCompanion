@@ -22,5 +22,9 @@
   { "id": "link_0021", "pokemonIds": ["pkm_0041", "pkm_0042"], "createdByEventId": "evt_0076" },
   { "id": "link_0024", "pokemonIds": ["pkm_0047", "pkm_0048"], "createdByEventId": "evt_0082" },
   { "id": "link_0023", "pokemonIds": ["pkm_0045", "pkm_0046"], "createdByEventId": "evt_0081" },
-  { "id": "link_0022", "pokemonIds": ["pkm_0043", "pkm_0044"], "createdByEventId": "evt_0078" }
+  { "id": "link_0022", "pokemonIds": ["pkm_0043", "pkm_0044"], "createdByEventId": "evt_0078" },
+  { "id": "link_0025", "pokemonIds": ["pkm_0049", "pkm_0050"], "createdByEventId": "evt_0084" },
+  { "id": "link_0027", "pokemonIds": ["pkm_0053", "pkm_0054"], "createdByEventId": "evt_0087" },
+  { "id": "link_0028", "pokemonIds": ["pkm_0055", "pkm_0056"], "createdByEventId": "evt_0089" },
+  { "id": "link_0026", "pokemonIds": ["pkm_0051", "pkm_0052"], "createdByEventId": "evt_0086" }
 ]

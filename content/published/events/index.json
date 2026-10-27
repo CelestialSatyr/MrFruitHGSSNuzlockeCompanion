@@ -1666,5 +1666,192 @@
       }
     ],
     "soulLinkId": "link_0024"
+  },
+  {
+    "id": "evt_0083",
+    "episodeId": "ep_0015",
+    "sequence": 10,
+    "videoTimestampSeconds": 70,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "Noctowl can in fact, not learn it",
+    "description": "Aeroblast would have been cool though!",
+    "type": "special-moment",
+    "pokemonIds": ["pkm_0021"]
+  },
+  {
+    "id": "evt_0084",
+    "episodeId": "ep_0015",
+    "sequence": 20,
+    "videoTimestampSeconds": 1168,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "First encounter for the episode!",
+    "description": "Let's hope it's a good one!",
+    "type": "encounter",
+    "locationId": "ecruteak-city",
+    "opportunityId": "ecruteak-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0049",
+        "speciesId": 316,
+        "level": 10,
+        "nickname": "DADDY MILK",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0050",
+        "speciesId": 492,
+        "level": 15,
+        "nickname": "PAKMILKMAN",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0025"
+  },
+  {
+    "id": "evt_0085",
+    "episodeId": "ep_0015",
+    "sequence": 30,
+    "videoTimestampSeconds": 1988,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "How many dupes will be encounter this time?",
+    "type": "encounter",
+    "locationId": "route-38",
+    "opportunityId": "route-38-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      { "result": "failed", "playerId": "player_fruit", "speciesId": 475, "reason": "Teleport..." },
+      { "result": "skipped", "playerId": "player_blue", "speciesId": 286 }
+    ]
+  },
+  {
+    "id": "evt_0086",
+    "episodeId": "ep_0015",
+    "sequence": 40,
+    "videoTimestampSeconds": 2414,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Alright, let's try that again",
+    "description": "Also, very good question, Blue..",
+    "type": "encounter",
+    "locationId": "route-42",
+    "opportunityId": "route-42-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0051",
+        "speciesId": 398,
+        "level": 10,
+        "nickname": "PADWNPRECH",
+        "placement": "box",
+        "flyingTypeDeclared": true
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0052",
+        "speciesId": 299,
+        "level": 10,
+        "nickname": "KEFLA",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0026"
+  },
+  {
+    "id": "evt_0087",
+    "episodeId": "ep_0015",
+    "sequence": 50,
+    "videoTimestampSeconds": 2748,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And that's our golden goose right there!",
+    "description": "Just don't worry about what could've been..",
+    "type": "encounter",
+    "locationId": "mt-mortar",
+    "opportunityId": "mt-mortar-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0053",
+        "speciesId": 72,
+        "level": 13,
+        "nickname": "BOOGEY",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0054",
+        "speciesId": 289,
+        "level": 13,
+        "nickname": "TINY",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0027"
+  },
+  {
+    "id": "evt_0088",
+    "episodeId": "ep_0015",
+    "sequence": 60,
+    "videoTimestampSeconds": 3025,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Surf unlocked!",
+    "type": "progression-changed",
+    "flag": { "kind": "capability", "id": "surf", "value": true }
+  },
+  {
+    "id": "evt_0089",
+    "episodeId": "ep_0015",
+    "sequence": 70,
+    "videoTimestampSeconds": 3711,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the final encounter of the episode",
+    "type": "encounter",
+    "locationId": "burned-tower",
+    "opportunityId": "burned-tower-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0055",
+        "speciesId": 301,
+        "level": 13,
+        "nickname": "CUMULONMBS",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0056",
+        "speciesId": 159,
+        "level": 13,
+        "nickname": "PYGMY",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0028"
   }
 ]
