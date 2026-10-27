@@ -23,6 +23,8 @@ function mon(
     primaryType,
     actualTypes,
     baseStatTotal,
+    abilityFit: "neutral",
+    natureFit: "neutral",
     flyingTypeDeclared: primaryType === "flying",
   };
 }
@@ -68,7 +70,7 @@ describe("Party Planner", () => {
     expect(best?.score.pairCount).toBe(3);
   });
 
-  it("uses unique actual typings as the first default tie breaker", () => {
+  it("uses unique actual typings after trait fit ties", () => {
     const candidates = [
       pair("a", "water", "fire", ["water", "ice"], ["fire", "flying"]),
       pair("b", "grass", "electric", ["grass", "poison"], ["electric", "steel"]),
@@ -92,6 +94,16 @@ describe("Party Planner", () => {
     const [best] = findPartyRecommendations(candidates, { maxPairs: 2, random: () => 0.5 });
     expect(best?.score.uniqueTypeCount).toBe(5);
     expect(best?.score.overlapCount).toBe(0);
+  });
+
+  it("prefers better ability/nature fit before raw BST by default", () => {
+    const safe = pair("safe", "poison", "normal", ["poison", "flying"], ["normal"], 250, 400);
+    const risky = pair("risky", "poison", "normal", ["poison", "flying"], ["normal"], 500, 500);
+    risky.left.abilityFit = "negative";
+
+    const [best] = findPartyRecommendations([safe, risky], { maxPairs: 1, random: () => 0.5 });
+    expect(best?.pairIds).toEqual(["safe"]);
+    expect(best?.score.negativeTraitCount).toBe(0);
   });
 
   it("uses total BST before overlap in the default ranking", () => {

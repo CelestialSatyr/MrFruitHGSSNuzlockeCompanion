@@ -11,8 +11,14 @@ import {
 } from "@nuzlocke/core";
 import { Link } from "react-router";
 import { PrimaryTypeBadge } from "../components/PrimaryTypeBadge";
+import { PokemonAbilityBadge, PokemonNatureBadge } from "../components/PokemonTraits";
 import { usePokemonPlannerDataMap } from "../hooks/usePokemonTypes";
-import { buildPartyPlannerData, collectPartyPlannerSpeciesIds } from "../lib/partyPlannerData";
+import { usePokemonMoveDataMap } from "../hooks/usePokemonMoves";
+import {
+  buildPartyPlannerData,
+  collectPartyPlannerMoveIds,
+  collectPartyPlannerSpeciesIds,
+} from "../lib/partyPlannerData";
 import { getHgssSpriteUrl } from "../lib/pokemon";
 import { getPlayerTheme } from "../lib/player-theme";
 import { useRunView } from "../context/RunViewContext";
@@ -41,6 +47,13 @@ const RANKING_META: Record<
     direction: "Maximise",
     description: "Prefer broader coverage from the Pokémon's current actual typings.",
   },
+  traitFit: {
+    label: "Ability & nature fit",
+    shortLabel: "trait fit",
+    direction: "Maximise",
+    description:
+      "Avoid detrimental abilities/natures, then prefer traits that fit the current Pokémon and moveset.",
+  },
   overlapCount: {
     label: "Typing overlap",
     shortLabel: "overlap",
@@ -67,10 +80,12 @@ export function PartyPlannerPage() {
   const [rankingItems, setRankingItems] = useState<RankingItem[]>(createDefaultRanking);
   const speciesIds = useMemo(() => collectPartyPlannerSpeciesIds(dataset, state), [dataset, state]);
   const { dataBySpecies, loading, error } = usePokemonPlannerDataMap(speciesIds);
+  const moveIds = useMemo(() => collectPartyPlannerMoveIds(state), [state]);
+  const { dataByMove, loading: movesLoading } = usePokemonMoveDataMap(moveIds);
 
   const plannerData = useMemo(
-    () => buildPartyPlannerData(dataset, state, dataBySpecies),
-    [dataset, state, dataBySpecies],
+    () => buildPartyPlannerData(dataset, state, dataBySpecies, dataByMove),
+    [dataset, state, dataByMove, dataBySpecies],
   );
 
   const activeRanking = useMemo(
@@ -175,10 +190,13 @@ export function PartyPlannerPage() {
         alivePairCount={plannerData.pairs.length}
       />
 
-      {loading ? (
+      {loading || movesLoading ? (
         <section className="planner-state-card">
           <strong>Loading party data…</strong>
-          <span>The planner is resolving typings and base stats for the alive links.</span>
+          <span>
+            The planner is resolving typings, moves, abilities, natures and base stats for the alive
+            links.
+          </span>
         </section>
       ) : null}
 
@@ -189,7 +207,7 @@ export function PartyPlannerPage() {
         </section>
       ) : null}
 
-      {!loading && !error && plannerData.unresolvedFlyingPokemonIds.length ? (
+      {!loading && !movesLoading && !error && plannerData.unresolvedFlyingPokemonIds.length ? (
         <section className="planner-state-card planner-state-card--warning">
           <strong>Flying declaration required</strong>
           <span>
@@ -201,7 +219,7 @@ export function PartyPlannerPage() {
         </section>
       ) : null}
 
-      {!loading && !error && plannerData.invalidPairIds.length ? (
+      {!loading && !movesLoading && !error && plannerData.invalidPairIds.length ? (
         <section className="planner-state-card planner-state-card--warning">
           <strong>Invalid Soul Link data</strong>
           <span>
@@ -212,7 +230,7 @@ export function PartyPlannerPage() {
         </section>
       ) : null}
 
-      {!loading && !error && !plannerData.unresolvedFlyingPokemonIds.length ? (
+      {!loading && !movesLoading && !error && !plannerData.unresolvedFlyingPokemonIds.length ? (
         mode === "automatic" ? (
           <AutomaticPlanner
             recommendations={recommendations}
@@ -574,6 +592,15 @@ function PlannerPokemon({
             </span>
           ))}
         </div>
+        <div className="planner-pokemon__traits">
+          <PokemonAbilityBadge abilityId={pokemon.abilityId} tone={pokemon.abilityFit} compact />
+          <PokemonNatureBadge
+            natureId={pokemon.natureId}
+            fitTone={pokemon.natureFit}
+            fitNote={pokemon.natureFitReason}
+            compact
+          />
+        </div>
         <small className="planner-pokemon__bst">BST {pokemon.baseStatTotal}</small>
       </div>
     </Link>
@@ -588,6 +615,9 @@ function ScorePills({ score }: { score: PartyPlannerRecommendation["score"] }) {
       </span>
       <span>
         <b>{score.overlapCount}</b> overlaps
+      </span>
+      <span title={`Trait score ${score.traitScore >= 0 ? "+" : ""}${score.traitScore}`}>
+        <b>{score.negativeTraitCount}</b> detrimental traits
       </span>
       <span>
         <b>{score.totalBaseStats.toLocaleString()}</b> total BST

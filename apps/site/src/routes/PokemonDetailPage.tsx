@@ -5,7 +5,9 @@ import { SoulLinkCard } from "../components/SoulLinkCard";
 import { SpoilerGate } from "../components/SpoilerGate";
 import { PokemonPrimaryRuleBadges } from "../components/PokemonPrimaryRuleBadges";
 import { PokemonTypeChips } from "../components/PokemonTypeChips";
+import { PokemonAbilityBadge, PokemonNatureBadge } from "../components/PokemonTraits";
 import { useRunView } from "../context/RunViewContext";
+import { usePokemonTraitFit } from "../hooks/usePokemonTraitFit";
 import { getOfficialArtworkUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerTheme } from "../lib/player-theme";
 
@@ -35,6 +37,12 @@ export function PokemonDetailPage() {
   const link = current.soulLinkId ? state.soulLinks.get(current.soulLinkId) : undefined;
   const shiny = current.source.shiny;
   const playerTheme = player ? getPlayerTheme(player) : undefined;
+  const { abilityFit, natureFit } = usePokemonTraitFit({
+    speciesId: current.currentSpeciesId,
+    abilityId: current.abilityId,
+    natureId: current.natureId,
+    knownMoveIds: current.knownMoveIds,
+  });
 
   return (
     <div className="page-stack page-stack--tight">
@@ -69,15 +77,17 @@ export function PokemonDetailPage() {
               <strong>{current.placement}</strong>
             </span>
             {current.natureId ? (
-              <span>
-                <small>Nature</small>
-                <strong>{current.natureId.replaceAll("-", " ")}</strong>
+              <span className="profile-fact--trait">
+                <PokemonNatureBadge
+                  natureId={current.natureId}
+                  fitTone={natureFit.tone}
+                  fitNote={natureFit.reason}
+                />
               </span>
             ) : null}
             {current.abilityId ? (
-              <span>
-                <small>Ability</small>
-                <strong>{current.abilityId.replaceAll("-", " ")}</strong>
+              <span className="profile-fact--trait">
+                <PokemonAbilityBadge abilityId={current.abilityId} tone={abilityFit.tone} />
               </span>
             ) : null}
             <span>

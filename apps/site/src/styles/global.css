@@ -808,7 +808,7 @@ p {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.55rem;
 }
-.profile-facts span {
+.profile-facts > span {
   padding: 0.7rem;
   border: 1px solid var(--border);
   border-radius: 0.7rem;
@@ -5692,4 +5692,269 @@ a.map-location-catch__member:hover b {
     grid-template-columns: 4.7rem minmax(0, 1fr) auto;
     gap: 0.5rem;
   }
+}
+
+/* Pokémon trait previews --------------------------------------------------- */
+.team-pokemon-card__traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.32rem;
+  margin-top: 0.4rem;
+}
+
+.pokemon-trait-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  min-height: 1.55rem;
+  max-width: 100%;
+  padding: 0.22rem 0.46rem;
+  border: 1px solid var(--border);
+  border-radius: 0.55rem;
+  background: rgba(9, 13, 20, 0.56);
+  color: var(--text);
+  font-size: 0.66rem;
+  line-height: 1.15;
+  text-transform: none;
+}
+
+.pokemon-trait-badge__label {
+  color: var(--muted);
+  font-size: 0.55rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pokemon-trait-badge strong {
+  margin: 0;
+  color: inherit;
+  font-size: 0.68rem;
+  line-height: 1.15;
+  text-transform: none;
+}
+
+.pokemon-trait-badge--positive {
+  border-color: rgba(77, 190, 112, 0.48);
+  background: rgba(42, 122, 68, 0.16);
+  color: #bcebc8;
+}
+
+.pokemon-trait-badge--neutral {
+  border-color: rgba(218, 177, 68, 0.48);
+  background: rgba(148, 110, 24, 0.16);
+  color: #f1dfa6;
+}
+
+.pokemon-trait-badge--negative {
+  border-color: rgba(220, 80, 88, 0.5);
+  background: rgba(139, 42, 49, 0.18);
+  color: #f4b4b8;
+}
+
+.pokemon-trait-badge--nature {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.18rem;
+  min-width: 0;
+  color: var(--text);
+}
+
+.pokemon-trait-badge__nature-heading {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.28rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.nature-effect {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  max-width: 100%;
+  white-space: normal;
+  font-size: 0.58rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.nature-effect__up {
+  color: #8edca5;
+}
+
+.nature-effect__down {
+  color: #ef9ba1;
+}
+
+.nature-effect--neutral {
+  color: var(--muted);
+}
+
+.pokemon-trait-badge--ability {
+  cursor: help;
+  outline: none;
+}
+
+.pokemon-trait-badge--ability:focus-visible {
+  box-shadow: 0 0 0 2px rgba(183, 208, 239, 0.28);
+}
+
+.pokemon-trait-tooltip {
+  position: absolute;
+  z-index: 80;
+  left: 50%;
+  bottom: calc(100% + 0.55rem);
+  width: min(17rem, 78vw);
+  padding: 0.7rem 0.78rem;
+  border: 1px solid rgba(143, 167, 198, 0.34);
+  border-radius: 0.7rem;
+  background: rgba(8, 13, 21, 0.98);
+  box-shadow: 0 0.85rem 2rem rgba(0, 0, 0, 0.42);
+  color: var(--text);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate(-50%, 0.18rem);
+  transition:
+    opacity 70ms ease,
+    transform 70ms ease,
+    visibility 0s linear 70ms;
+  text-align: left;
+  text-transform: none;
+}
+
+.pokemon-trait-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-right: 1px solid rgba(143, 167, 198, 0.34);
+  border-bottom: 1px solid rgba(143, 167, 198, 0.34);
+  background: rgba(8, 13, 21, 0.98);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.pokemon-trait-badge--ability:hover .pokemon-trait-tooltip,
+.pokemon-trait-badge--ability:focus-visible .pokemon-trait-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+  transition-delay: 0s;
+}
+
+.pokemon-trait-tooltip__eyebrow {
+  display: block;
+  margin-bottom: 0.16rem;
+  color: var(--muted);
+  font-size: 0.54rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pokemon-trait-tooltip .pokemon-trait-tooltip__title {
+  display: block;
+  margin: 0 0 0.3rem;
+  color: var(--text);
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.pokemon-trait-tooltip__body {
+  display: block;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.pokemon-trait-badge--positive .pokemon-trait-tooltip {
+  border-color: rgba(77, 190, 112, 0.5);
+}
+
+.pokemon-trait-badge--neutral .pokemon-trait-tooltip {
+  border-color: rgba(218, 177, 68, 0.5);
+}
+
+.pokemon-trait-badge--negative .pokemon-trait-tooltip {
+  border-color: rgba(220, 80, 88, 0.54);
+}
+
+/* The Nuzlocke primary remains a historical rule type, so emphasize the
+ * matching current type and append it when evolution changed actual typing. */
+.type-chip--primary {
+  position: relative;
+  border-color: rgba(255, 255, 255, 0.78);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.2),
+    0 0 0.65rem rgba(255, 255, 255, 0.13);
+}
+
+.type-chip__primary-mark {
+  margin-right: 0.22rem;
+  font-size: 0.48rem;
+  line-height: 1;
+}
+
+.type-chip--primary-historical {
+  border-style: dashed;
+}
+
+.profile-facts > span.profile-fact--trait {
+  display: flex;
+  align-items: center;
+  padding: 0.55rem;
+}
+
+.profile-facts > span.profile-fact--trait .pokemon-trait-badge {
+  width: 100%;
+  justify-content: flex-start;
+  border: 0;
+  background: transparent;
+  padding: 0.15rem;
+}
+
+/* Contextual trait-fit accents -------------------------------------------- */
+.pokemon-trait-badge--compact {
+  min-height: 1.35rem;
+  padding: 0.16rem 0.36rem;
+  font-size: 0.6rem;
+}
+
+.pokemon-trait-badge--compact .pokemon-trait-badge__label {
+  font-size: 0.5rem;
+}
+
+.pokemon-trait-badge--compact strong {
+  font-size: 0.62rem;
+}
+
+.pokemon-trait-badge--compact.pokemon-trait-badge--nature {
+  gap: 0.12rem;
+}
+
+.pokemon-trait-badge--compact .nature-effect {
+  gap: 0.22rem;
+  font-size: 0.54rem;
+}
+
+.pokemon-trait-badge--fit-positive {
+  border-color: rgba(77, 190, 112, 0.48);
+  box-shadow: inset 0 0 0 1px rgba(77, 190, 112, 0.08);
+}
+
+.pokemon-trait-badge--fit-neutral {
+  border-color: rgba(218, 177, 68, 0.4);
+}
+
+.pokemon-trait-badge--fit-negative {
+  border-color: rgba(220, 80, 88, 0.56);
+  box-shadow: inset 0 0 0 1px rgba(220, 80, 88, 0.08);
 }

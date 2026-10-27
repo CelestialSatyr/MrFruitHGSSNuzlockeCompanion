@@ -4,12 +4,14 @@ import {
   selectPartyForPlayer,
   type Player,
   type PokemonState,
+  type RunDataset,
 } from "@nuzlocke/core";
 import { Link } from "react-router";
 import { BadgeCase } from "../components/BadgeCase";
-import { PokemonTypeChips } from "../components/PokemonTypeChips";
+import { PokemonRuleTypeChips } from "../components/PokemonRuleTypeChips";
+import { PokemonAbilityBadge } from "../components/PokemonTraits";
+import { usePokemonTraitFit } from "../hooks/usePokemonTraitFit";
 import { useRunView } from "../context/RunViewContext";
-import { getPokemonCatchLocationName } from "../lib/encounter-locations";
 import { getHgssSpriteUrl, getSpeciesName } from "../lib/pokemon";
 import { getPlayerGameLabel, getPlayerTheme, type PlayerTheme } from "../lib/player-theme";
 import "../styles/overview-team-mirror.css";
@@ -80,9 +82,9 @@ export function OverviewPage() {
                       party.map((pokemon) => (
                         <TeamPokemonCard
                           key={pokemon.id}
+                          dataset={dataset}
                           pokemon={pokemon}
                           theme={theme}
-                          catchLocation={getPokemonCatchLocationName(dataset, pokemon)}
                         />
                       ))
                     ) : (
@@ -238,15 +240,21 @@ function PlayerProfileCard({
 }
 
 function TeamPokemonCard({
+  dataset,
   pokemon,
   theme,
-  catchLocation,
 }: {
+  dataset: RunDataset;
   pokemon: PokemonState;
   theme: PlayerTheme;
-  catchLocation: string | undefined;
 }) {
   const species = getSpeciesName(pokemon.currentSpeciesId);
+  const { abilityFit } = usePokemonTraitFit({
+    speciesId: pokemon.currentSpeciesId,
+    abilityId: pokemon.abilityId,
+    natureId: pokemon.natureId,
+    knownMoveIds: pokemon.knownMoveIds,
+  });
 
   return (
     <Link
@@ -264,10 +272,10 @@ function TeamPokemonCard({
       <div className="team-pokemon-card__copy">
         <strong>{pokemon.currentNickname ?? species}</strong>
         {pokemon.currentNickname ? <small>{species}</small> : null}
-        {catchLocation ? (
-          <span className="pokemon-catch-location">Caught · {catchLocation}</span>
-        ) : null}
-        <PokemonTypeChips speciesId={pokemon.currentSpeciesId} />
+        <div className="team-pokemon-card__traits">
+          <PokemonAbilityBadge abilityId={pokemon.abilityId} tone={abilityFit.tone} />
+        </div>
+        <PokemonRuleTypeChips dataset={dataset} pokemon={pokemon} />
       </div>
     </Link>
   );

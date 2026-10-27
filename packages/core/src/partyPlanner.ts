@@ -1,5 +1,7 @@
 import { POKEMON_TYPES, type PokemonType } from "./pokemonTypes.ts";
 
+export type PartyPlannerTraitTone = "positive" | "neutral" | "negative";
+
 export interface PartyPlannerPokemon {
   id: string;
   playerId: string;
@@ -12,6 +14,12 @@ export interface PartyPlannerPokemon {
   actualTypes: readonly PokemonType[];
   /** Base Stat Total for the Pokémon's current species. */
   baseStatTotal: number;
+  abilityId?: string;
+  natureId?: string;
+  abilityFit: PartyPlannerTraitTone;
+  natureFit: PartyPlannerTraitTone;
+  abilityFitReason?: string;
+  natureFitReason?: string;
   /** Historical capture decision; useful for UI badges. */
   flyingTypeDeclared: boolean;
   shiny?: boolean;
@@ -29,13 +37,16 @@ export interface PartyPlannerScore {
   overlapCount: number;
   typeOccurrences: number;
   totalBaseStats: number;
+  traitScore: number;
+  negativeTraitCount: number;
 }
 
 export type PartyPlannerRankingCriterion =
-  "pairCount" | "uniqueTypeCount" | "overlapCount" | "totalBaseStats";
+  "pairCount" | "uniqueTypeCount" | "overlapCount" | "traitFit" | "totalBaseStats";
 
 export const DEFAULT_PARTY_PLANNER_RANKING: readonly PartyPlannerRankingCriterion[] = [
   "pairCount",
+  "traitFit",
   "uniqueTypeCount",
   "totalBaseStats",
   "overlapCount",
@@ -65,6 +76,8 @@ interface PlannerState {
   actualMask: number;
   typeOccurrences: number;
   totalBaseStats: number;
+  traitScore: number;
+  negativeTraitCount: number;
   pairIds: string[];
 }
 
@@ -105,6 +118,26 @@ function baseStatTotalFor(pair: PartyPlannerPair): number {
   return pair.left.baseStatTotal + pair.right.baseStatTotal;
 }
 
+function traitContribution(pokemon: PartyPlannerPokemon): { score: number; negativeCount: number } {
+  const tones = [pokemon.abilityFit, pokemon.natureFit] as const;
+  return {
+    score: tones.reduce(
+      (sum, tone) => sum + (tone === "positive" ? 1 : tone === "negative" ? -1 : 0),
+      0,
+    ),
+    negativeCount: tones.filter((tone) => tone === "negative").length,
+  };
+}
+
+function traitTotalsFor(pair: PartyPlannerPair): { score: number; negativeCount: number } {
+  const left = traitContribution(pair.left);
+  const right = traitContribution(pair.right);
+  return {
+    score: left.score + right.score,
+    negativeCount: left.negativeCount + right.negativeCount,
+  };
+}
+
 function scoreState(state: PlannerState): PartyPlannerScore {
   const uniqueTypeCount = popcount(state.actualMask);
   return {
@@ -113,6 +146,8 @@ function scoreState(state: PlannerState): PartyPlannerScore {
     overlapCount: state.typeOccurrences - uniqueTypeCount,
     typeOccurrences: state.typeOccurrences,
     totalBaseStats: state.totalBaseStats,
+    traitScore: state.traitScore,
+    negativeTraitCount: state.negativeTraitCount,
   };
 }
 
@@ -147,6 +182,12 @@ export function comparePartyPlannerScores(
       case "overlapCount":
         if (a.overlapCount !== b.overlapCount) return a.overlapCount - b.overlapCount;
         break;
+      case "traitFit":
+        if (a.negativeTraitCount !== b.negativeTraitCount) {
+          return a.negativeTraitCount - b.negativeTraitCount;
+        }
+        if (a.traitScore !== b.traitScore) return b.traitScore - a.traitScore;
+        break;
       case "totalBaseStats":
         if (a.totalBaseStats !== b.totalBaseStats) {
           return b.totalBaseStats - a.totalBaseStats;
@@ -158,7 +199,7 @@ export function comparePartyPlannerScores(
 }
 
 function exactStateKey(state: PlannerState): string {
-  return `${state.primaryMask}:${state.actualMask}:${state.typeOccurrences}:${state.totalBaseStats}:${state.pairIds.length}`;
+  return `${state.primaryMask}:${state.actualMask}:${state.typeOccurrences}:${state.totalBaseStats}:${state.traitScore}:${state.negativeTraitCount}:${state.pairIds.length}`;
 }
 
 function teamKey(pairIds: readonly string[]): string {
@@ -207,7 +248,7 @@ function validateCandidate(pair: PartyPlannerPair): string | undefined {
  * Exact optimiser for the Party Planner.
  *
  * The caller controls the ranking criteria and their priority order. The
- * default remains: pair count, type diversity, total BST, then overlap.
+ * default remains: pair count, trait fit, type diversity, total BST, then overlap.
  * Disabled criteria are simply omitted from `ranking`.
  */
 export function findPartyRecommendations(
@@ -235,6 +276,8 @@ export function findPartyRecommendations(
     actualMask: 0,
     typeOccurrences: 0,
     totalBaseStats: 0,
+    traitScore: 0,
+    negativeTraitCount: 0,
     pairIds: [],
   };
   states.set(exactStateKey(empty), [empty]);
@@ -244,6 +287,7 @@ export function findPartyRecommendations(
     const pairActualMask = actualMaskFor(pair);
     const pairOccurrences = actualOccurrenceCount(pair);
     const pairBaseStats = baseStatTotalFor(pair);
+    const pairTraits = traitTotalsFor(pair);
     const snapshot = [...states.values()].flatMap((bucket) => [...bucket]);
 
     for (const state of snapshot) {
@@ -257,6 +301,8 @@ export function findPartyRecommendations(
           actualMask: state.actualMask | pairActualMask,
           typeOccurrences: state.typeOccurrences + pairOccurrences,
           totalBaseStats: state.totalBaseStats + pairBaseStats,
+          traitScore: state.traitScore + pairTraits.score,
+          negativeTraitCount: state.negativeTraitCount + pairTraits.negativeCount,
           pairIds: [...state.pairIds, pair.id],
         },
         resultCount,
@@ -302,6 +348,8 @@ export function analyseManualParty(
   let actualMask = 0;
   let typeOccurrences = 0;
   let totalBaseStats = 0;
+  let traitScore = 0;
+  let negativeTraitCount = 0;
   const primaryTypes = new Set<PokemonType>();
 
   for (const pair of selectedPairs) {
@@ -310,6 +358,9 @@ export function analyseManualParty(
     actualMask |= actualMaskFor(pair);
     typeOccurrences += actualOccurrenceCount(pair);
     totalBaseStats += baseStatTotalFor(pair);
+    const traits = traitTotalsFor(pair);
+    traitScore += traits.score;
+    negativeTraitCount += traits.negativeCount;
   }
 
   const actualTypes = POKEMON_TYPES.filter((type) => (actualMask & bitFor(type)) !== 0);
@@ -323,6 +374,8 @@ export function analyseManualParty(
       overlapCount: typeOccurrences - actualTypes.length,
       typeOccurrences,
       totalBaseStats,
+      traitScore,
+      negativeTraitCount,
     },
   };
 }

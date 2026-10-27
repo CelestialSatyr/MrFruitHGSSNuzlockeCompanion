@@ -25,8 +25,18 @@ interface PokeApiPokemon {
   stats?: PokeApiStatSlot[];
 }
 
+export interface HgssPokemonBaseStats {
+  hp: number;
+  attack: number;
+  defense: number;
+  specialAttack: number;
+  specialDefense: number;
+  speed: number;
+}
+
 export interface HgssPokemonPlannerData {
   types: readonly PokemonType[];
+  baseStats: HgssPokemonBaseStats;
   baseStatTotal: number;
 }
 
@@ -100,6 +110,34 @@ export function resolveHgssPokemonTypes(payload: PokeApiPokemon): readonly Pokem
   return resolved;
 }
 
+export function resolvePokemonBaseStats(payload: PokeApiPokemon): HgssPokemonBaseStats {
+  const byName = new Map(
+    (payload.stats ?? []).map((entry) => [entry.stat.name, entry.base_stat] as const),
+  );
+  const required = [
+    "hp",
+    "attack",
+    "defense",
+    "special-attack",
+    "special-defense",
+    "speed",
+  ] as const;
+  for (const stat of required) {
+    const value = byName.get(stat);
+    if (typeof value !== "number" || value <= 0) {
+      throw new Error(`PokéAPI returned no recognised ${stat} base stat.`);
+    }
+  }
+  return {
+    hp: byName.get("hp")!,
+    attack: byName.get("attack")!,
+    defense: byName.get("defense")!,
+    specialAttack: byName.get("special-attack")!,
+    specialDefense: byName.get("special-defense")!,
+    speed: byName.get("speed")!,
+  };
+}
+
 export function resolvePokemonBaseStatTotal(payload: PokeApiPokemon): number {
   const stats = payload.stats ?? [];
   const total = stats.reduce((sum, entry) => sum + entry.base_stat, 0);
@@ -152,6 +190,7 @@ export async function getHgssPokemonPlannerData(
   const payload = await getPokemonPayload(speciesId);
   return {
     types: resolveHgssPokemonTypes(payload),
+    baseStats: resolvePokemonBaseStats(payload),
     baseStatTotal: resolveHgssPokemonBaseStatTotal(speciesId, payload),
   };
 }

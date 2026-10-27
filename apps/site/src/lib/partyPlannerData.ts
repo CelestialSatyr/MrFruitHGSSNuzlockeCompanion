@@ -6,7 +6,13 @@ import type {
   RunDataset,
   RunState,
 } from "@nuzlocke/core";
-import type { HgssPokemonPlannerData, HgssProgressionState } from "@nuzlocke/hgss";
+import {
+  getHgssAbilityFit,
+  getHgssNatureFit,
+  type HgssMovePlannerData,
+  type HgssPokemonPlannerData,
+  type HgssProgressionState,
+} from "@nuzlocke/hgss";
 import { getSpeciesName } from "./pokemon";
 
 export interface PartyPlannerDataResult {
@@ -78,6 +84,7 @@ function makePlannerPokemon(
   dataset: RunDataset,
   pokemon: PokemonState,
   dataBySpecies: ReadonlyMap<number, HgssPokemonPlannerData>,
+  moveDataById: ReadonlyMap<string, HgssMovePlannerData>,
   typesBySpecies: ReadonlyMap<number, readonly PokemonType[]>,
   unresolvedFlyingPokemonIds: string[],
 ): PartyPlannerPokemon | undefined {
@@ -89,6 +96,17 @@ function makePlannerPokemon(
     return undefined;
   }
   const { currentTypes, primaryType, flyingTypeDeclared } = resolved;
+  const moves = pokemon.knownMoveIds
+    .map((moveId) =>
+      moveDataById.get(moveId.trim().toLowerCase().replaceAll("_", "-").replaceAll(" ", "-")),
+    )
+    .filter((move): move is HgssMovePlannerData => move !== undefined);
+  const abilityFit = getHgssAbilityFit(pokemon.abilityId, {
+    knownMoveIds: pokemon.knownMoveIds,
+    moves,
+    currentTypes,
+  });
+  const natureFit = getHgssNatureFit(pokemon.natureId, { baseStats: currentData.baseStats, moves });
 
   return {
     id: pokemon.id,
@@ -99,6 +117,12 @@ function makePlannerPokemon(
     primaryType,
     actualTypes: currentTypes,
     baseStatTotal: currentData.baseStatTotal,
+    ...(pokemon.abilityId ? { abilityId: pokemon.abilityId } : {}),
+    ...(pokemon.natureId ? { natureId: pokemon.natureId } : {}),
+    abilityFit: abilityFit.tone,
+    natureFit: natureFit.tone,
+    abilityFitReason: abilityFit.reason,
+    natureFitReason: natureFit.reason,
     flyingTypeDeclared,
     shiny: pokemon.source.shiny,
   };
@@ -108,6 +132,7 @@ export function buildPartyPlannerData(
   dataset: RunDataset,
   state: RunState<HgssProgressionState>,
   dataBySpecies: ReadonlyMap<number, HgssPokemonPlannerData>,
+  moveDataById: ReadonlyMap<string, HgssMovePlannerData> = new Map(),
 ): PartyPlannerDataResult {
   const [leftPlayerId, rightPlayerId] = dataset.run.playerIds;
   const unresolvedFlyingPokemonIds: string[] = [];
@@ -133,6 +158,7 @@ export function buildPartyPlannerData(
       dataset,
       leftState,
       dataBySpecies,
+      moveDataById,
       typesBySpecies,
       unresolvedFlyingPokemonIds,
     );
@@ -140,6 +166,7 @@ export function buildPartyPlannerData(
       dataset,
       rightState,
       dataBySpecies,
+      moveDataById,
       typesBySpecies,
       unresolvedFlyingPokemonIds,
     );
@@ -184,5 +211,21 @@ export function collectPartyPlannerSpeciesIds(
     }
   }
 
+  return [...ids];
+}
+
+export function collectPartyPlannerMoveIds(state: RunState<HgssProgressionState>): string[] {
+  const ids = new Set<string>();
+  for (const link of state.soulLinks.values()) {
+    if (link.status !== "active") continue;
+    for (const pokemonId of link.pokemonIds) {
+      const pokemon = state.pokemon.get(pokemonId);
+      if (!pokemon || pokemon.lifeStatus !== "alive") continue;
+      for (const moveId of pokemon.knownMoveIds) {
+        const normalised = moveId.trim().toLowerCase().replaceAll("_", "-").replaceAll(" ", "-");
+        if (normalised) ids.add(normalised);
+      }
+    }
+  }
   return [...ids];
 }

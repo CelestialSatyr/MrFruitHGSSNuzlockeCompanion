@@ -119,3 +119,9 @@
     background: linear-gradient(to right, var(--player-silver-soft), rgba(9, 13, 20, 0.45) 40%);
   }
 }
+
+@media (min-width: 760px) {
+  .run-player-column--left .team-pokemon-card__traits {
+    justify-content: flex-end;
+  }
+}

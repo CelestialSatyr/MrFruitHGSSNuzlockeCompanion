@@ -622,3 +622,22 @@
     justify-content: flex-start;
   }
 }
+
+.planner-pokemon__traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  margin-top: 0.3rem;
+}
+
+.planner-pokemon--right .planner-pokemon__traits {
+  justify-content: flex-end;
+}
+
+.planner-pokemon__traits .pokemon-trait-badge {
+  max-width: 100%;
+}
+
+.planner-pair-row {
+  min-height: 8rem;
+}
