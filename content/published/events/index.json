@@ -2165,5 +2165,33 @@
     "fromSpeciesId": 66,
     "toSpeciesId": 67,
     "level": 29
+  },
+  {
+    "id": "evt_0102",
+    "episodeId": "ep_0019",
+    "sequence": 10,
+    "videoTimestampSeconds": 347,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "First encounter of the episode!",
+    "description": "And.. seemingly the only thing really happening for the entire episode?",
+    "type": "encounter",
+    "locationId": "route-41",
+    "opportunityId": "route-41-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "skipped",
+        "playerId": "player_fruit",
+        "speciesId": 64,
+        "reason": "Invalid encounter"
+      },
+      {
+        "result": "failed",
+        "playerId": "player_blue",
+        "speciesId": 381,
+        "reason": "Killed by a Dream Eater crit"
+      }
+    ]
   }
 ]
