@@ -822,5 +822,63 @@
     "shiny": false,
     "natureId": "jolly",
     "initialAbilityId": "filter"
+  },
+  {
+    "id": "pkm_0085",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0119",
+    "initialSpeciesId": 240,
+    "gender": "female",
+    "shiny": true,
+    "natureId": "timid",
+    "initialAbilityId": "marvel-scale"
+  },
+  {
+    "id": "pkm_0086",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0119",
+    "initialSpeciesId": 214,
+    "gender": "female",
+    "shiny": true,
+    "natureId": "modest",
+    "initialAbilityId": "tangled-feet"
+  },
+  {
+    "id": "pkm_0087",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0120",
+    "initialSpeciesId": 321,
+    "gender": "male",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0088",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0120",
+    "initialSpeciesId": 69,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "impish",
+    "initialAbilityId": "unburden"
+  },
+  {
+    "id": "pkm_0089",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0121",
+    "initialSpeciesId": 420,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "relaxed",
+    "initialAbilityId": "steadfast"
+  },
+  {
+    "id": "pkm_0090",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0121",
+    "initialSpeciesId": 19,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "gentle",
+    "initialAbilityId": "skill-link"
   }
 ]
