@@ -20,3 +20,5 @@ export * from "./pokemonTypes.ts";
 export * from "./moveMetadata.ts";
 export * from "./abilityMetadata.ts";
 export * from "./natures.ts";
+
+export * from "./evolutionProjection.ts";

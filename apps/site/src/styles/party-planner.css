@@ -641,3 +641,46 @@
 .planner-pair-row {
   min-height: 8rem;
 }
+
+.planner-pokemon__projection {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+  align-items: center;
+  margin-top: 0.12rem;
+  color: var(--muted-strong);
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.planner-pokemon__projection > b {
+  color: var(--accent);
+  font-size: 0.82rem;
+}
+
+.planner-pokemon__projection > strong {
+  color: var(--text);
+}
+
+.planner-pokemon__projection > em {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.05rem 0.3rem;
+  color: var(--muted);
+  font-size: 0.58rem;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.planner-pokemon__projection--ambiguous {
+  color: var(--warning, #d8b55a);
+}
+
+.planner-pokemon--right .planner-pokemon__projection {
+  justify-content: flex-end;
+}
+
+.planner-rule-strip__rule > small {
+  font-size: 0.68rem;
+  font-weight: 800;
+}

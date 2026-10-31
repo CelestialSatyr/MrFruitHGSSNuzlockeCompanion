@@ -8,11 +8,16 @@ export interface PartyPlannerPokemon {
   speciesId: number;
   nickname?: string;
   speciesName: string;
+  /** Final unambiguous evolution reachable by the current run level cap. */
+  projectedSpeciesId: number;
+  projectedSpeciesName: string;
+  projectionLevelCap: number;
+  projectionAmbiguous: boolean;
   /** The effective primary used by the Soul Link primary-typing rule. */
   primaryType: PokemonType;
-  /** Current in-game typings. Used only for diversity scoring. */
+  /** Projected legal-form typings at the current cap. Used for diversity scoring. */
   actualTypes: readonly PokemonType[];
-  /** Base Stat Total for the Pokémon's current species. */
+  /** Base Stat Total for the projected legal form at the current cap. */
   baseStatTotal: number;
   abilityId?: string;
   natureId?: string;

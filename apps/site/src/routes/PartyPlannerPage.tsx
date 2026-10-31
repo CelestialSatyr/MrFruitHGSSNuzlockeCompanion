@@ -9,14 +9,17 @@ import {
   type PartyPlannerRankingCriterion,
   type PartyPlannerRecommendation,
 } from "@nuzlocke/core";
+import { getHgssPlannerLevelCap } from "@nuzlocke/hgss";
 import { Link } from "react-router";
 import { PrimaryTypeBadge } from "../components/PrimaryTypeBadge";
 import { PokemonAbilityBadge, PokemonNatureBadge } from "../components/PokemonTraits";
 import { usePokemonPlannerDataMap } from "../hooks/usePokemonTypes";
 import { usePokemonMoveDataMap } from "../hooks/usePokemonMoves";
+import { usePokemonEvolutionProjectionMap } from "../hooks/usePokemonEvolutionProjections";
 import {
   buildPartyPlannerData,
   collectPartyPlannerMoveIds,
+  collectPartyPlannerProjectionRequests,
   collectPartyPlannerSpeciesIds,
 } from "../lib/partyPlannerData";
 import { getHgssSpriteUrl } from "../lib/pokemon";
@@ -42,29 +45,31 @@ const RANKING_META: Record<
     description: "Prefer parties containing more complete Soul Link pairs.",
   },
   uniqueTypeCount: {
-    label: "Unique current types",
+    label: "Unique projected types",
     shortLabel: "type variety",
     direction: "Maximise",
-    description: "Prefer broader coverage from the Pokémon's current actual typings.",
+    description:
+      "Prefer broader coverage from each Pokémon's projected legal form at the current level cap.",
   },
   traitFit: {
     label: "Ability & nature fit",
     shortLabel: "trait fit",
     direction: "Maximise",
     description:
-      "Avoid detrimental abilities/natures, then prefer traits that fit the current Pokémon and moveset.",
+      "Avoid detrimental traits, then prefer abilities/natures that fit the projected form and current moveset.",
   },
   overlapCount: {
     label: "Typing overlap",
     shortLabel: "overlap",
     direction: "Minimise",
-    description: "Prefer fewer repeated current typings across the complete party.",
+    description: "Prefer fewer repeated projected typings across the complete party.",
   },
   totalBaseStats: {
     label: "Total base stats",
     shortLabel: "BST",
     direction: "Maximise",
-    description: "Prefer the highest combined BST from the Pokémon's current species.",
+    description:
+      "Prefer the highest combined BST from forms legally reachable by the current level cap.",
   },
 };
 
@@ -78,15 +83,34 @@ export function PartyPlannerPage() {
   const [selectedPairIds, setSelectedPairIds] = useState<string[]>([]);
   const [rerollToken, setRerollToken] = useState(0);
   const [rankingItems, setRankingItems] = useState<RankingItem[]>(createDefaultRanking);
-  const speciesIds = useMemo(() => collectPartyPlannerSpeciesIds(dataset, state), [dataset, state]);
+  const levelCapInfo = useMemo(() => getHgssPlannerLevelCap(state.game), [state.game]);
+  const projectionRequests = useMemo(() => collectPartyPlannerProjectionRequests(state), [state]);
+  const {
+    projectionByPokemonId,
+    loading: projectionsLoading,
+    error: projectionError,
+  } = usePokemonEvolutionProjectionMap(projectionRequests, levelCapInfo.level);
+  const speciesIds = useMemo(
+    () => collectPartyPlannerSpeciesIds(dataset, state, projectionByPokemonId),
+    [dataset, projectionByPokemonId, state],
+  );
   const { dataBySpecies, loading, error } = usePokemonPlannerDataMap(speciesIds);
   const moveIds = useMemo(() => collectPartyPlannerMoveIds(state), [state]);
   const { dataByMove, loading: movesLoading } = usePokemonMoveDataMap(moveIds);
 
   const plannerData = useMemo(
-    () => buildPartyPlannerData(dataset, state, dataBySpecies, dataByMove),
-    [dataset, state, dataByMove, dataBySpecies],
+    () =>
+      buildPartyPlannerData(
+        dataset,
+        state,
+        dataBySpecies,
+        dataByMove,
+        projectionByPokemonId,
+        levelCapInfo.level,
+      ),
+    [dataset, state, dataByMove, dataBySpecies, projectionByPokemonId, levelCapInfo.level],
   );
+  const plannerError = projectionError ?? error;
 
   const activeRanking = useMemo(
     () => rankingItems.filter((item) => item.enabled).map((item) => item.criterion),
@@ -162,8 +186,9 @@ export function PartyPlannerPage() {
           <p className="eyebrow">Team building</p>
           <h1>Party Planner</h1>
           <p>
-            Build and compare legal Soul Link parties. Primary typings are unique across both teams;
-            every link is selected as a pair.
+            Build and compare legal Soul Link parties using the strongest deterministic form each
+            Pokémon can reach by the current level cap. Primary typings are unique across both
+            teams; every link is selected as a pair.
           </p>
         </div>
         <div className="planner-mode-switch" role="group" aria-label="Party planner mode">
@@ -188,26 +213,32 @@ export function PartyPlannerPage() {
         leftName={leftPlayer?.shortName ?? leftPlayer?.displayName ?? "Mr Fruit"}
         rightName={rightPlayer?.shortName ?? rightPlayer?.displayName ?? "Blue"}
         alivePairCount={plannerData.pairs.length}
+        levelCap={levelCapInfo.level}
+        levelCapLabel={levelCapInfo.label}
       />
 
-      {loading || movesLoading ? (
+      {projectionsLoading || loading || movesLoading ? (
         <section className="planner-state-card">
           <strong>Loading party data…</strong>
           <span>
-            The planner is resolving typings, moves, abilities, natures and base stats for the alive
-            links.
+            The planner is projecting legal evolutions, typings, natures and base stats for the
+            alive links while keeping the currently known randomized abilities and moves.
           </span>
         </section>
       ) : null}
 
-      {error ? (
+      {plannerError ? (
         <section className="planner-state-card planner-state-card--error">
-          <strong>Pokémon data could not be loaded.</strong>
-          <span>{error}</span>
+          <strong>Pokémon projection data could not be loaded.</strong>
+          <span>{plannerError}</span>
         </section>
       ) : null}
 
-      {!loading && !movesLoading && !error && plannerData.unresolvedFlyingPokemonIds.length ? (
+      {!projectionsLoading &&
+      !loading &&
+      !movesLoading &&
+      !plannerError &&
+      plannerData.unresolvedFlyingPokemonIds.length ? (
         <section className="planner-state-card planner-state-card--warning">
           <strong>Flying declaration required</strong>
           <span>
@@ -219,7 +250,11 @@ export function PartyPlannerPage() {
         </section>
       ) : null}
 
-      {!loading && !movesLoading && !error && plannerData.invalidPairIds.length ? (
+      {!projectionsLoading &&
+      !loading &&
+      !movesLoading &&
+      !plannerError &&
+      plannerData.invalidPairIds.length ? (
         <section className="planner-state-card planner-state-card--warning">
           <strong>Invalid Soul Link data</strong>
           <span>
@@ -230,7 +265,11 @@ export function PartyPlannerPage() {
         </section>
       ) : null}
 
-      {!loading && !movesLoading && !error && !plannerData.unresolvedFlyingPokemonIds.length ? (
+      {!projectionsLoading &&
+      !loading &&
+      !movesLoading &&
+      !plannerError &&
+      !plannerData.unresolvedFlyingPokemonIds.length ? (
         mode === "automatic" ? (
           <AutomaticPlanner
             recommendations={recommendations}
@@ -259,10 +298,14 @@ function PlannerRuleStrip({
   leftName,
   rightName,
   alivePairCount,
+  levelCap,
+  levelCapLabel,
 }: {
   leftName: string;
   rightName: string;
   alivePairCount: number;
+  levelCap: number;
+  levelCapLabel: string;
 }) {
   return (
     <section className="planner-rule-strip">
@@ -273,6 +316,9 @@ function PlannerRuleStrip({
       <div className="planner-rule-strip__rule">
         <strong>1 primary type across both parties</strong>
         <span>Up to 6 alive Soul Link pairs · {alivePairCount} usable links</span>
+        <small>
+          Projection cap · Lv. {levelCap} ({levelCapLabel})
+        </small>
       </div>
       <div>
         <small>Right team</small>
@@ -578,14 +624,37 @@ function PlannerPokemon({
   return (
     <Link className={`planner-pokemon planner-pokemon--${side}`} to={`/pokemon/${pokemon.id}`}>
       <img
-        src={getHgssSpriteUrl(pokemon.speciesId, pokemon.shiny ?? false)}
+        src={getHgssSpriteUrl(pokemon.projectedSpeciesId, pokemon.shiny ?? false)}
         alt=""
         loading="lazy"
+        title={
+          pokemon.projectedSpeciesId !== pokemon.speciesId
+            ? `Projected form: ${pokemon.projectedSpeciesName}`
+            : pokemon.speciesName
+        }
       />
       <div className="planner-pokemon__copy">
         <strong>{pokemon.nickname ?? pokemon.speciesName}</strong>
         {pokemon.nickname ? <small>{pokemon.speciesName}</small> : null}
-        <div className="planner-pokemon__actual-types" aria-label="Current typings">
+        {pokemon.projectedSpeciesId !== pokemon.speciesId ? (
+          <span
+            className="planner-pokemon__projection"
+            title={`Planner stats use ${pokemon.projectedSpeciesName} at the current Lv. ${pokemon.projectionLevelCap} cap.`}
+          >
+            <span>{pokemon.speciesName}</span>
+            <b aria-hidden="true">→</b>
+            <strong>{pokemon.projectedSpeciesName}</strong>
+            <em>Lv. {pokemon.projectionLevelCap}</em>
+          </span>
+        ) : pokemon.projectionAmbiguous ? (
+          <span className="planner-pokemon__projection planner-pokemon__projection--ambiguous">
+            Branching evolution · current form used
+          </span>
+        ) : null}
+        <div
+          className="planner-pokemon__actual-types"
+          aria-label="Projected typings at the current level cap"
+        >
           {pokemon.actualTypes.map((type) => (
             <span key={type} className={`type-chip type-chip--${type}`}>
               {titleCase(type)}
@@ -601,7 +670,7 @@ function PlannerPokemon({
             compact
           />
         </div>
-        <small className="planner-pokemon__bst">BST {pokemon.baseStatTotal}</small>
+        <small className="planner-pokemon__bst">Projected BST {pokemon.baseStatTotal}</small>
       </div>
     </Link>
   );
