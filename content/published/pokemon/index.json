@@ -115,26 +115,6 @@
     "initialAbilityId": "run-away"
   },
   {
-    "id": "pkm_0015",
-    "playerId": "player_fruit",
-    "createdByEventId": "evt_0027",
-    "initialSpeciesId": 11,
-    "gender": "female",
-    "shiny": false,
-    "natureId": "lonely",
-    "initialAbilityId": "static"
-  },
-  {
-    "id": "pkm_0016",
-    "playerId": "player_blue",
-    "createdByEventId": "evt_0027",
-    "initialSpeciesId": 442,
-    "gender": "male",
-    "shiny": false,
-    "natureId": "jolly",
-    "initialAbilityId": "gluttony"
-  },
-  {
     "id": "pkm_0019",
     "playerId": "player_fruit",
     "createdByEventId": "evt_0032",
@@ -880,5 +860,25 @@
     "shiny": false,
     "natureId": "gentle",
     "initialAbilityId": "skill-link"
+  },
+  {
+    "id": "pkm_0015",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0027",
+    "initialSpeciesId": 11,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "lonely",
+    "initialAbilityId": "static"
+  },
+  {
+    "id": "pkm_0016",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0027",
+    "initialSpeciesId": 442,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "jolly",
+    "initialAbilityId": "gluttony"
   }
 ]

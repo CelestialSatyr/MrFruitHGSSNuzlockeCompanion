@@ -480,6 +480,44 @@
               "height": 720
             }
           }
+        },
+        {
+          "id": "ep_0024",
+          "number": 24,
+          "status": "published",
+          "youtube": {
+            "videoId": "zlczj7onpWA",
+            "url": "https://www.youtube.com/watch?v=zlczj7onpWA",
+            "title": "\"Now I am become Death, the destroyer of worlds\" | Pokemon HGSS Soul Link Nuzlocke [24]",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\n\"Now I am become Death, the destroyer of worlds\" | Pokemon HGSS Soul Link Nuzlocke [24]",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-10-29T18:00:31Z",
+            "durationSeconds": 2090,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/zlczj7onpWA/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
+        },
+        {
+          "id": "ep_0025",
+          "number": 25,
+          "status": "published",
+          "youtube": {
+            "videoId": "08rwlM89_Bg",
+            "url": "https://www.youtube.com/watch?v=08rwlM89_Bg",
+            "title": "A Devastating HOUR of POWER | Pokemon HGSS Soul Link Nuzlocke [25]",
+            "description": "Our Pokemon HeartGold and SoulSilver Randomized Soul Link Nuzlocke continues! Will it be another scufflocke or will having my most veteran Poke player return for another soul link ensure victory? Find out in today's episode!\n\nBlue: @bluewestlo \n\nCelestial's Website: https://celestialsatyr.github.io/MrFruitHGSSNuzlockeCompanion\n\nMr. Fruit's Cherry Limeade: https://advanced.gg/MrFruit (Code MrFruit for 10% off)\nBecome Awesome: http://bit.ly/SubscribeMrFruit\n\n★ WATCH MORE ★\n\nPokemon Ultra Sun and Ultra Moon Soul Link Nuzlocke: https://www.youtube.com/watch?v=73AKhaCV4_Y&list=PLoUIEa5ZOZyVfLyCVSerTrZhyib-m_Ro4\n\n★ CONNECT WITH ME ★\n\nMain Channel: @Mr_Fruit \nTwitter: https://twitter.com/MrFruitYT\nTwitch: http://www.twitch.tv/MyMisterFruit\nInstagram: https://instagram.com/mrfruitgaming/\n\n★ RULES ★\n\n-If a pokemon faints, it must be permanently placed inside PC Box\n-Can only catch the first pokemon encountered in each route.\n-Must nickname every pokemon caught (will be named after someone in House Fruit)\n-Every wild pokemon encounter, static pokemon encounter, trainer pokemon, ability and moveset/learnset are randomized.\n-If we black out, we lose.\n-No pokemon can exceed level of next gym leaders highest level\n-2 Items used in-battle per battle, unless a mon faints then item usage resets in that battle\n-Force Fully Evolved Trainer Pokemon At Lvl 40\n-If we white out/black out, we lose.\n-Each encounter is paired with each other making them \"soul linked\"\n-If one person fails to catch their encounter or knocks it out, the other person forfeits the encounter as well\n-If one persons Pokemon in a soul link is put in the PC or knocked out than the other linked Pokemon must follow/share the same fate\n-No repeat of primary types across both parties\n-No pair may share the same primary typing\n-Randomized fossils can be used as an extra encounter in the route the 2nd fossil half was found (both players will need to find 1 fossil for this to come into effect)\n\n#Pokemon #SoulLink #Nuzlocke\n===============\nPokemon owned by GameFreak/Nintendo. All images, characters and the like are their property and used for educational purposes. \n===============\nA Devastating HOUR of POWER | Pokemon HGSS Soul Link Nuzlocke [25]",
+            "channelTitle": "Mr. Fruit Pokemon",
+            "publishedAt": "2026-10-30T18:00:39Z",
+            "durationSeconds": 4459,
+            "thumbnail": {
+              "url": "https://i.ytimg.com/vi/08rwlM89_Bg/maxresdefault.jpg",
+              "width": 1280,
+              "height": 720
+            }
+          }
         }
       ],
       "pokemon": [
@@ -597,26 +635,6 @@
           "shiny": false,
           "natureId": "gentle",
           "initialAbilityId": "run-away"
-        },
-        {
-          "id": "pkm_0015",
-          "playerId": "player_fruit",
-          "createdByEventId": "evt_0027",
-          "initialSpeciesId": 11,
-          "gender": "female",
-          "shiny": false,
-          "natureId": "lonely",
-          "initialAbilityId": "static"
-        },
-        {
-          "id": "pkm_0016",
-          "playerId": "player_blue",
-          "createdByEventId": "evt_0027",
-          "initialSpeciesId": 442,
-          "gender": "male",
-          "shiny": false,
-          "natureId": "jolly",
-          "initialAbilityId": "gluttony"
         },
         {
           "id": "pkm_0019",
@@ -1364,6 +1382,26 @@
           "shiny": false,
           "natureId": "gentle",
           "initialAbilityId": "skill-link"
+        },
+        {
+          "id": "pkm_0015",
+          "playerId": "player_fruit",
+          "createdByEventId": "evt_0027",
+          "initialSpeciesId": 11,
+          "gender": "female",
+          "shiny": false,
+          "natureId": "lonely",
+          "initialAbilityId": "static"
+        },
+        {
+          "id": "pkm_0016",
+          "playerId": "player_blue",
+          "createdByEventId": "evt_0027",
+          "initialSpeciesId": 442,
+          "gender": "male",
+          "shiny": false,
+          "natureId": "jolly",
+          "initialAbilityId": "gluttony"
         }
       ],
       "soulLinks": [
@@ -1396,11 +1434,6 @@
           "id": "link_0007",
           "pokemonIds": ["pkm_0013", "pkm_0014"],
           "createdByEventId": "evt_0017"
-        },
-        {
-          "id": "link_0008",
-          "pokemonIds": ["pkm_0015", "pkm_0016"],
-          "createdByEventId": "evt_0027"
         },
         {
           "id": "link_0010",
@@ -1591,6 +1624,11 @@
           "id": "link_0045",
           "pokemonIds": ["pkm_0089", "pkm_0090"],
           "createdByEventId": "evt_0121"
+        },
+        {
+          "id": "link_0008",
+          "pokemonIds": ["pkm_0015", "pkm_0016"],
+          "createdByEventId": "evt_0027"
         }
       ],
       "rules": [
@@ -2319,7 +2357,8 @@
               "speciesId": 11,
               "level": 5,
               "nickname": "MAKILLA",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             },
             {
               "result": "caught",
@@ -2328,7 +2367,8 @@
               "speciesId": 442,
               "level": 5,
               "nickname": "BO NIX",
-              "placement": "box"
+              "placement": "box",
+              "flyingTypeDeclared": false
             }
           ],
           "soulLinkId": "link_0008"
@@ -4543,6 +4583,104 @@
             }
           ],
           "soulLinkId": "link_0045"
+        },
+        {
+          "id": "evt_0122",
+          "episodeId": "ep_0024",
+          "sequence": 10,
+          "videoTimestampSeconds": 891,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "And Pryce has been defeated!",
+          "description": "Just one more gym to go",
+          "type": "gym-battle",
+          "gymId": "mahogany-gym",
+          "leaderName": "Pryce",
+          "result": "win",
+          "participantPokemonIds": [
+            "pkm_0013",
+            "pkm_0014",
+            "pkm_0015",
+            "pkm_0016",
+            "pkm_0023",
+            "pkm_0024",
+            "pkm_0029",
+            "pkm_0030",
+            "pkm_0069",
+            "pkm_0070",
+            "pkm_0083",
+            "pkm_0084"
+          ],
+          "badgeId": "glacier"
+        },
+        {
+          "id": "evt_0123",
+          "episodeId": "ep_0025",
+          "sequence": 10,
+          "videoTimestampSeconds": 1509,
+          "tone": "negative",
+          "importance": "major",
+          "title": "\"It's pretty frickin terrifying\" indeed",
+          "description": "You never want to see Revenge show up...",
+          "type": "pokemon-death",
+          "pokemonId": "pkm_0069",
+          "locationId": "rocket-hq",
+          "opponentName": "Regigigas",
+          "cause": "An unfortunate Revenge plot..."
+        },
+        {
+          "id": "evt_0124",
+          "episodeId": "ep_0025",
+          "sequence": 20,
+          "videoTimestampSeconds": 2080,
+          "tone": "positive",
+          "importance": "normal",
+          "type": "party-changed",
+          "pairChanges": [
+            { "soulLinkId": "link_0020", "pokemonIds": ["pkm_0039", "pkm_0040"], "to": "party" }
+          ]
+        },
+        {
+          "id": "evt_0125",
+          "episodeId": "ep_0025",
+          "sequence": 30,
+          "videoTimestampSeconds": 2335,
+          "tone": "negative",
+          "importance": "normal",
+          "title": "Hits about as hard as...?",
+          "description": "A pokemon killer, maybe?",
+          "type": "pokemon-death",
+          "pokemonId": "pkm_0040",
+          "locationId": "rocket-hq",
+          "opponentName": "Bronzong",
+          "cause": "An extrasensory crit, but don't worry, Blue wasn't worried"
+        },
+        {
+          "id": "evt_0126",
+          "episodeId": "ep_0025",
+          "sequence": 40,
+          "videoTimestampSeconds": 2692,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "This is going to be the easiest sacrificial lamb ever...",
+          "type": "party-changed",
+          "pairChanges": [
+            { "soulLinkId": "link_0037", "pokemonIds": ["pkm_0073", "pkm_0074"], "to": "party" }
+          ]
+        },
+        {
+          "id": "evt_0127",
+          "episodeId": "ep_0025",
+          "sequence": 50,
+          "videoTimestampSeconds": 2735,
+          "tone": "positive",
+          "importance": "normal",
+          "title": "Is this one even worth noting?",
+          "type": "evolution",
+          "pokemonId": "pkm_0073",
+          "fromSpeciesId": 41,
+          "toSpeciesId": 42,
+          "level": 22
         }
       ]
     }
