@@ -880,5 +880,25 @@
     "shiny": false,
     "natureId": "jolly",
     "initialAbilityId": "gluttony"
+  },
+  {
+    "id": "pkm_0091",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0138",
+    "initialSpeciesId": 455,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "brave",
+    "initialAbilityId": "overgrow"
+  },
+  {
+    "id": "pkm_0092",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0138",
+    "initialSpeciesId": 226,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "gentle",
+    "initialAbilityId": "natural-cure"
   }
 ]

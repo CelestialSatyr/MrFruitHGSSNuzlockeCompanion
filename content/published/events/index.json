@@ -2845,5 +2845,179 @@
     "fromSpeciesId": 41,
     "toSpeciesId": 42,
     "level": 22
+  },
+  {
+    "id": "evt_0128",
+    "episodeId": "ep_0026",
+    "sequence": 10,
+    "videoTimestampSeconds": 40,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "The new teams!",
+    "type": "party-changed",
+    "pairChanges": [
+      { "soulLinkId": "link_0043", "pokemonIds": ["pkm_0085", "pkm_0086"], "to": "party" },
+      { "soulLinkId": "link_0025", "pokemonIds": ["pkm_0049", "pkm_0050"], "to": "party" },
+      { "soulLinkId": "link_0039", "pokemonIds": ["pkm_0077", "pkm_0078"], "to": "party" },
+      { "soulLinkId": "link_0006", "pokemonIds": ["pkm_0011", "pkm_0012"], "to": "party" },
+      { "soulLinkId": "link_0026", "pokemonIds": ["pkm_0051", "pkm_0052"], "to": "party" },
+      { "soulLinkId": "link_0042", "pokemonIds": ["pkm_0083", "pkm_0084"], "to": "party" }
+    ]
+  },
+  {
+    "id": "evt_0129",
+    "episodeId": "ep_0026",
+    "sequence": 20,
+    "videoTimestampSeconds": 40,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "Back to the box they go, thank you, soldiers!",
+    "type": "party-changed",
+    "pairChanges": [
+      { "soulLinkId": "link_0007", "pokemonIds": ["pkm_0013", "pkm_0014"], "to": "box" },
+      { "soulLinkId": "link_0008", "pokemonIds": ["pkm_0015", "pkm_0016"], "to": "box" },
+      { "soulLinkId": "link_0012", "pokemonIds": ["pkm_0023", "pkm_0024"], "to": "box" },
+      { "soulLinkId": "link_0015", "pokemonIds": ["pkm_0029", "pkm_0030"], "to": "box" },
+      { "soulLinkId": "link_0037", "pokemonIds": ["pkm_0073", "pkm_0074"], "to": "box" }
+    ]
+  },
+  {
+    "id": "evt_0130",
+    "episodeId": "ep_0026",
+    "sequence": 30,
+    "videoTimestampSeconds": 42,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "evolution",
+    "pokemonId": "pkm_0085",
+    "fromSpeciesId": 240,
+    "toSpeciesId": 467,
+    "level": 34
+  },
+  {
+    "id": "evt_0131",
+    "episodeId": "ep_0026",
+    "sequence": 40,
+    "videoTimestampSeconds": 161,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "evolution",
+    "pokemonId": "pkm_0049",
+    "fromSpeciesId": 316,
+    "toSpeciesId": 317,
+    "level": 34
+  },
+  {
+    "id": "evt_0132",
+    "episodeId": "ep_0026",
+    "sequence": 50,
+    "videoTimestampSeconds": 228,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "evolution",
+    "pokemonId": "pkm_0077",
+    "fromSpeciesId": 172,
+    "toSpeciesId": 25,
+    "level": 37
+  },
+  {
+    "id": "evt_0133",
+    "episodeId": "ep_0026",
+    "sequence": 60,
+    "videoTimestampSeconds": 780,
+    "tone": "negative",
+    "importance": "major",
+    "title": "Well, that lasted long...",
+    "description": "Onto the next Shiny pair!",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0085",
+    "locationId": "goldenrod-radio-tower",
+    "opponentName": "Garchomp",
+    "cause": "Arena Trap... That's rough, buddy"
+  },
+  {
+    "id": "evt_0134",
+    "episodeId": "ep_0026",
+    "sequence": 80,
+    "videoTimestampSeconds": 1470,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "party-changed",
+    "pairChanges": [
+      { "soulLinkId": "link_0024", "pokemonIds": ["pkm_0047", "pkm_0048"], "to": "party" }
+    ]
+  },
+  {
+    "id": "evt_0135",
+    "episodeId": "ep_0026",
+    "sequence": 90,
+    "videoTimestampSeconds": 1503,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "evolution",
+    "pokemonId": "pkm_0047",
+    "fromSpeciesId": 16,
+    "toSpeciesId": 17,
+    "level": 18
+  },
+  {
+    "id": "evt_0136",
+    "episodeId": "ep_0026",
+    "sequence": 100,
+    "videoTimestampSeconds": 1638,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "evolution",
+    "pokemonId": "pkm_0047",
+    "fromSpeciesId": 17,
+    "toSpeciesId": 18,
+    "level": 36
+  },
+  {
+    "id": "evt_0137",
+    "episodeId": "ep_0026",
+    "sequence": 70,
+    "videoTimestampSeconds": 1240,
+    "tone": "positive",
+    "importance": "normal",
+    "type": "progression-changed",
+    "flag": { "kind": "milestone", "id": "radioTowerCleared", "value": true }
+  },
+  {
+    "id": "evt_0138",
+    "episodeId": "ep_0026",
+    "sequence": 110,
+    "videoTimestampSeconds": 2482,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the first encounter for the episode is...",
+    "description": "Welcome back to the Dupeslocke encounters!",
+    "type": "encounter",
+    "locationId": "route-44",
+    "opportunityId": "route-44-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0091",
+        "speciesId": 455,
+        "level": 10,
+        "nickname": "G33KOWL",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0092",
+        "speciesId": 226,
+        "level": 21,
+        "nickname": "DANIELREIS",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0046"
   }
 ]
