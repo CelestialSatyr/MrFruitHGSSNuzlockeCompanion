@@ -3019,5 +3019,42 @@
       }
     ],
     "soulLinkId": "link_0046"
+  },
+  {
+    "id": "evt_0139",
+    "episodeId": "ep_0027",
+    "sequence": 10,
+    "videoTimestampSeconds": 1312,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the first encounter for the episode is...",
+    "description": "Let's hope it's less than.. 5, 6 dupes before we find our encounter this time?",
+    "type": "encounter",
+    "locationId": "ice-path",
+    "opportunityId": "ice-path-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0093",
+        "speciesId": 337,
+        "level": 23,
+        "nickname": "SAMURAIMSH",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0094",
+        "speciesId": 109,
+        "level": 23,
+        "nickname": "IT",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0047"
   }
 ]

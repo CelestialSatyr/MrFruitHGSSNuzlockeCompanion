@@ -900,5 +900,25 @@
     "shiny": false,
     "natureId": "gentle",
     "initialAbilityId": "natural-cure"
+  },
+  {
+    "id": "pkm_0093",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0139",
+    "initialSpeciesId": 337,
+    "gender": "genderless",
+    "shiny": false,
+    "natureId": "rash",
+    "initialAbilityId": "lightning-rod"
+  },
+  {
+    "id": "pkm_0094",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0139",
+    "initialSpeciesId": 109,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "gentle",
+    "initialAbilityId": "speed-boost"
   }
 ]
