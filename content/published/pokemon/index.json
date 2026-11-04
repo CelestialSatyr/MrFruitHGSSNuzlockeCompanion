@@ -920,5 +920,25 @@
     "shiny": false,
     "natureId": "gentle",
     "initialAbilityId": "speed-boost"
+  },
+  {
+    "id": "pkm_0095",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0141",
+    "initialSpeciesId": 409,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "timid",
+    "initialAbilityId": "filter"
+  },
+  {
+    "id": "pkm_0096",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0141",
+    "initialSpeciesId": 9,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "gentle",
+    "initialAbilityId": "anger-point"
   }
 ]
