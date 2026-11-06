@@ -940,5 +940,45 @@
     "shiny": false,
     "natureId": "gentle",
     "initialAbilityId": "anger-point"
+  },
+  {
+    "id": "pkm_0097",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0149",
+    "initialSpeciesId": 206,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "brave",
+    "initialAbilityId": "adaptability"
+  },
+  {
+    "id": "pkm_0098",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0149",
+    "initialSpeciesId": 438,
+    "gender": "female",
+    "shiny": false,
+    "natureId": "serious",
+    "initialAbilityId": "intimidate"
+  },
+  {
+    "id": "pkm_0099",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0150",
+    "initialSpeciesId": 121,
+    "gender": "genderless",
+    "shiny": false,
+    "natureId": "sassy",
+    "initialAbilityId": "hydration"
+  },
+  {
+    "id": "pkm_0100",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0150",
+    "initialSpeciesId": 358,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "lax",
+    "initialAbilityId": "tangled-feet"
   }
 ]
