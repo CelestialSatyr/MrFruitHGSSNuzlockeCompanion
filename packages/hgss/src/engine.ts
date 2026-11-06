@@ -33,9 +33,30 @@ export function reconstructHgssRun(
   }) as RunState<HgssProgressionState>;
 }
 
+function applyBlackthornProgressionClosure(state: HgssProgressionState): void {
+  // A recorded Clair victory proves the run has already traversed the mandatory
+  // Johto story gates needed to reach Blackthorn City. Keep the encounter map
+  // resilient when one of those helper progression flags was not authored
+  // separately.
+  state.badges.zephyr = true;
+  state.badges.hive = true;
+  state.badges.plain = true;
+  state.badges.fog = true;
+  state.badges.storm = true;
+  state.badges.mineral = true;
+  state.badges.glacier = true;
+  state.capabilities.strength = true;
+  state.milestones.radioTowerCleared = true;
+}
+
 export function applyHgssProgressionEvent(state: HgssProgressionState, event: RunEvent): void {
-  if (event.type === "gym-battle" && event.result === "win" && event.badgeId !== undefined) {
-    if (isHgssProgressionFlag("badge", event.badgeId)) {
+  if (event.type === "gym-battle" && event.result === "win") {
+    if (event.gymId === "blackthorn-gym") {
+      applyBlackthornProgressionClosure(state);
+      state.milestones.blackthornGymDefeated = true;
+    }
+
+    if (event.badgeId !== undefined && isHgssProgressionFlag("badge", event.badgeId)) {
       state.badges[event.badgeId as keyof HgssProgressionState["badges"]] = true;
     }
     return;

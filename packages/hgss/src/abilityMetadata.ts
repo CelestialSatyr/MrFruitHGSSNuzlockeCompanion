@@ -31,6 +31,7 @@ const POSITIVE_HGSS_ABILITIES = new Set([
   "static",
   "volt-absorb",
   "water-absorb",
+  "adaptability",
   "oblivious",
   "compound-eyes",
   "insomnia",

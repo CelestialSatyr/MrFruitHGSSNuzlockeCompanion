@@ -5,6 +5,7 @@ import {
   getHgssOpportunityState,
   hgssGameStateAdapter,
   reconstructHgssRun,
+  HGSS_MAIN_STORY_LOCATIONS,
   type HgssLocation,
 } from "../src/index";
 
@@ -166,5 +167,55 @@ describe("HGSS state integration", () => {
       "available",
       "locked",
     ]);
+  });
+  it("unlocks Dragon's Den and Route 45 from a recorded Clair victory", () => {
+    const dataset = parseRunDataset({
+      run: {
+        schemaVersion: 1,
+        id: "clair-progression-run",
+        title: "Clair progression",
+        gameId: "heartgold-soulsilver",
+        status: "active",
+        scope: "main-story",
+        playerIds: ["player_fruit", "player_two"],
+      },
+      players: [
+        { id: "player_fruit", displayName: "Fruit", gameVersionId: "heartgold" },
+        { id: "player_two", displayName: "Two", gameVersionId: "soulsilver" },
+      ],
+      episodes: [{ id: "ep_0001", number: 1, status: "published" }],
+      pokemon: [],
+      soulLinks: [],
+      rules: [],
+      tags: [],
+      events: [
+        {
+          id: "evt_0004",
+          episodeId: "ep_0001",
+          sequence: 1,
+          type: "gym-battle",
+          tone: "positive",
+          importance: "major",
+          gymId: "blackthorn-gym",
+          leaderName: "Clair",
+          result: "win",
+          participantPokemonIds: ["pkm_9999"],
+          badgeId: "rising",
+        },
+      ],
+    });
+
+    const state = reconstructHgssRun(dataset);
+    expect(state.game.milestones.blackthornGymDefeated).toBe(true);
+    expect(state.game.milestones.radioTowerCleared).toBe(true);
+    expect(state.game.capabilities.strength).toBe(true);
+    expect(state.game.badges.glacier).toBe(true);
+
+    const planner = buildHgssEncounterPlanner(HGSS_MAIN_STORY_LOCATIONS, state);
+    const dragonDen = planner.find((entry) => entry.opportunity.id === "dragons-den-main");
+    const route45 = planner.find((entry) => entry.opportunity.id === "route-45-main");
+
+    expect(dragonDen?.availability).toBe("available");
+    expect(route45?.availability).toBe("available");
   });
 });
