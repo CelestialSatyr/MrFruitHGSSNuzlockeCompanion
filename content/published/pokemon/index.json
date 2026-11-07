@@ -980,5 +980,43 @@
     "shiny": false,
     "natureId": "lax",
     "initialAbilityId": "tangled-feet"
+  },
+  {
+    "id": "pkm_0101",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0151",
+    "initialSpeciesId": 395,
+    "gender": "male",
+    "shiny": false,
+    "initialAbilityId": "skill-link"
+  },
+  {
+    "id": "pkm_0102",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0151",
+    "initialSpeciesId": 196,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "docile",
+    "initialAbilityId": "klutz"
+  },
+  {
+    "id": "pkm_0103",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0152",
+    "initialSpeciesId": 9,
+    "gender": "male",
+    "shiny": false,
+    "initialAbilityId": "snow-warning"
+  },
+  {
+    "id": "pkm_0104",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0152",
+    "initialSpeciesId": 138,
+    "gender": "male",
+    "shiny": false,
+    "natureId": "relaxed",
+    "initialAbilityId": "drought"
   }
 ]

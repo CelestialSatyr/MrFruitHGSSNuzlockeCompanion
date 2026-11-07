@@ -3283,5 +3283,77 @@
       }
     ],
     "soulLinkId": "link_0050"
+  },
+  {
+    "id": "evt_0151",
+    "episodeId": "ep_0030",
+    "sequence": 10,
+    "videoTimestampSeconds": 2250,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "First encounter of the episode!",
+    "type": "encounter",
+    "locationId": "whirl-islands",
+    "opportunityId": "whirl-islands-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0101",
+        "speciesId": 395,
+        "level": 23,
+        "nickname": "RAFTJUNK",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0102",
+        "speciesId": 196,
+        "level": 22,
+        "nickname": "ARKBLADE21",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0051"
+  },
+  {
+    "id": "evt_0152",
+    "episodeId": "ep_0030",
+    "sequence": 20,
+    "videoTimestampSeconds": 2775,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And the Legendary encounter is...",
+    "type": "encounter",
+    "locationId": "whirl-islands",
+    "opportunityId": "whirl-islands-lugia",
+    "acquisitionType": "static",
+    "outcomes": [
+      {
+        "result": "caught",
+        "playerId": "player_fruit",
+        "pokemonId": "pkm_0103",
+        "speciesId": 9,
+        "level": 45,
+        "nickname": "SHDWOHSKA",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      },
+      {
+        "result": "caught",
+        "playerId": "player_blue",
+        "pokemonId": "pkm_0104",
+        "speciesId": 138,
+        "level": 45,
+        "nickname": "HEPHAESTUS",
+        "placement": "box",
+        "flyingTypeDeclared": false
+      }
+    ],
+    "soulLinkId": "link_0052"
   }
 ]
