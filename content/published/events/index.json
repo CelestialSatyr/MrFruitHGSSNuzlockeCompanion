@@ -3355,5 +3355,88 @@
       }
     ],
     "soulLinkId": "link_0052"
+  },
+  {
+    "id": "evt_0153",
+    "episodeId": "ep_0031",
+    "sequence": 10,
+    "videoTimestampSeconds": 822,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "And we're so back!",
+    "description": "Our first encounter for the episode is...",
+    "type": "encounter",
+    "locationId": "route-27",
+    "opportunityId": "route-27-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "failed",
+        "playerId": "player_fruit",
+        "speciesId": 319,
+        "reason": "Turns out, the odds are pretty high..."
+      },
+      { "result": "skipped", "playerId": "player_blue", "speciesId": 381 }
+    ]
+  },
+  {
+    "id": "evt_0154",
+    "episodeId": "ep_0031",
+    "sequence": 20,
+    "videoTimestampSeconds": 1330,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "Next encounter is...",
+    "description": "Let's hope for a better outcome, shall we?",
+    "type": "encounter",
+    "locationId": "tohjo-falls",
+    "opportunityId": "tohjo-falls-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "failed",
+        "playerId": "player_fruit",
+        "speciesId": 481,
+        "reason": "That looks familiar.."
+      },
+      { "result": "skipped", "playerId": "player_blue", "speciesId": 285 }
+    ]
+  },
+  {
+    "id": "evt_0155",
+    "episodeId": "ep_0031",
+    "sequence": 30,
+    "videoTimestampSeconds": 1965,
+    "tone": "positive",
+    "importance": "normal",
+    "title": "And that's a new death, folks!",
+    "type": "pokemon-death",
+    "pokemonId": "pkm_0072",
+    "locationId": "route-27",
+    "opponentName": "Blaziken",
+    "cause": "Yikes, that's a critical Blaze Kick to the face, Wonder Guard isn't stopping that!"
+  },
+  {
+    "id": "evt_0156",
+    "episodeId": "ep_0031",
+    "sequence": 40,
+    "videoTimestampSeconds": 2645,
+    "tone": "negative",
+    "importance": "normal",
+    "title": "And 0/3, you know, could be worse!",
+    "description": "Somehow.. right?",
+    "type": "encounter",
+    "locationId": "route-26",
+    "opportunityId": "route-26-main",
+    "acquisitionType": "wild",
+    "outcomes": [
+      {
+        "result": "failed",
+        "playerId": "player_fruit",
+        "speciesId": 377,
+        "reason": "Died to Poison"
+      },
+      { "result": "skipped", "playerId": "player_blue", "speciesId": 210 }
+    ]
   }
 ]
