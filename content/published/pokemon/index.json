@@ -1018,5 +1018,21 @@
     "shiny": false,
     "natureId": "relaxed",
     "initialAbilityId": "drought"
+  },
+  {
+    "id": "pkm_0105",
+    "playerId": "player_fruit",
+    "createdByEventId": "evt_0158",
+    "initialSpeciesId": 193,
+    "gender": "male",
+    "shiny": false
+  },
+  {
+    "id": "pkm_0106",
+    "playerId": "player_blue",
+    "createdByEventId": "evt_0158",
+    "initialSpeciesId": 272,
+    "gender": "female",
+    "shiny": false
   }
 ]
