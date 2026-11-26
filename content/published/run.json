@@ -3,9 +3,10 @@
   "id": "mr-fruit-hgss-soul-link",
   "title": "HG & SS Soul Link",
   "gameId": "heartgold-soulsilver",
-  "status": "active",
+  "status": "failed",
   "attemptNumber": 1,
   "scope": "main-story",
   "playerIds": ["player_fruit", "player_blue"],
-  "description": "Run Number 1"
+  "description": "Run Number 1",
+  "completedAt": "2026-11-26T09:45:57.453Z"
 }
